@@ -18,7 +18,7 @@ api = MPRester("fB610TDF3LSwxiN9")
 #entries = api.get_entries({"nelements": {'$lte': 6, '$gte': 1},"elasticity": {'$ne': None}}, property_data=['pretty_formula','elasticity', 'elements'])
 covalent = ['B', 'C', 'Si']
 ionique = ['N', 'O', 'F', 'P', 'S', 'Cl', 'Sr', 'Br', 'I']
-
+#tableau des proprietes
 propsTableau = ['elasticity.poisson_ratio','elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill', 'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
 critere1= {"nelements": {'$gte': 1, '$lte': 6}, "elasticity": {'$ne': None}}
 critere2 = {"nelements": {'$lte': 6}, 'elements': {'$in': covalent}, "elasticity": {'$ne': None}}
