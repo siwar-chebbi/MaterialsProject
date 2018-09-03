@@ -8,7 +8,7 @@ tableau = {'Ac': 0, 'Al': 0, 'Am': 0, 'Sb': 0, 'Ag': 0, 'Ar': 0, 'As': 0, 'At': 
 
 # entries = api.get_entries_in_chemsys(['Ca', 'C', 'O'], property_data=['elasticity'])
 texte = ""
-
+#testgit
 
 for i in range(1, 7):
     entries = api.get_entries({"nelements": i}, property_data=['elasticity'])
