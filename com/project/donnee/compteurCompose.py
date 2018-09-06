@@ -11,7 +11,7 @@ texte = ""
 
 for i in range(1, 7):
     compteuri = 0
-    entries = api.get_entries({"nelements": i}, property_data=['elasticity'])
+    entries = api.get_entries({"nelements": i}, property_data=["elasticity"])
     for entry in entries:
         if entry.data["elasticity"]:
             compteuri = compteuri + 1
