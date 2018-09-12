@@ -15,17 +15,22 @@ api = MPRester("fB610TDF3LSwxiN9")
 
 composes = ['S', 'O']
 
+propsTableauCritere = ['pretty_formula', 'elasticity.poisson_ratio', 'elasticity.G_Reuss', 'elasticity.G_Voigt',
+                       'elasticity.G_Voigt_Reuss_Hill',
+                       'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
+
 propsTableau = ['elasticity.poisson_ratio', 'elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill',
                 'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
 
 propsTableauG = ['elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill']
 propsTableauK = ['elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
 
-critere1 = {"nelements": {'$lte': 6}, 'elements': {'$all': composes}, "elasticity": {'$ne': None},
-            "elasticity.G_Reuss": {'$gte': 0}, "elasticity.G_Voigt": {'$gte': 0},
-            "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0}, "elasticity.K_Reuss": {'$gte': 0},
-            "elasticity.K_Voigt": {'$gte': 0}, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
-materials = api.query(criteria=critere1, properties=propsTableau)
+critere = {"nelements": {'$lte': 6}, 'elements': {'$all': composes}, "elasticity": {'$ne': None},
+           "elasticity.G_Reuss": {'$gte': 0}, "elasticity.G_Voigt": {'$gte': 0},
+           "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0}, "elasticity.K_Reuss": {'$gte': 0},
+           "elasticity.K_Voigt": {'$gte': 0}, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
+
+materials = api.query(criteria=critere, properties=propsTableauCritere)
 
 lin = len(propsTableau)
 col = len(materials)
@@ -68,11 +73,12 @@ def drawTable(tableau1, propsTableau1, minX, maxX, tableau2, propsTableau2, minY
                 y = tableau2[propsTableau2.index(prop2), :]
                 area = 5  # 0 to 15 point radii
                 plt.scatter(x, y, s=area, c=poisson, cmap=cm.get_cmap('seismic'), norm=normalize, alpha=1)
-                plt.xlim(minX * 1.1, maxX * 1.1)
-                plt.ylim(minY * 1.1, maxY * 1.1)
-                plt.xlabel(prop1)
-                plt.ylabel(prop2)
-                plt.title(str(prop2) + ' versus ' + str(prop1))
+                plt.xlim(minX, maxX * 1.1)
+                plt.ylim(minY, maxY * 1.1)
+                #Ne pas afficher le mot "elasticity. (suppression 11 caractères)
+                plt.xlabel(prop1[11:])
+                plt.ylabel(prop2[11:])
+                plt.title(str(prop2[11:]) + ' versus ' + str(prop1[11:]))
                 plt.colorbar()
                 pdf.savefig()
                 plt.close()
@@ -85,11 +91,11 @@ resultat = recup(materials)
 
 logTableauK = logTableau(resultat, propsTableauK)
 maxK = logTableauK.max()
-minK = logTableauK.min()
+minK = min(0, logTableauK.min())
 
 logTableauG = logTableau(resultat, propsTableauG)
 maxG = logTableauG.max()
-minG = logTableauG.min()
+minG = min(0, logTableauG.min())
 
 poisson = resultat[propsTableau.index('elasticity.poisson_ratio'), :]
 
