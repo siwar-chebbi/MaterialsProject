@@ -15,24 +15,31 @@ import numpy as np
 
 api = MPRester("fB610TDF3LSwxiN9")
 
-#entries = api.get_entries({"nelements": {'$lte': 6, '$gte': 1},"elasticity": {'$ne': None}}, property_data=['pretty_formula','elasticity', 'elements'])
+
+compos = ['S', 'O']
 covalent = ['B', 'C', 'Si']
-ionique = ['N', 'O', 'F', 'P', 'S', 'Cl', 'Sr', 'Br', 'I']
-#tableau des proprietes
+ionique = ['N', 'O', 'F', 'P', 'S', 'Cl', 'Se', 'Br', 'I']
+alkali = ['Li', 'Na', 'K', 'Rb', 'Cs', 'Fr']
+alkaline = ['Be', 'Mg', 'Ca', 'Sr', 'Ba', 'Ra']
+chalcogen = ['O', 'S', 'Se', 'Te', 'Po']
+metalloid = ['B', 'Si', 'Ge', 'As', 'Sb', 'Te', 'Po']
+
+
 propsTableau = ['elasticity.poisson_ratio','elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill', 'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
 critere1= {"nelements": {'$gte': 1, '$lte': 6}, "elasticity": {'$ne': None}}
-critere2 = {"nelements": {'$lte': 6}, 'elements': {'$in': covalent}, "elasticity": {'$ne': None}}
-critere3 = {"nelements": {'$lte': 6}, 'elements': {'$in': ionique}, "elasticity": {'$ne': None}}
-#critere4 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0 }}
-materials = api.query(criteria=critere1, properties=propsTableau)
-#materials_covalent= api.query(criteria=critere2, properties=propsTableau)
-#materials_ionique = api.query(criteria=critere3, properties=propsTableau)
+critere2 = {"nelements": {'$lte': 6}, 'elements': {'$in': covalent}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0 }, "elasticity.G_Voigt": {'$gte': 0 }, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0 }, "elasticity.K_Reuss": {'$gte': 0 }, "elasticity.K_Voigt": {'$gte': 0 }, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0 }}
+critere3 = {"nelements": {'$lte': 6}, 'elements': {'$in': ionique}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0 }, "elasticity.G_Voigt": {'$gte': 0 }, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0 }, "elasticity.K_Reuss": {'$gte': 0 }, "elasticity.K_Voigt": {'$gte': 0 }, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0 }}
+critere4 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0 }, "elasticity.G_Voigt": {'$gte': 0 }, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0 }, "elasticity.K_Reuss": {'$gte': 0 }, "elasticity.K_Voigt": {'$gte': 0 }, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0 }}
+critere5 = {"nelements": {'$lte': 6}, 'elements': {'$in': alkali}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0 }, "elasticity.G_Voigt": {'$gte': 0 }, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0 }, "elasticity.K_Reuss": {'$gte': 0 }, "elasticity.K_Voigt": {'$gte': 0 }, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0 }}
+critere6 = {"nelements": {'$lte': 6}, 'elements': {'$in': alkaline}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0 }, "elasticity.G_Voigt": {'$gte': 0 }, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0 }, "elasticity.K_Reuss": {'$gte': 0 }, "elasticity.K_Voigt": {'$gte': 0 }, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0 }}
+critere7 = {"nelements": {'$lte': 6}, 'elements': {'$in': chalcogen}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0 }, "elasticity.G_Voigt": {'$gte': 0 }, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0 }, "elasticity.K_Reuss": {'$gte': 0 }, "elasticity.K_Voigt": {'$gte': 0 }, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0 }}
+critere8 = {"nelements": {'$lte': 6}, 'elements': {'$in': metalloid}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0 }, "elasticity.G_Voigt": {'$gte': 0 }, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0 }, "elasticity.K_Reuss": {'$gte': 0 }, "elasticity.K_Voigt": {'$gte': 0 }, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0 }}
+critere9 = {"nelements": {'$lte': 6}, 'elements': {'$all': compos}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0 }, "elasticity.G_Voigt": {'$gte': 0 }, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0 }, "elasticity.K_Reuss": {'$gte': 0 }, "elasticity.K_Voigt": {'$gte': 0 }, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0 }}
+
+
+materials = api.query(criteria=critere9, properties=propsTableau)
 
 propsPlot = ['elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill', 'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
-#propsPlot = ['elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill']
-
-
-
 
 lin = len(propsTableau)
 col = len(materials)
@@ -85,39 +92,3 @@ pdf.close()
 
 
 
-#entries = api.get_entries({"nelements": {'$lte': 6, '$gte': 6},"elasticity": {'$ne': None}}, property_data=['pretty_formula','elasticity', 'elements'])
-
-
-#datax = api.query(criteria={"nelements": {'$lte': 6, '$gte': 6}, "elasticity": {'$ne': None}}, properties=["pretty_formula","elasticity", "elements"])
-#elasticity.G_Reuss
-
-
-#datax = api.query(criteria={"nelements": {'$lte': 6, '$gte': 6}, "elasticity": {'$ne': None}}, properties=["pretty_formula","elasticity"])
-
-#datay = api.query(criteria={"nelements": {'$lte': 1}, "elasticity": {'$ne': None}}, properties=["elasticity.K_VRH"])
-
-
-
-#area = 5  # 0 to 15 point radii
-#plt.scatter(x, y, s=area, alpha=0.5)
-#plt.show()
-
-# N = len(data)
-# print(N)
-#
-# entries = api.get_entries({"nelements": {'$lte': 6}, "elements": {'$all': ['S', 'O']}, "elasticity": {'$ne': None}},
-#                           property_data=['elasticity'])
-# N = len(entries)
-# print(N)
-#
-# x = list()
-# y = list()
-#
-# for entry in entries:
-#     if entry.data["elasticity"]:
-#         x.append(entry.data["elasticity"]['G_Reuss'])
-#         y.append(entry.data["elasticity"]['K_VRH'])
-#
-# area = 5  # 0 to 15 point radii
-# plt.scatter(x, y, s=area, alpha=0.5)
-# plt.show()

@@ -12,9 +12,12 @@ propsTableau = ['material_id','pretty_formula','elasticity.poisson_ratio','elast
 critere1 = {"nelements": {'$lte': 6},'elements': {'$in': covalent}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$lt': 0 },'elasticity.G_Reuss' : {'$gte': 0 }, 'elasticity.G_Voigt': {'$gte': 0 }, 'elasticity.G_Voigt_Reuss_Hill': {'$gte': 0 }, 'elasticity.K_Reuss': {'$gte': 0 }, 'elasticity.K_Voigt': {'$gte': 0 }, 'elasticity.K_Voigt_Reuss_Hill': {'$gte': 0 }}
 critere2 = {"nelements": {'$lte': 6},'elements': {'$in': ionique}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$lt': 0 },'elasticity.G_Reuss' : {'$gte': 0 }, 'elasticity.G_Voigt': {'$gte': 0 }, 'elasticity.G_Voigt_Reuss_Hill': {'$gte': 0 }, 'elasticity.K_Reuss': {'$gte': 0 }, 'elasticity.K_Voigt': {'$gte': 0 }, 'elasticity.K_Voigt_Reuss_Hill': {'$gte': 0 }}
 
+critere3 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$lt': 0 },'elasticity.G_Reuss' : {'$gte': 0 }, 'elasticity.G_Voigt': {'$gte': 0 }, 'elasticity.G_Voigt_Reuss_Hill': {'$gte': 0 }, 'elasticity.K_Reuss': {'$gte': 0 }, 'elasticity.K_Voigt': {'$gte': 0 }, 'elasticity.K_Voigt_Reuss_Hill': {'$gte': 0 }}
 
-materials1 = api.query(criteria=critere1, properties=propsTableau)
-materials2 = api.query(criteria=critere2, properties=propsTableau)
+
+#materials1 = api.query(criteria=critere1, properties=propsTableau)
+#materials2 = api.query(criteria=critere2, properties=propsTableau)
+materials3 = api.query(criteria=critere3, properties=propsTableau)
 
 def recup(materials):
     texte=""
@@ -24,12 +27,14 @@ def recup(materials):
 
     for material in materials:
         texte = ""
-        for prop in propsTableau:
+            for prop in propsTableau:
             texte = texte + str(material.get(prop)) + "\t"
         print(texte)
 
 
-print("\n********************ELEMENTS COVALENTS*******************************\n")
-recup(materials1)
-print("\n********************ELEMENTS IONIQUES*******************************\n")
-recup(materials2)
+#print("\n********************ELEMENTS COVALENTS*******************************\n")
+#recup(materials1)
+#print("\n********************ELEMENTS IONIQUES*******************************\n")
+#recup(materials2)
+print("\n********************All ELEMENTS*******************************\n")
+recup(materials3)
