@@ -49,26 +49,16 @@ def recup(materials):
 
 resultat = recup(materials)
 
-#poisson = resultat[propsTableau.index('elasticity.poisson_ratio'), :]
-#normalize = color.Normalize(vmin=min   (poisson), vmax=max(poisson))
 for prop in propsTableau:
-    #for prop2 in propsPlot:
-        #if prop1 != prop2:
-    data = resultat[:, propsTableau.index(prop)]
-    #data = resultat[propsTableau.index(prop), :]
-    #y = resultat[propsTableau.index(prop2), :]
-    #area = 5  # 0 to 15 point radii
-    plt.hist(data)
-    #plt.scatter(x, y, s=area, c=poisson,cmap=cm.get_cmap('seismic'),  norm=normalize, alpha=1)
+    data = resultat[ propsTableau.index(prop),:]
+    plt.hist(data, bins=100)
     #plt.xlim(x.min(), x.max() * 1.1)
     #plt.ylim(y.min(), y.max() * 1.1)
-    #plt.xlabel(prop1[11:])
-    #plt.ylabel(prop2[11:])
+
+    plt.ylabel('nb_element')
+    plt.xlabel('propriete')
+    plt.title('Histogramme')
     plt.title(str(prop[11:]))
-    #plt.colorbar()
-    #filename= 'C:\\Users\\siwar\\Desktop\\image\\'+str(prop2) +' versus '+str(prop1)+'.pdf'
-    #if os.path.isfile(filename):
-    #    os.remove(filename)  # Opt.: os.system("rm "+strFile)
     pdf.savefig()
     plt.close()
 pdf.close()
