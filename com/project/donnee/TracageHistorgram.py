@@ -22,8 +22,6 @@ propsTableauCritere = ['pretty_formula', 'elasticity.poisson_ratio', 'elasticity
 propsTableau = ['elasticity.poisson_ratio', 'elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill',
                 'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
 
-propsTableauG = ['elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill']
-propsTableauK = ['elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
 
 critere = {"nelements": {'$lte': 6}, 'elements': {'$all': composes}, "elasticity": {'$ne': None},
            "elasticity.G_Reuss": {'$gte': 0}, "elasticity.G_Voigt": {'$gte': 0},
@@ -51,57 +49,48 @@ def recup(materials):
     return tableau
 
 
-def logTableau(tableauSource, propsTabExtraite):
-    linExt = len(propsTabExtraite)
-    i = 0
-    tableauLog = np.zeros(shape=(linExt, col))
-    for prop in propsTableau:
-        index = propsTableau.index(prop)
-        if prop in propsTabExtraite:
-            for j in range(0, col):
-                tableauLog[i, j] = math.log10(tableauSource[index, j])
-            i = i + 1
-    return tableauLog
-
-
-def drawTable(tableau1, propsTableau1, minX, maxX, tableau2, propsTableau2, minY, maxY, pdffile):
+def drawTable(tableauSource, propsTableauToPlot, pdffile):
     pdf = matplotlib.backends.backend_pdf.PdfPages(pdffile)
-    for prop1 in propsTableau1:
-        for prop2 in propsTableau2:
-            if prop1 != prop2:
-                x = tableau1[propsTableau1.index(prop1), :]
-                y = tableau2[propsTableau2.index(prop2), :]
-                area = 5  # 0 to 15 point radii
-                plt.scatter(x, y, s=area, c=poisson, cmap=cm.get_cmap('seismic'), norm=normalize, alpha=1)
-                plt.xlim(minX, maxX * 1.1)
-                plt.ylim(minY, maxY * 1.1)
-                #Ne pas afficher le mot "elasticity. (suppression 11 caractères)
-                plt.xlabel(prop1[11:])
-                plt.ylabel(prop2[11:])
-                plt.title(str(prop2[11:]) + ' versus ' + str(prop1[11:]))
-                plt.colorbar()
-                pdf.savefig()
-                plt.close()
+    dataToPlot = []
+    tableauLabel=[]
+    couleur=[]
+    minY = 1000
+    maxY = -1000
+    for prop in propsTableauToPlot:
+        dataToPlot.append(tableauSource[propsTableauToPlot.index(prop), :])
+        minY = min(minY, (tableauSource[propsTableauToPlot.index(prop), :]).min())
+        #maxY=10
+        maxY = max(maxY, (tableauSource[propsTableauToPlot.index(prop), :]).max())
+        tableauLabel.append(prop[11:])
+        couleur.append(cm((1+propsTableauToPlot.index(prop))/(len(propsTableauToPlot)+1)))
+#http://www.python-simple.com/python-matplotlib/histogram.php
+    nbIntervalle=50
+    pas = (maxY-minY)/nbIntervalle
+    bins =[]
+    for i in range(0 , nbIntervalle):
+        bins.append(minY+ i*pas)
+
+    plt.hist(dataToPlot, bins=bins, color=couleur, edgecolor="black", lw=1, label=tableauLabel, histtype='bar')  # bar est le defaut
+#plt.ylim(minY, maxY)
+    plt.ylabel('valeurs')
+    plt.xlabel('elements')
+    plt.title('Histogramme')
+    plt.legend()
+    pdf.savefig()
+    plt.close()
     pdf.close()
+
 
 #Execution des fonction
 #recuperation du tableau contenant les valeurs correspondantes au différents matériaux
 resultat = recup(materials)
 #calcul et recuperation des logs du tableau selon les proprietes K ou G avec determination des Max et Min (pour determiner min et max des echelles)
 
-logTableauK = logTableau(resultat, propsTableauK)
-maxK = logTableauK.max()
-minK = min(0, logTableauK.min())
 
-logTableauG = logTableau(resultat, propsTableauG)
-maxG = logTableauG.max()
-minG = min(0, logTableauG.min())
 
-poisson = resultat[propsTableau.index('elasticity.poisson_ratio'), :]
+cm = cm.get_cmap('gist_rainbow')
+propsToPlot = ['elasticity.G_Reuss','elasticity.G_Voigt']
+drawTable(resultat, propsToPlot, "histogramme.pdf")
 
-normalize = color.Normalize(vmin=min(poisson), vmax=max(poisson))
-
-drawTable(logTableauK, propsTableauK,  minK, maxK, logTableauG, propsTableauG, minG, maxG, "G_f_K.pdf")
-drawTable(logTableauG, propsTableauG, minG, maxG, logTableauK, propsTableauK, minK, maxK, "K_f_G.pdf")
 
 
