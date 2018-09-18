@@ -61,10 +61,10 @@ def drawTable(tableauSource, propsTableauToPlot, pdffile):
         for i in range(0, col):
             abscisses.append(i+1 + propsTableauToPlot.index(prop)*epaisseur-int(len(propsTableauToPlot)*epaisseur/2))
 
-        maxY = max(maxY, (tableauSource[propsTableauToPlot.index(prop), :]).max())
+        maxY = max(maxY, (tableauSource[propsTableau.index(prop), :]).max())
         plt.bar(abscisses, tableauSource[propsTableau.index(prop), :], color=couleur, width=epaisseur, label=prop[11:], align='center')  # bar est le defaut
     #maxY = 3
-    plt.ylim(minY, maxY)
+    plt.ylim(minY, maxY*1.01)
     plt.ylabel('valeurs')
     plt.xlabel('elements')
     plt.xticks(range(col), elements, rotation='vertical', fontsize=7)

@@ -32,11 +32,10 @@ materials = api.query(criteria=critere, properties=propsTableauCritere)
 
 lin = len(propsTableau)
 col = len(materials)
-
+elements = []
 def recup(materials):
     j = 0
     tableau = np.zeros(shape=(lin, col))
-    elements = []
 
     for material in materials:
 
@@ -69,11 +68,12 @@ def drawTable(tableauSource, propsTableauToPlot, pdffile):
     bins = []
     for i in range(0, nbIntervalle):
         bins.append(minY + i*pas)
+    bins.append(maxY)
 
     plt.hist(dataToPlot, bins=bins, color=couleur, edgecolor="black", lw=1, label=tableauLabel, histtype='bar')  # bar est le defaut
 #plt.ylim(minY, maxY)
-    plt.ylabel('valeurs')
-    plt.xlabel('elements')
+    plt.ylabel('nb_element')
+    plt.xlabel('propriete')
     plt.title('Histogramme')
     plt.legend()
     pdf.savefig()
@@ -89,7 +89,7 @@ resultat = recup(materials)
 
 
 cm = cm.get_cmap('gist_rainbow')
-propsToPlot = ['elasticity.G_Reuss']
+propsToPlot = ['elasticity.G_Reuss','elasticity.K_Voigt']
 drawTable(resultat, propsToPlot, "histogramme.pdf")
 
 
