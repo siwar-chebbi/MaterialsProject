@@ -64,11 +64,11 @@ col = len(materials)
 def recup(materials):
     j = 0
     tableau = np.zeros(shape=(lin, col))
-    elements = []
+    #elements = []
 
     for material in materials:
 
-        elements.append(material.get('pretty_formula'))
+     #  elements.append(material.get('pretty_formula'))
         i = 0
         for prop in propsTableau:
             tableau[i, j] = material.get(prop)
@@ -86,10 +86,10 @@ for prop1 in propsPlot:
             x = resultat[propsTableau.index(prop1), :]
             y = resultat[propsTableau.index(prop2), :]
             area = 5  # 0 to 15 point radii
-            plt.scatter(x, y, s=area, c=poisson,cmap=cm.get_cmap('plasma'),  norm=normalize, alpha=1)
+            plt.scatter(x, y, s=area, c=poisson,cmap=cm.get_cmap('seismic'),  norm=normalize, alpha=1)
             plt.xlim(x.min(), x.max() * 1.1)
             plt.ylim(y.min(), y.max() * 1.1)
-            plt.xlabel(prop1[11:])
+            plt.xlabel(prop2[11:])
             plt.ylabel(prop2[11:])
             plt.title(str(prop2[11:]) + ' versus ' + str(prop1[11:]))
             plt.colorbar()
