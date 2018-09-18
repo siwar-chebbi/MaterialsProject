@@ -55,14 +55,14 @@ def drawTable(tableauSource, propsTableauToPlot, pdffile):
 
     for prop in propsTableauToPlot:
         couleur = cm((1 + propsTableauToPlot.index(prop)) / (len(propsTableauToPlot) + 1))
-        minY = min(minY, (tableauSource[propsTableauToPlot.index(prop), :]).min())
+        minY = min(minY, (tableauSource[propsTableau.index(prop), :]).min())
         epaisseur = 0.2
         abscisses = []
         for i in range(0, col):
             abscisses.append(i+1 + propsTableauToPlot.index(prop)*epaisseur-int(len(propsTableauToPlot)*epaisseur/2))
 
         maxY = max(maxY, (tableauSource[propsTableauToPlot.index(prop), :]).max())
-        plt.bar(abscisses, tableauSource[propsTableauToPlot.index(prop), :], color=couleur, width=epaisseur, label=prop[11:], align='center')  # bar est le defaut
+        plt.bar(abscisses, tableauSource[propsTableau.index(prop), :], color=couleur, width=epaisseur, label=prop[11:], align='center')  # bar est le defaut
     #maxY = 3
     plt.ylim(minY, maxY)
     plt.ylabel('valeurs')
@@ -83,7 +83,9 @@ resultat = recup(materials)
 
 
 cm = cm.get_cmap('gist_rainbow')
-propsToPlot = ['elasticity.G_Reuss','elasticity.G_Voigt','elasticity.G_Voigt_Reuss_Hill','elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
+#propsToPlot = ['elasticity.G_Reuss','elasticity.G_Voigt','elasticity.G_Voigt_Reuss_Hill','elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
+propsToPlot = ['elasticity.G_Reuss']
+
 drawTable(resultat, propsToPlot, "bar.pdf")
 
 

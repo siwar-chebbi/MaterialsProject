@@ -57,18 +57,18 @@ def drawTable(tableauSource, propsTableauToPlot, pdffile):
     minY = 1000
     maxY = -1000
     for prop in propsTableauToPlot:
-        dataToPlot.append(tableauSource[propsTableauToPlot.index(prop), :])
-        minY = min(minY, (tableauSource[propsTableauToPlot.index(prop), :]).min())
+        dataToPlot.append(tableauSource[propsTableau.index(prop), :])
+        minY = min(minY, (tableauSource[propsTableau.index(prop), :]).min())
         #maxY=10
-        maxY = max(maxY, (tableauSource[propsTableauToPlot.index(prop), :]).max())
+        maxY = max(maxY, (tableauSource[propsTableau.index(prop), :]).max())
         tableauLabel.append(prop[11:])
         couleur.append(cm((1+propsTableauToPlot.index(prop))/(len(propsTableauToPlot)+1)))
-#http://www.python-simple.com/python-matplotlib/histogram.php
+    #http://www.python-simple.com/python-matplotlib/histogram.php
     nbIntervalle=50
     pas = (maxY-minY)/nbIntervalle
-    bins =[]
-    for i in range(0 , nbIntervalle):
-        bins.append(minY+ i*pas)
+    bins = []
+    for i in range(0, nbIntervalle):
+        bins.append(minY + i*pas)
 
     plt.hist(dataToPlot, bins=bins, color=couleur, edgecolor="black", lw=1, label=tableauLabel, histtype='bar')  # bar est le defaut
 #plt.ylim(minY, maxY)
@@ -89,7 +89,7 @@ resultat = recup(materials)
 
 
 cm = cm.get_cmap('gist_rainbow')
-propsToPlot = ['elasticity.G_Reuss','elasticity.G_Voigt']
+propsToPlot = ['elasticity.G_Reuss']
 drawTable(resultat, propsToPlot, "histogramme.pdf")
 
 
