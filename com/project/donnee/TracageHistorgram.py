@@ -87,10 +87,13 @@ resultat = recup(materials)
 #calcul et recuperation des logs du tableau selon les proprietes K ou G avec determination des Max et Min (pour determiner min et max des echelles)
 
 
-
 cm = cm.get_cmap('gist_rainbow')
-propsToPlot = ['elasticity.G_Reuss','elasticity.K_Voigt']
-drawTable(resultat, propsToPlot, "histogramme.pdf")
+propsToPlot = ['elasticity.G_Voigt_Reuss_Hill', 'elasticity.K_Voigt_Reuss_Hill']
+drawTable(resultat, propsToPlot, "histogrammeSandO.pdf")
+
+propsToPlot2 = ['elasticity.poisson_ratio']
+drawTable(resultat, propsToPlot2, "histogrammeRatioSandO.pdf")
+
 
 
 
