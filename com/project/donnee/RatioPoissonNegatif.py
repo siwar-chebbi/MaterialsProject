@@ -22,7 +22,7 @@ materials3 = api.query(criteria=critere3, properties=propsTableau)
 def recup(materials):
     texte=""
     for prop in propsTableau:
-        texte = texte + str(prop) + "\t"
+        texte = texte + prop + "\t"
     print(texte)
 
     for material in materials:

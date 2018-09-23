@@ -5,7 +5,7 @@ import matplotlib.colors as color
 import matplotlib.backends.backend_pdf
 import numpy as np
 
-pdf = matplotlib.backends.backend_pdf.PdfPages("output.pdf")
+pdf = matplotlib.backends.backend_pdf.PdfPages("HISTbis.pdf")
 api = MPRester("fB610TDF3LSwxiN9")
 
 
@@ -50,8 +50,8 @@ def recup(materials):
 resultat = recup(materials)
 
 for prop in propsTableau:
-    data = resultat[ propsTableau.index(prop),:]
-    plt.hist(data, bins=100)
+    data = resultat[propsTableau.index(prop),:]
+    plt.hist(data, bins=100, color = 'blue', edgecolor= 'black')
     #plt.xlim(x.min(), x.max() * 1.1)
     #plt.ylim(y.min(), y.max() * 1.1)
 
