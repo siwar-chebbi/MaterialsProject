@@ -46,29 +46,50 @@ def calculMaxLC(elas):
  return elastic.maximize(elas.LC, 2)
 
 
-propsDisplay =["minLC", "maxLC"]
+def calculMinNu(elas):
+    return elastic.minimize(elas.Poisson, 3)
+
+
+def calculMaxNu(elas):
+    return elastic.maximize(elas.Poisson, 3)
+
+
+propsDisplay = ["minLC", "maxLC", "minNu", "maxNu"]
 
 col = len(propsDisplay)
 lin = len(materials)
 elements = []
 materialIds =[]
-materialNonConforme=[]
-
+materialNonConformeEigenvalNegative=[]
+materialNonConformeMatSinguliere=[]
 def recup(materials):
     i = 0
     tableau = np.zeros(shape=(lin, col))
     for material in materials:
+        print(str(i+1),"-", str(material.get('material_id')),":", material.get('pretty_formula') )
         elements.append(material.get('pretty_formula'))
         materialIds.append(material.get('material_id'))
         matrix = material.get('elasticity.elastic_tensor')
         elastElement= generateElas(matrix)
         if elastElement:
-             minLC = calculMinLC(elastElement)[1]
-             maxLC = calculMaxLC(elastElement)[1]
+             eigenval = sorted(np.linalg.eig(elastElement.CVoigt)[0])
+             if eigenval[0] > 0:
+                 minLC = calculMinLC(elastElement)[1]
+                 maxLC = calculMaxLC(elastElement)[1]
+                 minNu = calculMinNu(elastElement)[1]
+                 maxNu = calculMaxNu(elastElement)[1]
+             else:
+                 minLC = -1500
+                 maxLC = -1500
+                 minNu = -1500
+                 maxNu = -1500
+                 materialNonConformeEigenvalNegative.append(material.get('material_id'))
         else:
-            materialNonConforme.append(material.get('material_id'))
+            materialNonConformeMatSinguliere.append(material.get('material_id'))
             minLC = -1000
             maxLC = -1000
+            minNu = -1000
+            maxNu = -1000
 
         #i = 0
         # for prop in propsDisplay:
@@ -76,6 +97,8 @@ def recup(materials):
         #     i = i + 1
         tableau[i, 0] = minLC
         tableau[i, 1] = maxLC
+        tableau[i, 2] = minNu
+        tableau[i, 3] = maxNu
         i = i + 1
     return tableau
 
@@ -84,9 +107,9 @@ def export (donnees,ligne,nomColonnes,fichier):
   my_df.index = ligne
   my_df.to_csv(fichier, index=ligne, header=nomColonnes)
 
-
 resultat = recup(materials)
 
 export(resultat, materialIds, propsDisplay, "elastic.csv")
-print("materials non conformes:\n" + str(materialNonConforme))
 
+print("materials non conformes, eigenVal negative:\n" + str(materialNonConformeEigenvalNegative))
+print("materials non conformes, matrice singuliere:\n" + str(materialNonConformeMatSinguliere))

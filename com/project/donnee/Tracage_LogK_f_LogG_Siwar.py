@@ -50,13 +50,10 @@ def recup(materials):
 
 
 def logTableau(tableauSource):
-    i=0
-    j=0
     logTab = np.zeros(shape=(lin, col))
-    for element in tableauSource:
-        logTab[i,j] = math.log10(tableauSource[i,j])
-        i=i+1
-    j=j+1
+    for j in range(0, col):
+        for i in range(0,lin):
+            logTab[i,j] = math.log10(tableauSource[i,j])
     return logTab
 
 
