@@ -27,7 +27,7 @@ def recup(materials):
 
     for material in materials:
         texte = ""
-            for prop in propsTableau:
+        for prop in propsTableau:
             texte = texte + str(material.get(prop)) + "\t"
         print(texte)
 
