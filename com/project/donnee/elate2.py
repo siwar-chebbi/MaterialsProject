@@ -2,7 +2,7 @@ from pymatgen import MPRester
 from project.elate import elastic
 import numpy as np
 import pandas as pd
-
+#######################################NE PAS PRENDRE LES VALEURS -1000 ET -1500 DES MATERIAUX NON CONFORMES
 api = MPRester("fB610TDF3LSwxiN9")
 
 propsTableau = ['material_id','pretty_formula',"elasticity.elastic_tensor", "elasticity.G_Voigt_Reuss_Hill", "elasticity.K_Voigt_Reuss_Hill"]
@@ -20,7 +20,7 @@ critere2 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G
             "elasticity.K_Reuss": {'$gte': 0}, "elasticity.K_Voigt": {'$gte': 0},
             "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}, "elasticity.K_Voigt_Reuss_Hill": {'$lte': 1000}}
 
-materials = api.query(criteria=critere2, properties=propsTableau)
+materials = api.query(criteria=critere1, properties=propsTableau)
 
 
 # test= elastic.ELATE_MaterialsProject("mp-2133")
@@ -58,6 +58,7 @@ propsDisplay = ["minLC", "maxLC", "minNu", "maxNu", "G_Voigt_Reuss_Hill", "K_Voi
 
 col = len(propsDisplay)
 lin = len(materials)
+newlin=lin
 elements = []
 materialIds =[]
 materialNonConformeEigenvalNegative=[]
@@ -67,41 +68,28 @@ def recup(materials):
     tableau = np.zeros(shape=(lin, col))
     for material in materials:
         print(str(i+1), "-", str(material.get('material_id')), ":", material.get('pretty_formula'))
-        elements.append(material.get('pretty_formula'))
-        materialIds.append(material.get('material_id'))
+
         matrix = material.get('elasticity.elastic_tensor')
         elastElement = generateElas(matrix)
         if elastElement:
              eigenval = sorted(np.linalg.eig(elastElement.CVoigt)[0])
              if eigenval[0] > 0:
-                 minLC = calculMinLC(elastElement)[1]
-                 maxLC = calculMaxLC(elastElement)[1]
-                 minNu = calculMinNu(elastElement)[1]
-                 maxNu = calculMaxNu(elastElement)[1]
+                elements.append(material.get('pretty_formula'))
+                materialIds.append(material.get('material_id'))
+                tableau[i, 0] = calculMinLC(elastElement)[1]
+                tableau[i, 1] = calculMaxLC(elastElement)[1]
+                tableau[i, 2] = calculMinNu(elastElement)[1]
+                tableau[i, 3] = calculMaxNu(elastElement)[1]
+                tableau[i, 4] = material.get("elasticity.G_Voigt_Reuss_Hill")
+                tableau[i, 5] = material.get("elasticity.K_Voigt_Reuss_Hill")
+                i = i + 1
              else:
-                 minLC = -1500
-                 maxLC = -1500
-                 minNu = -1500
-                 maxNu = -1500
                  materialNonConformeEigenvalNegative.append(material.get('material_id'))
         else:
             materialNonConformeMatSinguliere.append(material.get('material_id'))
-            minLC = -1000
-            maxLC = -1000
-            minNu = -1000
-            maxNu = -1000
 
-        #i = 0
-        # for prop in propsDisplay:
-        #     tableau[i, j] = globals()[prop]
-        #     i = i + 1
-        tableau[i, 0] = minLC
-        tableau[i, 1] = maxLC
-        tableau[i, 2] = minNu
-        tableau[i, 3] = maxNu
-        tableau[i, 4] = material.get("elasticity.G_Voigt_Reuss_Hill")
-        tableau[i, 5] = material.get("elasticity.K_Voigt_Reuss_Hill")
-        i = i + 1
+    nb_ligne_supp = lin-len(materialIds)
+    tableau = tableau[:-nb_ligne_supp,:]
     return tableau
 
 def export (donnees,ligne,nomColonnes,fichier):
