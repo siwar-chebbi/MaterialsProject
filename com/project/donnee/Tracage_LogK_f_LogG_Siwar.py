@@ -27,7 +27,12 @@ critere = {"nelements": {'$lte': 6}, 'elements': {'$all': composes}, "elasticity
            "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0}, "elasticity.K_Reuss": {'$gte': 0},
            "elasticity.K_Voigt": {'$gte': 0}, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
 
-materials = api.query(criteria=critere, properties=propsTableauCritere)
+critere0 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0},
+            "elasticity.G_Voigt": {'$gte': 0}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0},
+            "elasticity.K_Reuss": {'$gte': 0}, "elasticity.K_Voigt": {'$gte': 0},
+            "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
+
+materials = api.query(criteria=critere0, properties=propsTableauCritere)
 
 lin = len(propsPlot)
 col = len(materials)
