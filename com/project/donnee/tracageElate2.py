@@ -19,10 +19,10 @@ for prop1 in propsDisplay:
     for prop2 in propsDisplay:
         if prop1 != prop2:
             data_X = data[prop1].get_values()
-            data_X.shape
+            #data_X.shape
             data_X = np.vstack(data_X)
             data_Y = data[prop2].get_values()
-            data_Y.shape
+            #data_Y.shape
 
             regr = linear_model.LinearRegression()
 
@@ -42,7 +42,7 @@ for prop1 in propsDisplay:
             print('Variance score: %.2f \n '
                   '##############################################################' % r2_score(data_Y, data_y_pred))
 
-            texte = 'Coefficients: '+"{:.2f}".format(regr.coef_[0])+' \n Mean squared error: '+"{:.2f}".format(mean_squared_error(data_y_pred, data_Y))+' \n Variance score: '+ "{:.2f}".format(r2_score(data_Y, data_y_pred))
+            texte = 'Coefficients: '+"{:.2f}".format(regr.coef_[0])+' \n Mean squared error: '+"{:.2f}".format(mean_squared_error(data_y_pred, data_Y))+' \n Variance score R2: '+ "{:.2f}".format(r2_score(data_Y, data_y_pred))
             plt.scatter(data_X, data_Y, color='black')
             plt.plot(data_X, data_y_pred, color='blue', linewidth=3)
             plt.xlim(data_X.min(), data_X.max() * 1.1)
