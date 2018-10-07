@@ -1,5 +1,5 @@
 from pymatgen import MPRester
-from project.elate import elastic
+from MaterialsProject.com.project.elate import elastic
 import numpy as np
 import pandas as pd
 
