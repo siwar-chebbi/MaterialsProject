@@ -2,17 +2,26 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn import linear_model
+<<<<<<< HEAD
 from sklearn.metrics import mean_squared_error, r2_score
+=======
+from sklearn.metrics import mean_squared_error,  r2_score
+>>>>>>> ec50975979760fa8093be1eda0fd98cffc9491a0
 import matplotlib.backends.backend_pdf
 
-propsDisplay = ["minLC", "maxLC", "minNu", "maxNu", "G_Voigt_Reuss_Hill", "K_Voigt_Reuss_Hill"]
+#correspond a elate_properties_all_materials_with_crashes_cases.py
+#propsDisplay = ["minLC", "maxLC", "minNu", "maxNu", "G_Voigt_Reuss_Hill", "K_Voigt_Reuss_Hill"]
+
+#correspond a elate_properties_all_materials_filtered.py
+propsDisplay = ["minLC", "maxLC", "minNu", "maxNu", "K_Voigt_Reuss_Hill", "Emin", "Emax", "Gmin", "Gmax"]
+
 pdf = matplotlib.backends.backend_pdf.PdfPages("sklearn.pdf")
 
 
 def importer (fichier):
     return pd.read_csv(fichier)
 
-data=importer("elastic.csv")
+data=importer("elastic_All_Exp_&_Hypo_Filtered.csv")
 data.head()
 
 for prop1 in propsDisplay:
