@@ -1,5 +1,5 @@
 from pymatgen import MPRester
-from project.elate import elastic
+from MaterialsProject.com.project.elate import elastic
 import numpy as np
 import pandas as pd
 
@@ -125,7 +125,7 @@ def export (donnees,ligne,nomColonnes,fichier):
 
 resultat = recup(materials)
 
-export(resultat, materialIds, propsDisplay, "elastic.csv")
+export(resultat, materialIds, propsDisplay, "elasticttt.csv")
 
 print("materials non conformes, eigenVal negative:\n" + str(materialNonConformeEigenvalNegative))
 print("materials non conformes, matrice singuliere:\n" + str(materialNonConformeMatSinguliere))
