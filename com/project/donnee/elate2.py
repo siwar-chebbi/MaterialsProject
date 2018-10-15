@@ -1,5 +1,5 @@
 from pymatgen import MPRester
-from project.elate import elastic
+from MaterialsProject.com.project.elate import elastic
 import numpy as np
 import pandas as pd
 #######################################NE PAS PRENDRE LES VALEURS -1000 ET -1500 DES MATERIAUX NON CONFORMES
@@ -20,7 +20,7 @@ critere2 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G
             "elasticity.K_Reuss": {'$gte': 0}, "elasticity.K_Voigt": {'$gte': 0},
             "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}, "elasticity.K_Voigt_Reuss_Hill": {'$lte': 1000}}
 
-materials = api.query(criteria=critere1, properties=propsTableau)
+materials = api.query(criteria=critere2, properties=propsTableau)
 
 
 # test= elastic.ELATE_MaterialsProject("mp-2133")
