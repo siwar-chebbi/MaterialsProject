@@ -2,14 +2,14 @@
 
 from pymatgen import MPRester
 
-api = MPRester("fB610TDF3LSwxiN9")
+api = MPRester("eDCEK5m9WVjmajp7e8af")
 
 compteur = 0
 compteuri = 0
 texte = ""
 
 
-for i in range(1, 7):
+for i in range(3, 4):
     compteuri = 0
     entries = api.get_entries({"nelements": i}, property_data=["elasticity"])
     for entry in entries:
@@ -17,10 +17,9 @@ for i in range(1, 7):
             compteuri = compteuri + 1
             compteur = compteur + 1
 
-    texte += "Le nombre de molécules contenant " + str(i) + " atome(s) : " + str(compteuri) + "\n"
+    texte += "Number of elements containing " + str(i) + " atome(s) : " + str(compteuri) + "\n"
 
-
-texte += "\nLe nombre total d'éléments : " + str(compteur)
+texte += "\nThe total number of all elements : " + str(compteur)
 print(texte)
 
 
