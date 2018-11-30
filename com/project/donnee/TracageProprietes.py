@@ -7,7 +7,7 @@ from pymatgen.analysis.elasticity import elastic
 from pymatgen.util import plotting
 import numpy as np
 
-api = MPRester("fB610TDF3LSwxiN9")
+api = MPRester("eDCEK5m9WVjmajp7e8af")
 
 
 #datax = api.query(criteria={"nelements": {'$lte': 6 ,'$gte': 1 }, "elements": {'$all': ['S','O']}, "elasticity": {'$ne': None}}, properties=['pretty_formula','elasticity.G_Reuss', 'elasticity.G_VRH', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill', 'elasticity.K_Reuss', 'elasticity.K_VRH', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill'])

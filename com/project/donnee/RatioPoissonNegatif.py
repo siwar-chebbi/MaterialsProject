@@ -1,7 +1,7 @@
 from pymatgen import MPRester
 
 
-api = MPRester("fB610TDF3LSwxiN9")
+api = MPRester("eDCEK5m9WVjmajp7e8af")
 
 #entries = api.get_entries({"nelements": {'$lte': 6, '$gte': 1},"elasticity": {'$ne': None}}, property_data=['pretty_formula','elasticity', 'elements'])
 covalent = ['B', 'C', 'Si']
@@ -12,8 +12,11 @@ propsTableau = ['material_id','pretty_formula','elasticity.poisson_ratio','elast
 critere1 = {"nelements": {'$lte': 6},'elements': {'$in': covalent}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$lt': 0 },'elasticity.G_Reuss' : {'$gte': 0 }, 'elasticity.G_Voigt': {'$gte': 0 }, 'elasticity.G_Voigt_Reuss_Hill': {'$gte': 0 }, 'elasticity.K_Reuss': {'$gte': 0 }, 'elasticity.K_Voigt': {'$gte': 0 }, 'elasticity.K_Voigt_Reuss_Hill': {'$gte': 0 }}
 critere2 = {"nelements": {'$lte': 6},'elements': {'$in': ionique}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$lt': 0 },'elasticity.G_Reuss' : {'$gte': 0 }, 'elasticity.G_Voigt': {'$gte': 0 }, 'elasticity.G_Voigt_Reuss_Hill': {'$gte': 0 }, 'elasticity.K_Reuss': {'$gte': 0 }, 'elasticity.K_Voigt': {'$gte': 0 }, 'elasticity.K_Voigt_Reuss_Hill': {'$gte': 0 }}
 
-critere3 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$lt': 0 },'elasticity.G_Reuss' : {'$gte': 0 }, 'elasticity.G_Voigt': {'$gte': 0 }, 'elasticity.G_Voigt_Reuss_Hill': {'$gte': 0 }, 'elasticity.K_Reuss': {'$gte': 0 }, 'elasticity.K_Voigt': {'$gte': 0 }, 'elasticity.K_Voigt_Reuss_Hill': {'$gte': 0 }}
-
+critere3 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$lt': 0 }, 'icsd_ids.0': {'$exists': True},
+                "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
+                "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
+                "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
+                "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
 
 #materials1 = api.query(criteria=critere1, properties=propsTableau)
 #materials2 = api.query(criteria=critere2, properties=propsTableau)

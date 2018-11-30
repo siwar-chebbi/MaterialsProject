@@ -5,7 +5,7 @@ import matplotlib.colors as color
 import matplotlib.backends.backend_pdf
 import numpy as np
 
-pdf = matplotlib.backends.backend_pdf.PdfPages("output.pdf")
+pdf = matplotlib.backends.backend_pdf.PdfPages("tracage-proprietes-avecPoisson-EXP.pdf")
 api = MPRester("eDCEK5m9WVjmajp7e8af")
 
 
@@ -36,7 +36,7 @@ critere2 = {"nelements": {'$lte': 6}, 'elements': {'$in': covalent}, "elasticity
 critere3 = {"nelements": {'$lte': 6}, 'elements': {'$in': ionique}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0 }, "elasticity.G_Voigt": {'$gte': 0 }, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0 }, "elasticity.K_Reuss": {'$gte': 0 }, "elasticity.K_Voigt": {'$gte': 0 }, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0 }}
 
 #
-critere4 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
+critere4 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, 'icsd_ids.0': {'$exists': True}, "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
                 "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
                 "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
                 "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}

@@ -11,7 +11,7 @@ import math
 
 import numpy as np
 
-api = MPRester("fB610TDF3LSwxiN9")
+api = MPRester("eDCEK5m9WVjmajp7e8af")
 
 composes = ['S', 'O']
 
@@ -22,13 +22,18 @@ propsTableauCritere = ['pretty_formula', 'elasticity.poisson_ratio', 'elasticity
 propsTableau = ['elasticity.poisson_ratio', 'elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill',
                 'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
 
+critere4 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
+                "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
+                "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
+                "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
+
 
 critere = {"nelements": {'$lte': 6}, 'elements': {'$all': composes}, "elasticity": {'$ne': None},
            "elasticity.G_Reuss": {'$gte': 0}, "elasticity.G_Voigt": {'$gte': 0},
            "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0}, "elasticity.K_Reuss": {'$gte': 0},
            "elasticity.K_Voigt": {'$gte': 0}, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
 
-materials = api.query(criteria=critere, properties=propsTableauCritere)
+materials = api.query(criteria=critere4, properties=propsTableauCritere)
 
 lin = len(propsTableau)
 col = len(materials)
@@ -72,9 +77,9 @@ def drawTable(tableauSource, propsTableauToPlot, pdffile):
 
     plt.hist(dataToPlot, bins=bins, color=couleur, edgecolor="black", lw=1, label=tableauLabel, histtype='bar')  # bar est le defaut
 #plt.ylim(minY, maxY)
-    plt.ylabel('nb_element')
-    plt.xlabel('propriete')
-    plt.title('Histogramme')
+    plt.ylabel('Nombre of elements')
+    #plt.xlabel('propriete')
+    #plt.title('Histogramme')
     plt.legend()
     pdf.savefig()
     plt.close()
@@ -88,12 +93,27 @@ resultat = recup(materials)
 
 
 cm = cm.get_cmap('gist_rainbow')
-propsToPlot = ['elasticity.G_Voigt_Reuss_Hill', 'elasticity.K_Voigt_Reuss_Hill']
-drawTable(resultat, propsToPlot, "histogrammeSandO.pdf")
+propsToPlot = ['elasticity.G_Voigt_Reuss_Hill']
+drawTable(resultat, propsToPlot, "histogrammeGVRH.pdf")
 
 propsToPlot2 = ['elasticity.poisson_ratio']
-drawTable(resultat, propsToPlot2, "histogrammeRatioSandO.pdf")
+drawTable(resultat, propsToPlot2, "histogrammeRatioGVRH.pdf")
+
+propsToPlot3 = ['elasticity.G_Reuss']
+drawTable(resultat, propsToPlot3, "histogrammeGReuss.pdf")
 
 
+propsToPlot4 = ['elasticity.G_Voigt']
+drawTable(resultat, propsToPlot4, "histogrammeGVoigt.pdf")
 
 
+propsToPlot5 = ['elasticity.K_Reuss']
+drawTable(resultat, propsToPlot5, "histogrammeKReuss.pdf")
+
+
+propsToPlot6 = ['elasticity.K_Voigt']
+drawTable(resultat, propsToPlot6, "histogrammeKVoigt.pdf")
+
+
+propsToPlot7 = ['elasticity.K_Voigt_Reuss_Hill']
+drawTable(resultat, propsToPlot6, "histogrammeKVRH.pdf")
