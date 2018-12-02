@@ -25,6 +25,7 @@ propsTableau = ['elasticity.poisson_ratio', 'elasticity.G_Reuss', 'elasticity.G_
 
 #Proprietes utilisees dans le tracage des graphes
 propsPlot = ['elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill', 'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
+propsPlotLabel = [u'$G_{Reuss} (GPa)$', u'$G_{Voigt}(GPa)$', u'$G_{Voigt\u2000Reuss\u2000Hill}(GPa)$', u'$K_{Reuss}(GPa)$', '$K_{Voigt}(GPa)$', u'$K_{Voigt\u2000Reuss\u2000Hill}(GPa)$']
 
 #
 critere1 = {"nelements": {'$gte': 1, '$lte': 6}, "elasticity": {'$ne': None}}
@@ -89,10 +90,12 @@ for prop1 in propsPlot:
             y = resultat[propsTableau.index(prop2), :]
             area = 5  # 0 to 15 point radii
             plt.scatter(x, y, s=area, c=poisson,cmap=cm.get_cmap('seismic'), norm=normalize, alpha=1)
-            plt.xlim(x.min(), x.max() * 1.1)
-            plt.ylim(y.min(), y.max() * 1.1)
-            plt.xlabel(prop1[11:])
-            plt.ylabel(prop2[11:])
+            #plt.xlim(x.min(), x.max() * 1.1)
+            #plt.ylim(y.min(), y.max() * 1.1)
+            plt.xlim(x.min(), 1000)
+            plt.ylim(y.min(), 1000)
+            plt.xlabel(propsPlotLabel[propsPlot.index(prop1)])
+            plt.ylabel(propsPlotLabel[propsPlot.index(prop2)])
             #plt.title(str(prop2[11:]) + ' versus ' + str(prop1[11:]))
             plt.colorbar()
             #filename= 'C:\\Users\\siwar\\Desktop\\image\\'+str(prop2) +' versus '+str(prop1)+'.pdf'
