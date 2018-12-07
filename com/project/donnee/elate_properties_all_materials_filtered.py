@@ -3,7 +3,7 @@ from MaterialsProject.com.project.elate import elastic
 import numpy as np
 import pandas as pd
 #######################################NE PAS PRENDRE LES VALEURS -1000 ET -1500 DES MATERIAUX NON CONFORMES
-api = MPRester("fB610TDF3LSwxiN9")
+api = MPRester("eDCEK5m9WVjmajp7e8af")
 
 propsTableau = ['material_id','pretty_formula',"elasticity.elastic_tensor", "elasticity.G_Voigt_Reuss_Hill", "elasticity.K_Voigt_Reuss_Hill"]
 composes = ['S', 'O']
@@ -14,11 +14,10 @@ critere1 = {"nelements": {'$lte': 6}, 'elements': {'$all': composes}, "elasticit
            "elasticity.K_Voigt": {'$gte': 0}, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
 
 #critere2: tous les elements elastiques
-critere2 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0},
-            "elasticity.G_Voigt": {'$gte': 0}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0},
-            "elasticity.G_Voigt_Reuss_Hill": {'$lte': 1000},
-            "elasticity.K_Reuss": {'$gte': 0}, "elasticity.K_Voigt": {'$gte': 0},
-            "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}, "elasticity.K_Voigt_Reuss_Hill": {'$lte': 1000}}
+critere2 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$lt': 0 }, "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
+                "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
+                "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
+                "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
 
 materials = api.query(criteria=critere2, properties=propsTableau)
 
@@ -115,7 +114,7 @@ def export (donnees,ligne,nomColonnes,fichier):
 
 resultat = recup(materials)
 
-export(resultat, materialIds, propsDisplay, "elastic.csv")
+export(resultat, materialIds, propsDisplay, "elasticRatioNega.csv")
 
 print("materials non conformes, eigenVal negative:\n" + str(materialNonConformeEigenvalNegative))
 print("materials non conformes, matrice singuliere:\n" + str(materialNonConformeMatSinguliere))

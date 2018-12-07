@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 
-api = MPRester("fB610TDF3LSwxiN9")
+api = MPRester("eDCEK5m9WVjmajp7e8af")
 propsTableau = ['material_id','pretty_formula',"elasticity.elastic_tensor", "elasticity.G_Voigt_Reuss_Hill", "elasticity.K_Voigt_Reuss_Hill"]
 composesSO = ['S', 'O']
 composesAll = ""
@@ -16,12 +16,11 @@ CritereComposes = composesAll
 
 def critere(isIcsds, composes):
     if composes == composesAll:
-        return {"nelements": {'$lte': 6}, 'icsd_ids.0': {'$exists': isIcsds},
-                "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0},
-                "elasticity.G_Voigt": {'$gte': 0}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0},
-                "elasticity.G_Voigt_Reuss_Hill": {'$lte': 1000},
-                "elasticity.K_Reuss": {'$gte': 0}, "elasticity.K_Voigt": {'$gte': 0},
-                "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}, "elasticity.K_Voigt_Reuss_Hill": {'$lte': 1000}}
+        return {"nelements": {'$lte': 6}, "elasticity": {'$ne': None},'icsd_ids.0': {'$exists': isIcsds},
+                "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
+                "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
+                "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
+                "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
     else:
         return {"nelements": {'$lte': 6}, 'elements': {'$all': composesSO}, 'icsd_ids.0': {'$exists': isIcsds},
                 "elasticity": {'$ne': None},
@@ -125,7 +124,7 @@ def export (donnees,ligne,nomColonnes,fichier):
 
 resultat = recup(materials)
 
-export(resultat, materialIds, propsDisplay, "elasticttt.csv")
+export(resultat, materialIds, propsDisplay, "elastic_Exp.csv")
 
 print("materials non conformes, eigenVal negative:\n" + str(materialNonConformeEigenvalNegative))
 print("materials non conformes, matrice singuliere:\n" + str(materialNonConformeMatSinguliere))

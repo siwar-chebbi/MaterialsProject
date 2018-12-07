@@ -10,14 +10,15 @@ import matplotlib.backends.backend_pdf
 
 #correspond a elate_properties_all_materials_filtered.py
 propsDisplay = ["minLC", "maxLC", "minNu", "maxNu", "K_Voigt_Reuss_Hill", "Emin", "Emax", "Gmin", "Gmax"]
+propsPlotLabel = [u'$LC_{min} (GPa)$', u'$LC_{max}(GPa)$', u'$\mu_{min}(GPa)$', u'$\mu_{max}(GPa)$', u'$K_{Voigt\u2000Reuss\u2000Hill}(GPa)$', u'$E_{min}(GPa)$', '$E_{max}(GPa)$', u'$G_{min}(GPa)$', '$G_{max}(GPa)$']
+pdf = matplotlib.backends.backend_pdf.PdfPages("elastic_EXP.pdf")
 
-pdf = matplotlib.backends.backend_pdf.PdfPages("elastic_All_Hypo_Filtered.pdf")
 
 
 def importer (fichier):
     return pd.read_csv(fichier)
 
-data=importer("elastic_All_Hypo_Filtered.csv")
+data=importer("elasticEXP.csv")
 data.head()
 
 for prop1 in propsDisplay:
@@ -52,11 +53,12 @@ for prop1 in propsDisplay:
             plt.plot(data_X, data_y_pred, color='blue', linewidth=3)
             plt.xlim(data_X.min(), data_X.max() * 1.1)
             plt.ylim(data_Y.min(), data_Y.max() * 1.1)
-            plt.xlabel(prop1)
-            plt.ylabel(prop2)
-            plt.title(str(prop2) + ' versus ' + str(prop1))
+            #plt.xlim(data_X.min(), 1800)
+            #plt.ylim(data_Y.min(), 1800)
+            plt.xlabel(propsPlotLabel[propsDisplay.index(prop1)])
+            plt.ylabel(propsPlotLabel[propsDisplay.index(prop2)])
+            #plt.title(str(prop2) + ' versus ' + str(prop1))
             plt.figtext(0.5, 0.75, texte, ha="center", fontsize=7, bbox={"facecolor": "orange", "alpha": 0.5, "pad": 5})
-
             pdf.savefig()
             plt.close()
 pdf.close()

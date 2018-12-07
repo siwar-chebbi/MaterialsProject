@@ -21,6 +21,7 @@ propsTableauCritere = ['pretty_formula', 'elasticity.poisson_ratio', 'elasticity
 
 propsTableau = ['elasticity.poisson_ratio', 'elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill',
                 'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
+propsPlotLabel = [u'$Poisson\u2000ratio$', u'$G_{Reuss} (GPa)$', u'$G_{Voigt}(GPa)$', u'$G_{Voigt\u2000Reuss\u2000Hill}(GPa)$', u'$K_{Reuss}(GPa)$', '$K_{Voigt}(GPa)$', u'$K_{Voigt\u2000Reuss\u2000Hill}(GPa)$']
 
 critere4 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
                 "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
@@ -65,7 +66,7 @@ def drawTable(tableauSource, propsTableauToPlot, pdffile):
         minY = min(minY, (tableauSource[propsTableau.index(prop), :]).min())
         #maxY=10
         maxY = max(maxY, (tableauSource[propsTableau.index(prop), :]).max())
-        tableauLabel.append(prop[11:])
+        tableauLabel.append(propsPlotLabel[propsTableau.index(prop)])
         couleur.append(cm((1+propsTableauToPlot.index(prop))/(len(propsTableauToPlot)+1)))
     #http://www.python-simple.com/python-matplotlib/histogram.php
     nbIntervalle=50
@@ -116,4 +117,4 @@ drawTable(resultat, propsToPlot6, "histogrammeKVoigt.pdf")
 
 
 propsToPlot7 = ['elasticity.K_Voigt_Reuss_Hill']
-drawTable(resultat, propsToPlot6, "histogrammeKVRH.pdf")
+drawTable(resultat, propsToPlot7, "histogrammeKVRH.pdf")

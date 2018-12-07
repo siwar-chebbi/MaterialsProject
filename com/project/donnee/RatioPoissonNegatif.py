@@ -12,7 +12,7 @@ propsTableau = ['material_id','pretty_formula','elasticity.poisson_ratio','elast
 critere1 = {"nelements": {'$lte': 6},'elements': {'$in': covalent}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$lt': 0 },'elasticity.G_Reuss' : {'$gte': 0 }, 'elasticity.G_Voigt': {'$gte': 0 }, 'elasticity.G_Voigt_Reuss_Hill': {'$gte': 0 }, 'elasticity.K_Reuss': {'$gte': 0 }, 'elasticity.K_Voigt': {'$gte': 0 }, 'elasticity.K_Voigt_Reuss_Hill': {'$gte': 0 }}
 critere2 = {"nelements": {'$lte': 6},'elements': {'$in': ionique}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$lt': 0 },'elasticity.G_Reuss' : {'$gte': 0 }, 'elasticity.G_Voigt': {'$gte': 0 }, 'elasticity.G_Voigt_Reuss_Hill': {'$gte': 0 }, 'elasticity.K_Reuss': {'$gte': 0 }, 'elasticity.K_Voigt': {'$gte': 0 }, 'elasticity.K_Voigt_Reuss_Hill': {'$gte': 0 }}
 
-critere3 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$lt': 0 }, 'icsd_ids.0': {'$exists': True},
+critere3 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$lt': 0 },
                 "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
                 "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
                 "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
