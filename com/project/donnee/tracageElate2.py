@@ -11,14 +11,14 @@ import matplotlib.backends.backend_pdf
 #correspond a elate_properties_all_materials_filtered.py
 propsDisplay = ["minLC", "maxLC", "minNu", "maxNu", "K_Voigt_Reuss_Hill", "Emin", "Emax", "Gmin", "Gmax"]
 propsPlotLabel = [u'$LC_{min} (GPa)$', u'$LC_{max}(GPa)$', u'$\mu_{min}(GPa)$', u'$\mu_{max}(GPa)$', u'$K_{Voigt\u2000Reuss\u2000Hill}(GPa)$', u'$E_{min}(GPa)$', '$E_{max}(GPa)$', u'$G_{min}(GPa)$', '$G_{max}(GPa)$']
-pdf = matplotlib.backends.backend_pdf.PdfPages("elastic_EXP.pdf")
+pdf = matplotlib.backends.backend_pdf.PdfPages("elastic_All_EXP_AND_HYP_Filtered.pdf")
 
 
 
 def importer (fichier):
     return pd.read_csv(fichier)
 
-data=importer("elasticEXP.csv")
+data=importer("elastic_All_EXP_AND_HYP_Filtered.csv")
 data.head()
 
 for prop1 in propsDisplay:

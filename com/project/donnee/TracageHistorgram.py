@@ -23,7 +23,7 @@ propsTableau = ['elasticity.poisson_ratio', 'elasticity.G_Reuss', 'elasticity.G_
                 'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
 propsPlotLabel = [u'$Poisson\u2000ratio$', u'$G_{Reuss} (GPa)$', u'$G_{Voigt}(GPa)$', u'$G_{Voigt\u2000Reuss\u2000Hill}(GPa)$', u'$K_{Reuss}(GPa)$', '$K_{Voigt}(GPa)$', u'$K_{Voigt\u2000Reuss\u2000Hill}(GPa)$']
 
-critere4 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
+critere4 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, 'icsd_ids.0': {'$exists': True}, "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
                 "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
                 "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
                 "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
@@ -95,26 +95,26 @@ resultat = recup(materials)
 
 cm = cm.get_cmap('gist_rainbow')
 propsToPlot = ['elasticity.G_Voigt_Reuss_Hill']
-drawTable(resultat, propsToPlot, "histogrammeGVRH.pdf")
+drawTable(resultat, propsToPlot, "histogrammeGVRHEXP.pdf")
 
 propsToPlot2 = ['elasticity.poisson_ratio']
-drawTable(resultat, propsToPlot2, "histogrammeRatioGVRH.pdf")
+drawTable(resultat, propsToPlot2, "histogrammeRatioGVRHEXP.pdf")
 
 propsToPlot3 = ['elasticity.G_Reuss']
-drawTable(resultat, propsToPlot3, "histogrammeGReuss.pdf")
+drawTable(resultat, propsToPlot3, "histogrammeGReussEXP.pdf")
 
 
 propsToPlot4 = ['elasticity.G_Voigt']
-drawTable(resultat, propsToPlot4, "histogrammeGVoigt.pdf")
+drawTable(resultat, propsToPlot4, "histogrammeGVoigtEXP.pdf")
 
 
 propsToPlot5 = ['elasticity.K_Reuss']
-drawTable(resultat, propsToPlot5, "histogrammeKReuss.pdf")
+drawTable(resultat, propsToPlot5, "histogrammeKReussEXP.pdf")
 
 
 propsToPlot6 = ['elasticity.K_Voigt']
-drawTable(resultat, propsToPlot6, "histogrammeKVoigt.pdf")
+drawTable(resultat, propsToPlot6, "histogrammeKVoigtEXP.pdf")
 
 
 propsToPlot7 = ['elasticity.K_Voigt_Reuss_Hill']
-drawTable(resultat, propsToPlot7, "histogrammeKVRH.pdf")
+drawTable(resultat, propsToPlot7, "histogrammeKVRHEXP.pdf")
