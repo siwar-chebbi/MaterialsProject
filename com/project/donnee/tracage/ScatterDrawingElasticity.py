@@ -9,19 +9,20 @@ import numpy as np
 
 api = MPRester("eDCEK5m9WVjmajp7e8af")
 
+# datax = api.query(criteria={"nelements": {'$lte': 6 ,'$gte': 1 }, "elements": {'$all': ['S','O']}, "elasticity": {'$ne': None}}, properties=['pretty_formula','elasticity.G_Reuss', 'elasticity.G_VRH', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill', 'elasticity.K_Reuss', 'elasticity.K_VRH', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill'])
 
-#datax = api.query(criteria={"nelements": {'$lte': 6 ,'$gte': 1 }, "elements": {'$all': ['S','O']}, "elasticity": {'$ne': None}}, properties=['pretty_formula','elasticity.G_Reuss', 'elasticity.G_VRH', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill', 'elasticity.K_Reuss', 'elasticity.K_VRH', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill'])
+materials = api.query(criteria={"nelements": {'$lte': 6, '$gte': 1}, "elasticity": {'$ne': None}},
+                      properties=['pretty_formula', 'elasticity.G_Reuss', 'elasticity.G_VRH', 'elasticity.G_Voigt',
+                                  'elasticity.G_Voigt_Reuss_Hill', 'elasticity.K_Reuss', 'elasticity.K_VRH',
+                                  'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill'])
 
-materials = api.query(criteria={"nelements": {'$lte': 6 ,'$gte': 1}, "elasticity": {'$ne': None}}, properties=['pretty_formula','elasticity.G_Reuss', 'elasticity.G_VRH', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill', 'elasticity.K_Reuss', 'elasticity.K_VRH', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill'])
-
-props = ['elasticity.G_Reuss', 'elasticity.G_VRH', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill', 'elasticity.K_Reuss', 'elasticity.K_VRH', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
+props = ['elasticity.G_Reuss', 'elasticity.G_VRH', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill',
+         'elasticity.K_Reuss', 'elasticity.K_VRH', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
 lin = len(props)
 col = len(materials)
 
 
-
 def recup(materials):
-
     j = 0
     tableau = np.zeros(shape=(lin, col))
     elements = []
@@ -36,8 +37,8 @@ def recup(materials):
         j = j + 1
     return tableau
 
-resultat = recup(materials)
 
+resultat = recup(materials)
 
 for prop1 in props:
     for prop2 in props:
@@ -50,5 +51,5 @@ for prop1 in props:
             plt.ylim(y.min() * 1.1, y.max() * 1.1)
             plt.xlabel(prop1)
             plt.ylabel(prop2)
-            plt.title(str(prop2) + ' versus ' +str(prop1))
+            plt.title(str(prop2) + ' versus ' + str(prop1))
             plt.show()

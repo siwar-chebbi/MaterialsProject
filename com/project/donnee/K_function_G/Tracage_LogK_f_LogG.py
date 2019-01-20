@@ -8,7 +8,6 @@ import matplotlib.colors as color
 import matplotlib.backends.backend_pdf
 import math
 
-
 import numpy as np
 
 api = MPRester("fB610TDF3LSwxiN9")
@@ -34,6 +33,7 @@ materials = api.query(criteria=critere, properties=propsTableauCritere)
 
 lin = len(propsTableau)
 col = len(materials)
+
 
 def recup(materials):
     j = 0
@@ -75,7 +75,7 @@ def drawTable(tableau1, propsTableau1, minX, maxX, tableau2, propsTableau2, minY
                 plt.scatter(x, y, s=area, c=poisson, cmap=cm.get_cmap('seismic'), norm=normalize, alpha=1)
                 plt.xlim(minX, maxX * 1.1)
                 plt.ylim(minY, maxY * 1.1)
-                #Ne pas afficher le mot "elasticity. (suppression 11 caractères)
+                # Ne pas afficher le mot "elasticity. (suppression 11 caractères)
                 plt.xlabel(prop1[11:])
                 plt.ylabel(prop2[11:])
                 plt.title(str(prop2[11:]) + ' versus ' + str(prop1[11:]))
@@ -84,10 +84,11 @@ def drawTable(tableau1, propsTableau1, minX, maxX, tableau2, propsTableau2, minY
                 plt.close()
     pdf.close()
 
-#Execution des fonction
-#recuperation du tableau contenant les valeurs correspondantes au différents matériaux
+
+# Execution des fonction
+# recuperation du tableau contenant les valeurs correspondantes au différents matériaux
 resultat = recup(materials)
-#calcul et recuperation des logs du tableau selon les proprietes K ou G avec determination des Max et Min (pour determiner min et max des echelles)
+# calcul et recuperation des logs du tableau selon les proprietes K ou G avec determination des Max et Min (pour determiner min et max des echelles)
 
 logTableauK = logTableau(resultat, propsTableauK)
 maxK = logTableauK.max()
@@ -101,7 +102,5 @@ poisson = resultat[propsTableau.index('elasticity.poisson_ratio'), :]
 
 normalize = color.Normalize(vmin=min(poisson), vmax=max(poisson))
 
-drawTable(logTableauK, propsTableauK,  minK, maxK, logTableauG, propsTableauG, minG, maxG, "G_f_K.pdf")
+drawTable(logTableauK, propsTableauK, minK, maxK, logTableauG, propsTableauG, minG, maxG, "G_f_K.pdf")
 drawTable(logTableauG, propsTableauG, minG, maxG, logTableauK, propsTableauK, minK, maxK, "K_f_G.pdf")
-
-
