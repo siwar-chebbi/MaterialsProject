@@ -1,19 +1,20 @@
 from pymatgen import MPRester
-from MaterialsProject.com.project.elate import elastic
+from com.project.elate import elastic
 import numpy as np
 import pandas as pd
 
 api = MPRester("fB610TDF3LSwxiN9")
 
-propsTableau = ['material_id','pretty_formula',"elasticity.elastic_tensor", "elasticity.G_Voigt_Reuss_Hill", "elasticity.K_Voigt_Reuss_Hill"]
+propsTableau = ['material_id', 'pretty_formula', "elasticity.elastic_tensor", "elasticity.G_Voigt_Reuss_Hill",
+                "elasticity.K_Voigt_Reuss_Hill"]
 composes = ['S', 'O']
-#critere1: tous les elements elastiques contenant les composes S,O
+# critere1: tous les elements elastiques contenant les composes S,O
 critere1 = {"nelements": {'$lte': 6}, 'elements': {'$all': composes}, "elasticity": {'$ne': None},
-           "elasticity.G_Reuss": {'$gte': 0}, "elasticity.G_Voigt": {'$gte': 0},
-           "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0}, "elasticity.K_Reuss": {'$gte': 0},
-           "elasticity.K_Voigt": {'$gte': 0}, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
+            "elasticity.G_Reuss": {'$gte': 0}, "elasticity.G_Voigt": {'$gte': 0},
+            "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0}, "elasticity.K_Reuss": {'$gte': 0},
+            "elasticity.K_Voigt": {'$gte': 0}, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
 
-#critere2: tous les elements elastiques
+# critere2: tous les elements elastiques
 critere2 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0},
             "elasticity.G_Voigt": {'$gte': 0}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0},
             "elasticity.G_Voigt_Reuss_Hill": {'$lte': 1000},
@@ -40,10 +41,11 @@ def generateElas(matrix):
 
 
 def calculMinLC(elas):
- return elastic.minimize(elas.LC, 2)
+    return elastic.minimize(elas.LC, 2)
+
 
 def calculMaxLC(elas):
- return elastic.maximize(elas.LC, 2)
+    return elastic.maximize(elas.LC, 2)
 
 
 def calculMinNu(elas):
@@ -59,31 +61,33 @@ propsDisplay = ["minLC", "maxLC", "minNu", "maxNu", "G_Voigt_Reuss_Hill", "K_Voi
 col = len(propsDisplay)
 lin = len(materials)
 elements = []
-materialIds =[]
-materialNonConformeEigenvalNegative=[]
-materialNonConformeMatSinguliere=[]
+materialIds = []
+materialNonConformeEigenvalNegative = []
+materialNonConformeMatSinguliere = []
+
+
 def recup(materials):
     i = 0
     tableau = np.zeros(shape=(lin, col))
     for material in materials:
-        print(str(i+1), "-", str(material.get('material_id')), ":", material.get('pretty_formula'))
+        print(str(i + 1), "-", str(material.get('material_id')), ":", material.get('pretty_formula'))
         elements.append(material.get('pretty_formula'))
         materialIds.append(material.get('material_id'))
         matrix = material.get('elasticity.elastic_tensor')
         elastElement = generateElas(matrix)
         if elastElement:
-             eigenval = sorted(np.linalg.eig(elastElement.CVoigt)[0])
-             if eigenval[0] > 0:
-                 minLC = calculMinLC(elastElement)[1]
-                 maxLC = calculMaxLC(elastElement)[1]
-                 minNu = calculMinNu(elastElement)[1]
-                 maxNu = calculMaxNu(elastElement)[1]
-             else:
-                 minLC = -1500
-                 maxLC = -1500
-                 minNu = -1500
-                 maxNu = -1500
-                 materialNonConformeEigenvalNegative.append(material.get('material_id'))
+            eigenval = sorted(np.linalg.eig(elastElement.CVoigt)[0])
+            if eigenval[0] > 0:
+                minLC = calculMinLC(elastElement)[1]
+                maxLC = calculMaxLC(elastElement)[1]
+                minNu = calculMinNu(elastElement)[1]
+                maxNu = calculMaxNu(elastElement)[1]
+            else:
+                minLC = -1500
+                maxLC = -1500
+                minNu = -1500
+                maxNu = -1500
+                materialNonConformeEigenvalNegative.append(material.get('material_id'))
         else:
             materialNonConformeMatSinguliere.append(material.get('material_id'))
             minLC = -1000
@@ -91,7 +95,7 @@ def recup(materials):
             minNu = -1000
             maxNu = -1000
 
-        #i = 0
+        # i = 0
         # for prop in propsDisplay:
         #     tableau[i, j] = globals()[prop]
         #     i = i + 1
@@ -104,10 +108,12 @@ def recup(materials):
         i = i + 1
     return tableau
 
-def export (donnees,ligne,nomColonnes,fichier):
-  my_df = pd.DataFrame(donnees)
-  my_df.index = ligne
-  my_df.to_csv(fichier, index=ligne, header=nomColonnes)
+
+def export(donnees, ligne, nomColonnes, fichier):
+    my_df = pd.DataFrame(donnees)
+    my_df.index = ligne
+    my_df.to_csv(fichier, index=ligne, header=nomColonnes)
+
 
 resultat = recup(materials)
 

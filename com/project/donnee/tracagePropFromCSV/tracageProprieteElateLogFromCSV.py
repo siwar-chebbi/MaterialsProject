@@ -17,19 +17,22 @@ def importer(fichier):
 # propsDisplay = ["minLC", "maxLC", "minNu", "maxNu", "G_Voigt_Reuss_Hill", "K_Voigt_Reuss_Hill"]
 
 # correspond a elate_properties_all_materials_filtered.py
-propsDisplay = ['elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill', 'elasticity.K_Reuss',
-                'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
+propsDisplay = ["minLC", "maxLC", "minNu", "maxNu", "K_Voigt_Reuss_Hill", "Emin", "Emax", "Gmin", "Gmax"]
 
-propsPlotLabel = [u'$G_{Reuss} (GPa)$', u'$G_{Voigt}(GPa)$', u'$G_{Voigt\u2000Reuss\u2000Hill}(GPa)$',
-                  u'$K_{Reuss}(GPa)$', '$K_{Voigt}(GPa)$', u'$K_{Voigt\u2000Reuss\u2000Hill}(GPa)$']
+
+propsPlotLabel = [u'$LC_{min} (GPa)$', u'$LC_{max}(GPa)$', u'$\mu_{min}(GPa)$', u'$\mu_{max}(GPa)$',
+                  u'$K_{Voigt\u2000Reuss\u2000Hill}(GPa)$', u'$E_{min}(GPa)$', '$E_{max}(GPa)$', u'$G_{min}(GPa)$',
+                  '$G_{max}(GPa)$']
 
 # fichiers input (csv) et output (pdf)
-data = importer("elastic_property_from_MP_DB_HYP4187.csv")
+data = importer("elasticRatioPoissonPositive.csv")
 data.head()
-pdf = matplotlib.backends.backend_pdf.PdfPages("elastic_property_from_MP_DBLOGHYP.pdf")
+pdf = matplotlib.backends.backend_pdf.PdfPages("elasticRatioPoissonPositive.pdf")
 
 # valeurs poisson
 poisson = data['elasticity.poisson_ratio'].get_values()
+
+
 
 for prop1 in propsDisplay:
     for prop2 in propsDisplay:
@@ -42,7 +45,7 @@ for prop1 in propsDisplay:
             cleaned_y = []
             cleaned_poisson = []
             for x, y, z in zip(data_X, data_Y, poisson):
-                if x <= 0 or y <= 0:
+                if  x =='-inf' or y=='-inf' in y or x <= 0 or y <= 0:
                     continue
                 else:
                     cleaned_x.append(x)

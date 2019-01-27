@@ -20,10 +20,4 @@ for i in range(1, 7):
             if oxygen and soufre:
                 compteur = compteur + 1
 
-
 print("Le nombre d'éléments contenant S et O est : " + str(compteur))
-
-
-
-
-

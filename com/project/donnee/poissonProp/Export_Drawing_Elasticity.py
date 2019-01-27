@@ -53,22 +53,24 @@ critere4 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G
             "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
             "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
 
-critere4EXP = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, 'icsd_ids.0': {'$exists': True}, "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
-            "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
-            "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
-            "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
+critere4EXP = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, 'icsd_ids.0': {'$exists': True},
+               "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
+               "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000},
+               "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
+               "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
+               "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
 
-critere4HYP = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, 'icsd_ids.0': {'$exists': False}, "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
-            "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
-            "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
-            "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
-
+critere4HYP = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, 'icsd_ids.0': {'$exists': False},
+               "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
+               "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000},
+               "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
+               "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
+               "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
 
 critere4bis = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0},
-            "elasticity.G_Voigt": {'$gte': 0}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0},
-            "elasticity.K_Reuss": {'$gte': 0}, "elasticity.K_Voigt": {'$gte': 0},
-            "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
-
+               "elasticity.G_Voigt": {'$gte': 0}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0},
+               "elasticity.K_Reuss": {'$gte': 0}, "elasticity.K_Voigt": {'$gte': 0},
+               "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
 
 #
 critere5 = {"nelements": {'$lte': 6}, 'elements': {'$in': alkali}, "elasticity": {'$ne': None},
@@ -137,9 +139,9 @@ def export(donnees, ligne, nomColonnes, fichier):
 
 export(resultat.transpose(), materialIds, propsTableau, "elastic_property_from_MP_DB_HYP4187.csv")
 
-#poisson = resultat[propsTableau.index('elasticity.poisson_ratio'), :]
-#normalize = color.Normalize(vmin=min(poisson), vmax=max(poisson))
-#for prop1 in propsPlot:
+# poisson = resultat[propsTableau.index('elasticity.poisson_ratio'), :]
+# normalize = color.Normalize(vmin=min(poisson), vmax=max(poisson))
+# for prop1 in propsPlot:
 #    for prop2 in propsPlot:
 #        if prop1 != prop2:
 #            x = resultat[propsTableau.index(prop1), :]
@@ -159,4 +161,4 @@ export(resultat.transpose(), materialIds, propsTableau, "elastic_property_from_M
 #            #    os.remove(filename)  # Opt.: os.system("rm "+strFile)
 #            pdf.savefig()
 #            plt.close()
-#pdf.close()
+# pdf.close()

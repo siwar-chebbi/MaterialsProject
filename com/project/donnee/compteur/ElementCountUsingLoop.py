@@ -8,7 +8,6 @@ compteur = 0
 compteuri = 0
 texte = ""
 
-
 for i in range(1, 6):
     compteuri = 0
     entries = api.get_entries({"nelements": i}, property_data=["elasticity"])
@@ -21,9 +20,3 @@ for i in range(1, 6):
 
 texte += "\nThe total number of all elements : " + str(compteur)
 print(texte)
-
-
-
-
-
-

@@ -63,7 +63,7 @@ for prop1 in propsDisplay:
             print(
                 'log10 =  {:.2f} * log10(x) + {:.2f} \nVariance score: {:.2f} \nMean squared error:{:.2f} \nNombre de points: {:d}\n'.format(
                     regr.coef_[0], regr.intercept_, r2_score(data_Y_log, data_y_pred),
-                    mean_squared_error(data_y_pred, data_Y_log), len(cleaned_x)))
+                mean_squared_error(data_y_pred, data_Y_log), len(cleaned_x)))
 
             # texte dans le graphe
             texte = u'$log_{10}($' + propsPlotLabel[propsDisplay.index(prop2)] + ') = ' + "{:.2f}".format(
@@ -78,14 +78,12 @@ for prop1 in propsDisplay:
             fig = plt.figure()
             ax1 = fig.add_subplot(111, label="log10")
             ax2 = fig.add_subplot(111, label="regression", frame_on=False)
-            # subplot de tous les points
+            # subpot de tous les points
             normalize = color.Normalize(vmin=min(cleaned_poisson), vmax=max(cleaned_poisson))
-            im = ax1.scatter(cleaned_x, cleaned_y, s=area, c=cleaned_poisson, cmap=cm.get_cmap('seismic'),
+            im = ax1.scatter(data_X_log, data_Y_log, s=area, c=cleaned_poisson, cmap=cm.get_cmap('seismic'),
                              norm=normalize, alpha=1)
-            ax1.set_xscale('log')
-            ax1.set_yscale('log')
-            ax1.set_xlim(1, 1e3)
-            ax1.set_ylim(1, 1e3)
+            ax1.set_xlim(0, 3)
+            ax1.set_ylim(0, 3)
 
             # subplot regression lineaire (droite)
             ax2.plot(sorted(data_X_log), data_y_pred, color='black', linewidth=2)
