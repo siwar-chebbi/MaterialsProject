@@ -19,7 +19,6 @@ def importer(fichier):
 # correspond a elate_properties_all_materials_filtered.py
 propsDisplay = ["minLC", "maxLC", "minNu", "maxNu", "K_Voigt_Reuss_Hill", "Emin", "Emax", "Gmin", "Gmax"]
 
-
 propsPlotLabel = [u'$LC_{min} (GPa)$', u'$LC_{max}(GPa)$', u'$\mu_{min}(GPa)$', u'$\mu_{max}(GPa)$',
                   u'$K_{Voigt\u2000Reuss\u2000Hill}(GPa)$', u'$E_{min}(GPa)$', '$E_{max}(GPa)$', u'$G_{min}(GPa)$',
                   '$G_{max}(GPa)$']
@@ -32,8 +31,6 @@ pdf = matplotlib.backends.backend_pdf.PdfPages("elasticRatioPoissonPositive.pdf"
 # valeurs poisson
 poisson = data['elasticity.poisson_ratio'].get_values()
 
-
-
 for prop1 in propsDisplay:
     for prop2 in propsDisplay:
         if prop1 != prop2:
@@ -45,7 +42,7 @@ for prop1 in propsDisplay:
             cleaned_y = []
             cleaned_poisson = []
             for x, y, z in zip(data_X, data_Y, poisson):
-                if  x =='-inf' or y=='-inf' in y or x <= 0 or y <= 0:
+                if x == '-inf' or y == '-inf' in y or x <= 0 or y <= 0:
                     continue
                 else:
                     cleaned_x.append(x)
@@ -77,6 +74,10 @@ for prop1 in propsDisplay:
                 # + '\n Mean squared error: ' + "{:.2f}".format( mean_squared_error(data_y_pred, data_Y_log))
 
             area = 5
+            max_x_log = 1e3
+            max_y_log = 1e3
+            min_x_log = 1
+            min_y_log = 1
             # 2 subplots superposees
             fig = plt.figure()
             ax1 = fig.add_subplot(111, label="log10")
@@ -87,13 +88,13 @@ for prop1 in propsDisplay:
                              norm=normalize, alpha=1)
             ax1.set_xscale('log')
             ax1.set_yscale('log')
-            ax1.set_xlim(1, 1e3)
-            ax1.set_ylim(1, 1e3)
+            ax1.set_xlim(min_x_log, max_x_log)
+            ax1.set_ylim(min_y_log, max_y_log)
 
             # subplot regression lineaire (droite)
             ax2.plot(sorted(data_X_log), data_y_pred, color='black', linewidth=2)
-            ax2.set_xlim(0, 3)
-            ax2.set_ylim(0, 3)
+            ax2.set_xlim(math.log10(min_x_log), math.log10(max_x_log))
+            ax2.set_ylim(math.log10(min_y_log), math.log10(max_y_log))
             ax2.set_yticklabels([])
             ax2.set_xticklabels([])
 
