@@ -40,11 +40,11 @@ for x, y in zip(Emax_list, Emin_list):
 print(len(Emax_sur_Emin))
 
 #normalize = color.Normalize(vmin=min(poisson), vmax=max(poisson))
-data_X = data['elasticity.poisson_ratio'].get_values()
+data_X = Emax_sur_Emin
             # data_X.shape
 data_X = np.vstack(data_X)
 
-data_Y = Emax_sur_Emin
+data_Y = data['elasticity.poisson_ratio'].get_values()
             # data_Y.shape
 regr = linear_model.LinearRegression()
 
@@ -74,8 +74,8 @@ plt.scatter(data_X, data_Y, s=area, alpha=1)
 plt.plot(data_X, data_y_pred, color='black', linewidth=2)
 # plt.xlim(data_X.min(), data_X.max() * 1.1)
             # plt.ylim(data_Y.min(), data_Y.max() * 1.1)
-plt.xlim(data_X.min(), 1000)
-plt.ylim(data_Y.min(), 1000)
+plt.xlim(min(data_X), 70)
+plt.ylim(data_Y.min(), data_Y.max())
 #plt.xlabel(propsPlotLabel[propsDisplay.index(prop1)])
 #plt.ylabel(propsPlotLabel[propsDisplay.index(prop2)])
 #plt.colorbar()
