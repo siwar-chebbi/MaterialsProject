@@ -39,9 +39,8 @@ for x, y in zip(Emax_list, Emin_list):
 
 print(len(Emax_sur_Emin))
 
-poisson = data['elasticity.poisson_ratio'].get_values()
 #normalize = color.Normalize(vmin=min(poisson), vmax=max(poisson))
-data_X = poisson
+data_X = data['elasticity.poisson_ratio'].get_values()
             # data_X.shape
 data_X = np.vstack(data_X)
 
