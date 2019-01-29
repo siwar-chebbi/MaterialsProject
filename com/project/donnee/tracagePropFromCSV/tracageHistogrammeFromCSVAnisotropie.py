@@ -19,7 +19,7 @@ def importer(fichier):
     return pd.read_csv(fichier)
 
 
-data = importer("elasticRatioPoissonPositive.csv")
+data = importer("elasticElateALL.csv")
 data.head()
 
 Emax_list = data['Emax'].get_values()
@@ -39,17 +39,17 @@ def drawTable(propsTableauToPlot, pdffile):
     pdf = matplotlib.backends.backend_pdf.PdfPages(pdffile)
 
     dataToPlot = Emax_sur_Emin
-    minY = min(Emax_sur_Emin)
+    #minY = min(Emax_sur_Emin)
 
-    maxY = max(Emax_sur_Emin)
+    #maxY = max(Emax_sur_Emin)
     tableauLabel = propsTableauToPlot
     couleur = "green"
 
     # http://www.python-simple.com/python-matplotlib/histogram.php
     nbIntervalle = 50
 
-    # maxY=250
-    # minY=0
+    maxY=50
+    minY=0
 
     pas = (maxY - minY) / nbIntervalle
     bins = []

@@ -24,9 +24,9 @@ propsPlotLabel = [u'$LC_{min} (GPa)$', u'$LC_{max}(GPa)$', u'$\mu_{min}(GPa)$', 
                   '$G_{max}(GPa)$']
 
 # fichiers input (csv) et output (pdf)
-data = importer("elasticRatioPoissonPositive.csv")
+data = importer("elasticElateALL.csv")
 data.head()
-pdf = matplotlib.backends.backend_pdf.PdfPages("elasticRatioPoissonPositive.pdf")
+pdf = matplotlib.backends.backend_pdf.PdfPages("elasticElateALL2000*2000.pdf")
 
 # valeurs poisson
 poisson = data['elasticity.poisson_ratio'].get_values()
@@ -74,8 +74,8 @@ for prop1 in propsDisplay:
                 # + '\n Mean squared error: ' + "{:.2f}".format( mean_squared_error(data_y_pred, data_Y_log))
 
             area = 5
-            max_x_log = 1e3
-            max_y_log = 1e3
+            max_x_log = 3000
+            max_y_log = 3000
             min_x_log = 1
             min_y_log = 1
             # 2 subplots superposees

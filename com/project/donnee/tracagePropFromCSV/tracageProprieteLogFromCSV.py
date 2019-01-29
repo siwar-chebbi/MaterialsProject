@@ -24,9 +24,9 @@ propsPlotLabel = [u'$G_{Reuss} (GPa)$', u'$G_{Voigt}(GPa)$', u'$G_{Voigt\u2000Re
                   u'$K_{Reuss}(GPa)$', '$K_{Voigt}(GPa)$', u'$K_{Voigt\u2000Reuss\u2000Hill}(GPa)$']
 
 # fichiers input (csv) et output (pdf)
-data = importer("elastic_property_from_MP_DB_HYP4187.csv")
+data = importer("elastic_property_from_MP_DB_12522.csv")
 data.head()
-pdf = matplotlib.backends.backend_pdf.PdfPages("elastic_property_from_MP_DBLOGHYP.pdf")
+pdf = matplotlib.backends.backend_pdf.PdfPages("elastic_property_from_MP_DBLOGALL.pdf")
 
 # valeurs poisson
 poisson = data['elasticity.poisson_ratio'].get_values()
