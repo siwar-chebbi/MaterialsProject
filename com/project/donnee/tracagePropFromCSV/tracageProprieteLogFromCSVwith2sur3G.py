@@ -102,6 +102,7 @@ for prop1 in propsDisplay:
 
             # subplot 2/3  (droite)
             ax3.plot(sorted(data_X_log), sorted(cleaned_x2sur3), color='green', linewidth=2)
+            ax3.text(2.1, 1.6, "2/3 G", fontsize=10, color= 'green')
             ax3.set_xlim(0, 3)
             ax3.set_ylim(0, 3)
             ax3.set_yticklabels([])
