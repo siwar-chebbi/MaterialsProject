@@ -8,6 +8,8 @@ import matplotlib.cm as cm
 import matplotlib.colors as color
 import math
 
+
+
 propsTableau = ["minLC", "maxLC", "minNu", "maxNu", "K_Voigt_Reuss_Hill", "Emin", "Emax", "Gmin", "Gmax"]
 
 propsPlotLabel = [u'$LC_{min} (GPa)$', u'$LC_{max}(GPa)$', u'$\mu_{min}(GPa)$', u'$\mu_{max}(GPa)$',
@@ -33,7 +35,13 @@ for x, y in zip(Emax_list, Emin_list):
         Emax_sur_Emin.append(x / y)
 
 print(len(Emax_sur_Emin))
+print(min(Emax_sur_Emin))
+print(max(Emax_sur_Emin))
 
+Emax_sur_EminLOG = [math.log10(i) for i in Emax_sur_Emin]
+print(len(Emax_sur_EminLOG))
+print(min(Emax_sur_EminLOG))
+print(max(Emax_sur_EminLOG))
 
 def drawTable(propsTableauToPlot, pdffile):
     pdf = matplotlib.backends.backend_pdf.PdfPages(pdffile)
@@ -43,25 +51,27 @@ def drawTable(propsTableauToPlot, pdffile):
 
     #maxY = max(Emax_sur_Emin)
     tableauLabel = propsTableauToPlot
-    couleur = "green"
+    #couleur = "green"
 
     # http://www.python-simple.com/python-matplotlib/histogram.php
-    nbIntervalle = 50
+    maxY= 100
+    minY= 1
 
-    maxY=50
-    minY=0
-
+    nbIntervalle = 500
     pas = (maxY - minY) / nbIntervalle
     bins = []
     for i in range(0, nbIntervalle):
         bins.append(minY + i * pas)
     bins.append(maxY)
 
-    plt.hist(dataToPlot, bins=bins, color="green", edgecolor="black", lw=1, label=tableauLabel,
+    #plt.hist(dataToPlot, bins=np.linspace(1, 100, 100), color="green", edgecolor="black", lw=1, label=tableauLabel, histtype='bar') # bar est le defaut
+
+    plt.hist(dataToPlot, bins=np.logspace(np.log10(1),np.log10(100), 50), color="green", edgecolor="black", lw=1, label=tableauLabel,
              histtype='bar')  # bar est le defaut
-    # plt.hist(dataToPlot, bins=100, color='blue', edgecolor='black',lw=1,histtype='bar')
+
     # plt.ylim(minY, maxY)
     plt.ylabel('Nombre of elements')
+    plt.gca().set_xscale("log")
     # plt.xlabel('propriete')
     # plt.title('Histogramme')
     plt.legend()
@@ -71,5 +81,5 @@ def drawTable(propsTableauToPlot, pdffile):
 
 
 cm = cm.get_cmap('gist_rainbow')
-propsToPlot = ['Emax_sur_Emin']
-drawTable(propsToPlot, "Emax_sur_Emin.pdf")
+propsToPlot = ['Elastic anisotropy']
+drawTable(propsToPlot, "Emax_sur_EminLOG.pdf")

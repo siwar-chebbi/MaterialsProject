@@ -23,6 +23,20 @@ def importer(fichier):
 data = importer("elastic_All_EXP_AND_HYP_Filtered.csv")
 data.head()
 
+
+Emax_list = data['Emax'].get_values()
+Emin_list = data['Emin'].get_values()
+Emax_sur_Emin = []
+
+for x, y in zip(Emax_list, Emin_list):
+    if y == 0:
+        continue
+    else:
+        Emax_sur_Emin.append(x / y)
+
+print(len(Emax_sur_Emin))
+
+
 for prop1 in propsDisplay:
     for prop2 in propsDisplay:
         if prop1 != prop2:

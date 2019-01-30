@@ -40,47 +40,54 @@ for x, y in zip(Emax_list, Emin_list):
 print(len(Emax_sur_Emin))
 
 #normalize = color.Normalize(vmin=min(poisson), vmax=max(poisson))
-data_X = Emax_sur_Emin
+# data_X = Emax_sur_Emin
+data_X = [math.log10(i) for i in Emax_sur_Emin]
+print(len(data_X))
             # data_X.shape
 data_X = np.vstack(data_X)
 
 data_Y = data['elasticity.poisson_ratio'].get_values()
             # data_Y.shape
-regr = linear_model.LinearRegression()
+#regr = linear_model.LinearRegression()
 
             # Train the model using the training sets
-regr.fit(data_X, data_Y)
+#regr.fit(data_X, data_Y)
 
             # Make predictions using the testing set
-data_y_pred = regr.predict(data_X)
+#data_y_pred = regr.predict(data_X)
 
             # The coefficients
 #print('#############' + str(prop2) + ' versus ' + str(prop1) + '######################')
-print('Coefficients: \n', regr.coef_)
+#print('Coefficients: \n', regr.coef_)
             # The mean squared error
-print("Mean squared error: %.2f"
-    % mean_squared_error(data_y_pred, data_Y))
+#print("Mean squared error: %.2f"
+#    % mean_squared_error(data_y_pred, data_Y))
             # Explained variance score: 1 is perfect prediction
-print('Variance score: %.2f \n '
-    '##############################################################' % r2_score(data_Y, data_y_pred))
+#print('Variance score: %.2f \n '
+#    '##############################################################' % r2_score(data_Y, data_y_pred))
 
-texte = 'Coefficients: ' + "{:.2f}".format(regr.coef_[0]) + ' \n Mean squared error: ' + "{:.2f}".format(
-mean_squared_error(data_y_pred, data_Y)) + ' \n Variance score R2: ' + "{:.2f}".format(
-    r2_score(data_Y, data_y_pred))
+#texte = 'Coefficients: ' + "{:.2f}".format(regr.coef_[0]) + ' \n Mean squared error: ' + "{:.2f}".format(
+#mean_squared_error(data_y_pred, data_Y)) + ' \n Variance score R2: ' + "{:.2f}".format(
+#    r2_score(data_Y, data_y_pred))
 area = 5
 
-plt.scatter(data_X, data_Y, s=area, alpha=1)
+plt.scatter(data_X, data_Y, s=area, alpha=1, color="green")
 
-plt.plot(data_X, data_y_pred, color='black', linewidth=2)
+#plt.plot(data_X, data_y_pred, color='black', linewidth=2)
 # plt.xlim(data_X.min(), data_X.max() * 1.1)
             # plt.ylim(data_Y.min(), data_Y.max() * 1.1)
-plt.xlim(min(data_X), 70)
+
+#plt.xlim(min(data_X), 100)
+plt.xlim(1, 1e1)
 plt.ylim(data_Y.min(), data_Y.max())
+plt.xlabel("Elastic anisotropy")
+plt.ylabel(u'$\mu (GPa)$')
+plt.gca().set_xscale("log")
 #plt.xlabel(propsPlotLabel[propsDisplay.index(prop1)])
 #plt.ylabel(propsPlotLabel[propsDisplay.index(prop2)])
 #plt.colorbar()
             # plt.title(str(prop2) + ' versus ' + str(prop1))
-plt.figtext(0.5, 0.75, texte, ha="center", fontsize=7, bbox={"facecolor": "orange", "alpha": 0.5, "pad": 5})
+#plt.figtext(0.5, 0.75, ha="center", fontsize=7, bbox={"facecolor": "orange", "alpha": 0.5, "pad": 5})
 pdf.savefig()
 plt.close()
 pdf.close()
