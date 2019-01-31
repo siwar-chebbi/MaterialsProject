@@ -17,7 +17,7 @@ propsDisplay = ['elasticity.poisson_ratio']
 propsPlotLabel = [u'$G_{Reuss} (GPa)$', u'$G_{Voigt}(GPa)$', u'$G_{Voigt\u2000Reuss\u2000Hill}(GPa)$',
                   u'$K_{Reuss}(GPa)$', '$K_{Voigt}(GPa)$', u'$K_{Voigt\u2000Reuss\u2000Hill}(GPa)$']
 
-pdf = matplotlib.backends.backend_pdf.PdfPages("AnistropyPoissonratio.pdf")
+pdf = matplotlib.backends.backend_pdf.PdfPages("RatioPoissonAnisotropy.pdf")
 
 
 def importer(fichier):
@@ -41,7 +41,9 @@ print(len(Emax_sur_Emin))
 
 #normalize = color.Normalize(vmin=min(poisson), vmax=max(poisson))
 # data_X = Emax_sur_Emin
-data_X = [math.log10(i) for i in Emax_sur_Emin]
+data_X = Emax_sur_Emin
+
+#data_X = [math.log10(i) for i in Emax_sur_Emin]
 print(len(data_X))
             # data_X.shape
 data_X = np.vstack(data_X)
@@ -78,7 +80,7 @@ plt.scatter(data_X, data_Y, s=area, alpha=1, color="green")
             # plt.ylim(data_Y.min(), data_Y.max() * 1.1)
 
 #plt.xlim(min(data_X), 100)
-plt.xlim(1, 1e1)
+plt.xlim(0.80, 300)
 plt.ylim(data_Y.min(), data_Y.max())
 plt.xlabel("Elastic anisotropy")
 plt.ylabel(u'$\mu (GPa)$')

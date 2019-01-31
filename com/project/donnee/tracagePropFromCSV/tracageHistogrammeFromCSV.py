@@ -22,7 +22,7 @@ def importer(fichier):
     return pd.read_csv(fichier)
 
 
-data = importer("elastic_property_from_MP_DB_12522.csv")
+data = importer("elastic_property_from_MP_DB_HYP4187.csv")
 data.head()
 
 
@@ -71,22 +71,22 @@ def drawTable(propsTableauToPlot, pdffile):
 
 cm = cm.get_cmap('gist_rainbow')
 propsToPlot = ['elasticity.G_Voigt_Reuss_Hill']
-drawTable(propsToPlot, "histogrammeGVRH.pdf")
+drawTable(propsToPlot, "histogrammeGVRHHYP.pdf")
 
 propsToPlot2 = ['elasticity.poisson_ratio']
 drawTable(propsToPlot2, "histogrammeRatioGVRH.pdf")
 
 propsToPlot3 = ['elasticity.G_Reuss']
-drawTable(propsToPlot3, "histogrammeGReuss.pdf")
+drawTable(propsToPlot3, "histogrammeGReussHYP.pdf")
 
 propsToPlot4 = ['elasticity.G_Voigt']
-drawTable(propsToPlot4, "histogrammeGVoigt.pdf")
+drawTable(propsToPlot4, "histogrammeGVoigtHYP.pdf")
 
 propsToPlot5 = ['elasticity.K_Reuss']
-drawTable(propsToPlot5, "histogrammeKReuss.pdf")
+drawTable(propsToPlot5, "histogrammeKReussHYP.pdf")
 
 propsToPlot6 = ['elasticity.K_Voigt']
-drawTable(propsToPlot6, "histogrammeKVoigt.pdf")
+drawTable(propsToPlot6, "histogrammeKVoigtHYP.pdf")
 
 propsToPlot7 = ['elasticity.K_Voigt_Reuss_Hill']
-drawTable(propsToPlot7, "histogrammeKVRH.pdf")
+drawTable(propsToPlot7, "histogrammeKVRHHYP.pdf")

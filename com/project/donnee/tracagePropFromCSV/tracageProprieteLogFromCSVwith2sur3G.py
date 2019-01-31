@@ -23,10 +23,15 @@ propsDisplay = ['elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_
 propsPlotLabel = [u'$G_{Reuss} (GPa)$', u'$G_{Voigt}(GPa)$', u'$G_{Voigt\u2000Reuss\u2000Hill}(GPa)$',
                   u'$K_{Reuss}(GPa)$', '$K_{Voigt}(GPa)$', u'$K_{Voigt\u2000Reuss\u2000Hill}(GPa)$']
 
+
+propsPlotLabelSansGPA = [u'$G_{Reuss} $', u'$G_{Voigt}$', u'$G_{Voigt\u2000Reuss\u2000Hill}$',
+                  u'$K_{Reuss}$', '$K_{Voigt}$', u'$K_{Voigt\u2000Reuss\u2000Hill}$']
+
+
 # fichiers input (csv) et output (pdf)
-data = importer("elastic_property_from_MP_DB_HYP4187.csv")
+data = importer("elastic_property_from_MP_DB_12522.csv")
 data.head()
-pdf = matplotlib.backends.backend_pdf.PdfPages("elastic_property_from_MP_DBLOGALL.pdf")
+pdf = matplotlib.backends.backend_pdf.PdfPages("elastic_property_from_MP_DB_12522.pdf")
 
 # valeurs poisson
 poisson = data['elasticity.poisson_ratio'].get_values()
@@ -102,7 +107,7 @@ for prop1 in propsDisplay:
 
             # subplot 2/3  (droite)
             ax3.plot(sorted(data_X_log), sorted(cleaned_x2sur3), color='green', linewidth=2)
-            ax3.text(2.1, 1.6, "2/3 G", fontsize=10, color= 'green')
+            ax3.text(2.1, 1.6, '2/3G', fontsize=10, color='green', rotation= 30)
             ax3.set_xlim(0, 3)
             ax3.set_ylim(0, 3)
             ax3.set_yticklabels([])

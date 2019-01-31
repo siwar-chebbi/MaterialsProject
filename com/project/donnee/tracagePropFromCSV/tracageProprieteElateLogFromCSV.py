@@ -26,7 +26,7 @@ propsPlotLabel = [u'$LC_{min} (GPa)$', u'$LC_{max}(GPa)$', u'$\mu_{min}(GPa)$', 
 # fichiers input (csv) et output (pdf)
 data = importer("elasticElateALL.csv")
 data.head()
-pdf = matplotlib.backends.backend_pdf.PdfPages("elasticElateALL2000*2000.pdf")
+pdf = matplotlib.backends.backend_pdf.PdfPages("elasticElateALL3000*3000.pdf")
 
 # valeurs poisson
 poisson = data['elasticity.poisson_ratio'].get_values()

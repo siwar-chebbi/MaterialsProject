@@ -66,11 +66,11 @@ def drawTable(propsTableauToPlot, pdffile):
 
     #plt.hist(dataToPlot, bins=np.linspace(1, 100, 100), color="green", edgecolor="black", lw=1, label=tableauLabel, histtype='bar') # bar est le defaut
 
-    plt.hist(dataToPlot, bins=np.logspace(np.log10(1),np.log10(100), 50), color="green", edgecolor="black", lw=1, label=tableauLabel,
+    plt.hist(dataToPlot, bins=np.logspace(np.log10(1),np.log10(300), 50), color="green", edgecolor="black", lw=1, label=tableauLabel,
              histtype='bar')  # bar est le defaut
 
     # plt.ylim(minY, maxY)
-    plt.ylabel('Nombre of elements')
+    plt.ylabel('Nombre of structures')
     plt.gca().set_xscale("log")
     # plt.xlabel('propriete')
     # plt.title('Histogramme')
