@@ -28,6 +28,20 @@ critere3 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None},
             "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
             "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
 
+
+critere4 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$lt': 0},
+            "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
+            "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
+            "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
+            "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
+
+critere4bis = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$lt': 0}, 'icsd_ids.0': {'$exists': True},
+            "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
+            "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
+            "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
+            "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
+
+
 critere4EXP = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, 'icsd_ids.0': {'$exists': True},
             "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
             "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
@@ -40,7 +54,7 @@ critere4HYP = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, 'icsd_ids.
             "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
             "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
 
-materials = api.query(criteria=critere4HYP, properties=propsTableau)
+materials = api.query(criteria=critere4bis, properties=propsTableau)
 
 
 # test= elastic.ELATE_MaterialsProject("mp-2133")
@@ -146,7 +160,7 @@ def export(donnees, ligne, nomColonnes, fichier):
 
 resultat = recup(materials)
 
-export(resultat, materialIds, propsDisplay, "elasticElateHYP.csv")
+export(resultat, materialIds, propsDisplay, "elasticRatioNegaEXP.csv")
 
 print("materials non conformes, eigenVal negative:\n" + str(materialNonConformeEigenvalNegative))
 print("materials non conformes, matrice singuliere:\n" + str(materialNonConformeMatSinguliere))

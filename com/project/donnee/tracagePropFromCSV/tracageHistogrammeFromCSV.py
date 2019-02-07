@@ -22,7 +22,7 @@ def importer(fichier):
     return pd.read_csv(fichier)
 
 
-data = importer("elastic_property_from_MP_DB_HYP4187.csv")
+data = importer("elastic_property_from_MP_DB_12522.csv")
 data.head()
 
 
@@ -39,7 +39,7 @@ def drawTable(propsTableauToPlot, pdffile):
         # maxY=10
         maxY = max(maxY, (data[propsTableauToPlot].get_values()).max())
         tableauLabel = propsPlotLabel[propsTableau.index(prop)]
-        couleur = cm((1 + propsTableauToPlot.index(prop)) / (len(propsTableauToPlot) + 1))
+        #couleur = cm((1 + propsTableauToPlot.index(prop)) / (len(propsTableauToPlot) + 1))
     # http://www.python-simple.com/python-matplotlib/histogram.php
     nbIntervalle = 50
     pas = (maxY - minY) / nbIntervalle
@@ -50,6 +50,13 @@ def drawTable(propsTableauToPlot, pdffile):
 
     plt.hist(dataToPlot, bins=np.logspace(np.log10(1),np.log10(1000), 50), color="green", edgecolor="black", lw=1, label=tableauLabel,
              histtype='bar')  # bar est le defaut
+    plt.axvspan(10, 100, facecolor='r', alpha=0.5)
+    #plt.axvspan(10, 100, facecolor='r', alpha=0.5)
+    #plt.axvspan(100, 300, facecolor='g', alpha=0.5)
+    #plt.axvspan(1, 10, facecolor='b', alpha=0.1)
+    #plt.axvspan(300, 1000, facecolor='b', alpha=0.1)
+
+
 
     #plt.hist(dataToPlot, bins=bins, color="green", edgecolor="black", lw=1, label=tableauLabel,
          #    histtype='bar')  # bar est le defaut
@@ -71,22 +78,22 @@ def drawTable(propsTableauToPlot, pdffile):
 
 cm = cm.get_cmap('gist_rainbow')
 propsToPlot = ['elasticity.G_Voigt_Reuss_Hill']
-drawTable(propsToPlot, "histogrammeGVRHHYP.pdf")
+drawTable(propsToPlot, "histogrammeGVRH.pdf")
 
-propsToPlot2 = ['elasticity.poisson_ratio']
-drawTable(propsToPlot2, "histogrammeRatioGVRH.pdf")
+#propsToPlot2 = ['elasticity.poisson_ratio']
+#drawTable(propsToPlot2, "histogrammeRatioGVRH.pdf")
 
 propsToPlot3 = ['elasticity.G_Reuss']
-drawTable(propsToPlot3, "histogrammeGReussHYP.pdf")
+drawTable(propsToPlot3, "histogrammeGReuss.pdf")
 
 propsToPlot4 = ['elasticity.G_Voigt']
-drawTable(propsToPlot4, "histogrammeGVoigtHYP.pdf")
+drawTable(propsToPlot4, "histogrammeGVoigt.pdf")
 
-propsToPlot5 = ['elasticity.K_Reuss']
-drawTable(propsToPlot5, "histogrammeKReussHYP.pdf")
+#propsToPlot5 = ['elasticity.K_Reuss']
+#drawTable(propsToPlot5, "histogrammeKReussHYP.pdf")
 
-propsToPlot6 = ['elasticity.K_Voigt']
-drawTable(propsToPlot6, "histogrammeKVoigtHYP.pdf")
+#propsToPlot6 = ['elasticity.K_Voigt']
+#drawTable(propsToPlot6, "histogrammeKVoigtHYP.pdf")
 
-propsToPlot7 = ['elasticity.K_Voigt_Reuss_Hill']
-drawTable(propsToPlot7, "histogrammeKVRHHYP.pdf")
+#propsToPlot7 = ['elasticity.K_Voigt_Reuss_Hill']
+#drawTable(propsToPlot7, "histogrammeKVRHHYP.pdf")
