@@ -24,9 +24,9 @@ propsPlotLabel = [u'$LC_{min} (GPa)$', u'$LC_{max}(GPa)$', u'$\mu_{min}(GPa)$', 
                   '$G_{max}(GPa)$']
 
 # fichiers input (csv) et output (pdf)
-data = importer("elasticElateHYP.csv")
+data = importer("elasticElateALL.csv")
 data.head()
-pdf = matplotlib.backends.backend_pdf.PdfPages("elasticElateHYP3000*3000.pdf")
+pdf = matplotlib.backends.backend_pdf.PdfPages("elasticElateALL1000*1000-27.pdf")
 
 # valeurs poisson
 poisson = data['elasticity.poisson_ratio'].get_values()
@@ -66,16 +66,16 @@ for prop1 in propsDisplay:
                     mean_squared_error(data_y_pred, data_Y_log), len(cleaned_x)))
 
             # texte dans le graphe
-            texte = u'$log_{10}($' + propsPlotLabel[propsDisplay.index(prop2)] + ') = ' + "{:.2f}".format(
-                regr.coef_[0]) + ' * ' + u'$log_{10}($' + propsPlotLabel[
-                        propsDisplay.index(prop1)] + ') + ' + "{:.2f}".format(
-                regr.intercept_) + ' \n Variance score R2: ' + "{:.2f}".format(
-                r2_score(data_Y_log, data_y_pred)) \
+            #texte = u'$log_{10}($' + propsPlotLabel[propsDisplay.index(prop2)] + ') = ' + "{:.2f}".format(
+            #    regr.coef_[0]) + ' * ' + u'$log_{10}($' + propsPlotLabel[
+            #            propsDisplay.index(prop1)] + ') + ' + "{:.2f}".format(
+            #    regr.intercept_) + ' \n Variance score R2: ' + "{:.2f}".format(
+            #    r2_score(data_Y_log, data_y_pred)) \
                 # + '\n Mean squared error: ' + "{:.2f}".format( mean_squared_error(data_y_pred, data_Y_log))
 
-            area = 5
-            max_x_log = 3000
-            max_y_log = 3000
+            area = 0.1
+            max_x_log = 1000
+            max_y_log = 1000
             min_x_log = 1
             min_y_log = 1
             # 2 subplots superposees
@@ -85,14 +85,14 @@ for prop1 in propsDisplay:
             # subplot de tous les points
             normalize = color.Normalize(vmin=min(cleaned_poisson), vmax=max(cleaned_poisson))
             im = ax1.scatter(cleaned_x, cleaned_y, s=area, c=cleaned_poisson, cmap=cm.get_cmap('seismic'),
-                             norm=normalize, alpha=1)
+                             norm=normalize, alpha=3)
             ax1.set_xscale('log')
             ax1.set_yscale('log')
             ax1.set_xlim(min_x_log, max_x_log)
             ax1.set_ylim(min_y_log, max_y_log)
 
             # subplot regression lineaire (droite)
-            ax2.plot(sorted(data_X_log), data_y_pred, color='black', linewidth=2)
+            ax2.plot(sorted(data_X_log), data_y_pred, color='black', linewidth=1)
             ax2.set_xlim(math.log10(min_x_log), math.log10(max_x_log))
             ax2.set_ylim(math.log10(min_y_log), math.log10(max_y_log))
             ax2.set_yticklabels([])
@@ -105,7 +105,7 @@ for prop1 in propsDisplay:
 
             ax1.set_xlabel(propsPlotLabel[propsDisplay.index(prop1)])
             ax1.set_ylabel(propsPlotLabel[propsDisplay.index(prop2)])
-            plt.figtext(0.5, 0.80, texte, ha="center", fontsize=7, bbox={"facecolor": "orange", "alpha": 0.5, "pad": 5})
+            #plt.figtext(0.5, 0.80, texte, ha="center", fontsize=7, bbox={"facecolor": "orange", "alpha": 0.5, "pad": 5})
             pdf.savefig()
             plt.close()
 pdf.close()

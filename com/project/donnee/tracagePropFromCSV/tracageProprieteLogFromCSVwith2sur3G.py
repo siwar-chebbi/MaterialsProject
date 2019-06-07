@@ -29,9 +29,9 @@ propsPlotLabelSansGPA = [u'$G_{Reuss} $', u'$G_{Voigt}$', u'$G_{Voigt\u2000Reuss
 
 
 # fichiers input (csv) et output (pdf)
-data = importer("elastic_property_from_MP_DB_12522.csv")
+data = importer("elastic_property_from_MP_DB_HYP4187.csv")
 data.head()
-pdf = matplotlib.backends.backend_pdf.PdfPages("elastic_property_from_MP_DB_12522.pdf")
+pdf = matplotlib.backends.backend_pdf.PdfPages("elastic_property_from_MP_DB_HYP4187-27MARS.pdf")
 
 # valeurs poisson
 poisson = data['elasticity.poisson_ratio'].get_values()
@@ -58,6 +58,7 @@ for prop1 in propsDisplay:
             data_X_log = np.vstack(np.log10(cleaned_x))
             data_Y_log = np.log10(cleaned_y)
             cleaned_x2sur3 = [i * 2 / 3 for i in data_X_log]
+            cleaned_x8sur3 = [i * 8 / 3 for i in data_X_log]
 
             # regession lineaire de log10(y) =f(log10(x))
             regr = linear_model.LinearRegression()
@@ -68,51 +69,59 @@ for prop1 in propsDisplay:
             # Explained variance score: 1 is perfect prediction
             # The mean squared error
             print('############# ' + str(prop2) + ' versus ' + str(prop1) + ' ######################')
-            print(
-                'log10 =  {:.2f} * log10(x) + {:.2f} \nVariance score: {:.2f} \nMean squared error:{:.2f} \nNombre de points: {:d}\n'.format(
-                    regr.coef_[0], regr.intercept_, r2_score(data_Y_log, data_y_pred),
-                    mean_squared_error(data_y_pred, data_Y_log), len(cleaned_x)))
+            #print(
+            #    'log10 =  {:.2f} * log10(x) + {:.2f} \nVariance score: {:.2f} \nMean squared error:{:.2f} \nNombre de points: {:d}\n'.format(
+            #        regr.coef_[0], regr.intercept_, r2_score(data_Y_log, data_y_pred),
+            #        mean_squared_error(data_y_pred, data_Y_log), len(cleaned_x)))
 
             # texte dans le graphe
-            texte = u'$log_{10}($' + propsPlotLabel[propsDisplay.index(prop2)] + ') = ' + "{:.2f}".format(
-                regr.coef_[0]) + ' * ' + u'$log_{10}($' + propsPlotLabel[
-                        propsDisplay.index(prop1)] + ') + ' + "{:.2f}".format(
-                regr.intercept_) + ' \n Variance score R2: ' + "{:.2f}".format(
-                r2_score(data_Y_log, data_y_pred)) \
+            #texte = u'$log_{10}($' + propsPlotLabel[propsDisplay.index(prop2)] + ') = ' + "{:.2f}".format(
+            #    regr.coef_[0]) + ' * ' + u'$log_{10}($' + propsPlotLabel[
+            #            propsDisplay.index(prop1)] + ') + ' + "{:.2f}".format(
+            #    regr.intercept_) + ' \n Variance score R2: ' + "{:.2f}".format(
+            #    r2_score(data_Y_log, data_y_pred)) \
                 # + '\n Mean squared error: ' + "{:.2f}".format( mean_squared_error(data_y_pred, data_Y_log))
 
-            area = 5
+            area = 0.1
             # 2 subplots superposees
             fig = plt.figure()
             ax1 = fig.add_subplot(111, label="log10")
             ax2 = fig.add_subplot(111, label="regression", frame_on=False)
             #rajouter 2sur3 de G
             ax3 = fig.add_subplot(111, label="2sur3", frame_on=False)
+            #ax4 = fig.add_subplot(111, label="8sur3", frame_on=False)
 
             # subplot de tous les points
             normalize = color.Normalize(vmin=min(cleaned_poisson), vmax=max(cleaned_poisson))
             im = ax1.scatter(cleaned_x, cleaned_y, s=area, c=cleaned_poisson, cmap=cm.get_cmap('seismic'),
-                             norm=normalize, alpha=1)
+                             norm=normalize, alpha=3)
             ax1.set_xscale('log')
             ax1.set_yscale('log')
             ax1.set_xlim(1, 1e3)
             ax1.set_ylim(1, 1e3)
 
             # subplot regression lineaire (droite)
-            ax2.plot(sorted(data_X_log), data_y_pred, color='black', linewidth=2)
+            ax2.plot(sorted(data_X_log), data_y_pred, color='black', linewidth=1)
             ax2.set_xlim(0, 3)
             ax2.set_ylim(0, 3)
             ax2.set_yticklabels([])
             ax2.set_xticklabels([])
 
             # subplot 2/3  (droite)
-            ax3.plot(sorted(data_X_log), sorted(cleaned_x2sur3), color='green', linewidth=2)
-            ax3.text(2.1, 1.6, '2/3G', fontsize=10, color='green', rotation= 30)
+            ax3.plot(sorted(data_X_log), sorted(cleaned_x2sur3), color='green', linewidth=1)
+            ax3.text(1.9, 1.4, '2/3G', fontsize=6, color='green', rotation= 30)
             ax3.set_xlim(0, 3)
             ax3.set_ylim(0, 3)
             ax3.set_yticklabels([])
             ax3.set_xticklabels([])
 
+            # subplot 8/3  (droite)
+            #ax4.plot(sorted(data_X_log), sorted(cleaned_x8sur3), "--", color='orange', linewidth=2)
+            #ax4.text(0.78, 2.6, '8/3G', fontsize=10, color='orange', rotation= 60)
+            #ax4.set_xlim(0, 3)
+            #ax4.set_ylim(0, 3)
+            #ax4.set_yticklabels([])
+            #ax4.set_xticklabels([])
 
             # colorbar des valeurs de poisson
             plt.gcf().subplots_adjust(right=0.8)
@@ -121,7 +130,8 @@ for prop1 in propsDisplay:
 
             ax1.set_xlabel(propsPlotLabel[propsDisplay.index(prop1)])
             ax1.set_ylabel(propsPlotLabel[propsDisplay.index(prop2)])
-            plt.figtext(0.5, 0.80, texte, ha="center", fontsize=7, bbox={"facecolor": "orange", "alpha": 0.5, "pad": 5})
+            #plt.figtext(0.5, 0.80, ha="center", fontsize=7, bbox={"facecolor": "orange", "alpha": 0.5, "pad": 5})
+            #plt.figtext(0.5, 0.80, texte, ha="center", fontsize=7, bbox={"facecolor": "orange", "alpha": 0.5, "pad": 5})
             pdf.savefig()
             plt.close()
 pdf.close()
