@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 
 pdf = matplotlib.backends.backend_pdf.PdfPages("output.pdf")
-api = MPRester("eDCEK5m9WVjmajp7e8af")
+api = MPRester("78OAi0lR9kdkyiAi")
 
 compos = ['S', 'O']
 covalent = ['B', 'C', 'Si']
@@ -47,7 +47,7 @@ critere3 = {"nelements": {'$lte': 6}, 'elements': {'$in': ionique}, "elasticity"
             "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0}, "elasticity.K_Reuss": {'$gte': 0},
             "elasticity.K_Voigt": {'$gte': 0}, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
 
-#
+# Less than 1000###############################################################################
 critere4 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
             "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
             "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
@@ -66,6 +66,29 @@ critere4HYP = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, 'icsd_ids.
                "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
                "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
                "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
+
+# Geater than 1000###############################################################################
+critere4_gte_1000 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0},
+                     "elasticity.G_Voigt": {'$gte': 0}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0},
+                     "elasticity.K_Reuss": {'$gte': 0}, "elasticity.K_Voigt": {'$gte': 0},
+                     "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
+
+critere4EXP_gte_1000 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, 'icsd_ids.0': {'$exists': True},
+                        "elasticity.G_Reuss": {'$gte': 0},
+                        "elasticity.G_Voigt": {'$gte': 0},
+                        "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0},
+                        "elasticity.K_Reuss": {'$gte': 0}, "elasticity.K_Voigt": {'$gte': 0},
+                        "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
+
+critere4HYP_gte_1000 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, 'icsd_ids.0': {'$exists': False},
+                        "elasticity.G_Reuss": {'$gte': 0},
+                        "elasticity.G_Voigt": {'$gte': 0},
+                        "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0},
+                        "elasticity.K_Reuss": {'$gte': 0}, "elasticity.K_Voigt": {'$gte': 0},
+                        "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
+
+#######################################################################################################
+
 
 critere4bis = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0},
                "elasticity.G_Voigt": {'$gte': 0}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0},
@@ -128,16 +151,34 @@ def recup(materials):
     return tableau
 
 
-resultat = recup(materials)
-
-
 def export(donnees, ligne, nomColonnes, fichier):
     my_df = pd.DataFrame(donnees)
     my_df.index = ligne
     my_df.to_csv(fichier, index=ligne, header=nomColonnes)
 
 
-export(resultat.transpose(), materialIds, propsTableau, "elastic_property_from_MP_DB_HYP4187.csv")
+def importer(fichier):
+    return pd.read_csv(fichier, index_col=0)
+
+
+def export_gte_1000(file_name):
+    data = importer(file_name)
+    extract_data2 = data[(data['elasticity.G_Reuss'] > 1000) | (data['elasticity.G_Voigt'] > 1000) |
+                         (data['elasticity.G_Voigt_Reuss_Hill'] > 1000) |
+                         (data['elasticity.K_Reuss'] > 1000) |
+                         (data['elasticity.K_Voigt'] > 1000) |
+                         (data['elasticity.K_Voigt_Reuss_Hill'] > 1000)]
+    extract_data2.to_csv("elastic_property_from_MP_DB_critere4_gte_1000.csv")
+
+
+
+resultat = recup(materials)
+export(resultat.transpose(), materialIds, propsTableau, "elastic_property_from_MP_DB_HYP_3961__RevisionArtic.csv")
+#export_gte_1000("recupAll.csv")
+
+##################################Filtration des données > 1000############################
+
+########################################################################################
 
 # poisson = resultat[propsTableau.index('elasticity.poisson_ratio'), :]
 # normalize = color.Normalize(vmin=min(poisson), vmax=max(poisson))
