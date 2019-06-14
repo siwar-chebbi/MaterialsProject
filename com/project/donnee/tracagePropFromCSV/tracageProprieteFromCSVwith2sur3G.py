@@ -34,7 +34,7 @@ propsPlotLabelSansGPA = [u'$G_{Reuss} $', u'$G_{Voigt}$', u'$G_{Voigt\u2000Reuss
 # fichiers input (csv) et output (pdf)
 data = importer("elasticElate_ALL_revisionArt_without_Zero.csv")
 data.head()
-pdf = matplotlib.backends.backend_pdf.PdfPages("elasticElate_ALL_revisionArt_without_Zero_14JUIN.pdf")
+pdf = matplotlib.backends.backend_pdf.PdfPages("elasticElate_ALL_revisionArt_without_LOG_AND_Zero_14JUIN.pdf")
 
 # valeurs poisson
 poisson = data['elasticity.poisson_ratio'].get_values()
@@ -58,15 +58,15 @@ for prop1 in propsDisplay:
                     cleaned_poisson.append(z)
 
             # log10 de X et Y
-            data_X_log = np.vstack(np.log10(cleaned_x))
-            data_Y_log = np.log10(cleaned_y)
-            cleaned_x2sur3 = [i * 1 / 3 for i in data_X_log]
+            #data_X_log = np.vstack(np.log10(cleaned_x))
+            #data_Y_log = np.log10(cleaned_y)
+            cleaned_x2sur3 = [i * 1 / 3 for i in data_X]
             #cleaned_x8sur3 = [i * 8 / 3 for i in data_X_log]
 
             # regession lineaire de log10(y) =f(log10(x))
             regr = linear_model.LinearRegression()
-            regr.fit(data_X_log, data_Y_log)
-            data_y_pred = regr.predict(sorted(data_X_log))
+            regr.fit(data_X, data_Y)
+            data_y_pred = regr.predict(sorted(data_X))
 
             # log10(y) = a*log10(x) + b
             # Explained variance score: 1 is perfect prediction
@@ -74,8 +74,8 @@ for prop1 in propsDisplay:
             print('############# ' + str(prop2) + ' versus ' + str(prop1) + ' ######################')
             print(
                 'log10 =  {:.2f} * log10(x) + {:.2f} \nVariance score: {:.2f} \nMean squared error:{:.2f} \nNombre de points: {:d}\n'.format(
-                    regr.coef_[0], regr.intercept_, r2_score(data_Y_log, data_y_pred),
-                    mean_squared_error(data_y_pred, data_Y_log), len(cleaned_x)))
+                    regr.coef_[0], regr.intercept_, r2_score(data_Y, data_y_pred),
+                    mean_squared_error(data_y_pred, data_Y), len(cleaned_x)))
 
             # texte dans le graphe
             #texte = u'$log_{10}($' + propsPlotLabel[propsDisplay.index(prop2)] + ') = ' + "{:.2f}".format(
@@ -103,23 +103,23 @@ for prop1 in propsDisplay:
             im = ax1.scatter(cleaned_x, cleaned_y, s=area, c=cleaned_poisson, norm=normalize, alpha=3, cmap= toto)
             #im = ax1.scatter(cleaned_x, cleaned_y, s=area, c=cleaned_poisson, cmap=cm.get_cmap('coolwarm'),
             #                 norm=normalize, alpha=3)
-            ax1.set_xscale('log')
-            ax1.set_yscale('log')
+            #ax1.set_xscale('log')
+            #ax1.set_yscale('log')
             ax1.set_xlim(1, 1e3)
             ax1.set_ylim(1, 1e3)
 
             # subplot regression lineaire (droite)
-            ax2.plot(sorted(data_X_log), data_y_pred, color='black', linewidth=1)
-            ax2.set_xlim(0, 3)
-            ax2.set_ylim(0, 3)
+            ax2.plot(sorted(data_X), data_y_pred, color='black', linewidth=1)
+            ax2.set_xlim(0, 1e3)
+            ax2.set_ylim(0, 1e3)
             ax2.set_yticklabels([])
             ax2.set_xticklabels([])
 
             # subplot 1/3  (droite)
-            ax3.plot(sorted(data_X_log), sorted(cleaned_x2sur3), color='green', linewidth=1)
+            ax3.plot(sorted(data_X), sorted(cleaned_x2sur3), color='green', linewidth=1)
             ax3.text(1.9, 0.7, '1/3G', fontsize=6, color='green', rotation= 19)
-            ax3.set_xlim(0, 3)
-            ax3.set_ylim(0, 3)
+            ax3.set_xlim(0, 1e3)
+            ax3.set_ylim(0, 1e3)
             ax3.set_yticklabels([])
             ax3.set_xticklabels([])
 

@@ -34,7 +34,7 @@ propsPlotLabelSansGPA = [u'$G_{Reuss} $', u'$G_{Voigt}$', u'$G_{Voigt\u2000Reuss
 # fichiers input (csv) et output (pdf)
 data = importer("elasticElate_ALL_revisionArt_without_Zero.csv")
 data.head()
-pdf = matplotlib.backends.backend_pdf.PdfPages("elasticElate_ALL_revisionArt_without_Zero_14JUIN.pdf")
+pdf = matplotlib.backends.backend_pdf.PdfPages("elasticElate_ALL_revisionArt_without_ZeroAND1sur3G_14JUIN3000*3000.pdf")
 
 # valeurs poisson
 poisson = data['elasticity.poisson_ratio'].get_values()
@@ -60,7 +60,7 @@ for prop1 in propsDisplay:
             # log10 de X et Y
             data_X_log = np.vstack(np.log10(cleaned_x))
             data_Y_log = np.log10(cleaned_y)
-            cleaned_x2sur3 = [i * 1 / 3 for i in data_X_log]
+            #cleaned_x2sur3 = [i * 1 / 3 for i in data_X_log]
             #cleaned_x8sur3 = [i * 8 / 3 for i in data_X_log]
 
             # regession lineaire de log10(y) =f(log10(x))
@@ -91,7 +91,7 @@ for prop1 in propsDisplay:
             ax1 = fig.add_subplot(111, label="log10")
             ax2 = fig.add_subplot(111, label="regression", frame_on=False)
             #rajouter 2sur3 de G
-            ax3 = fig.add_subplot(111, label="1sur3", frame_on=False)
+            #ax3 = fig.add_subplot(111, label="1sur3", frame_on=False)
             #ax4 = fig.add_subplot(111, label="8sur3", frame_on=False)
 
             # subplot de tous les points
@@ -105,23 +105,23 @@ for prop1 in propsDisplay:
             #                 norm=normalize, alpha=3)
             ax1.set_xscale('log')
             ax1.set_yscale('log')
-            ax1.set_xlim(1, 1e3)
-            ax1.set_ylim(1, 1e3)
+            ax1.set_xlim(1, 3000)
+            ax1.set_ylim(1, 3000)
 
             # subplot regression lineaire (droite)
             ax2.plot(sorted(data_X_log), data_y_pred, color='black', linewidth=1)
-            ax2.set_xlim(0, 3)
-            ax2.set_ylim(0, 3)
+            ax2.set_xlim(0, 4)
+            ax2.set_ylim(0, 4)
             ax2.set_yticklabels([])
             ax2.set_xticklabels([])
 
             # subplot 1/3  (droite)
-            ax3.plot(sorted(data_X_log), sorted(cleaned_x2sur3), color='green', linewidth=1)
-            ax3.text(1.9, 0.7, '1/3G', fontsize=6, color='green', rotation= 19)
-            ax3.set_xlim(0, 3)
-            ax3.set_ylim(0, 3)
-            ax3.set_yticklabels([])
-            ax3.set_xticklabels([])
+            #ax3.plot(sorted(data_X_log), sorted(cleaned_x2sur3), color='green', linewidth=1)
+            #ax3.text(1.9, 0.7, '1/3G', fontsize=6, color='green', rotation= 19)
+            #ax3.set_xlim(0, 3)
+            #ax3.set_ylim(0, 3)
+            #ax3.set_yticklabels([])
+            #ax3.set_xticklabels([])
 
             # subplot 8/3  (droite)
             #ax4.plot(sorted(data_X_log), sorted(cleaned_x8sur3), "--", color='orange', linewidth=2)

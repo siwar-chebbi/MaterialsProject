@@ -1,5 +1,5 @@
 from pymatgen import MPRester
-from com.project.elate import elastic
+from MaterialsProject.com.project.elate import elastic
 import numpy as np
 import pandas as pd
 
@@ -57,7 +57,7 @@ critere4HYP = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, 'icsd_ids.
                "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
                "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
 
-materials = api.query(criteria=critere3, properties=propsTableau)
+materials = api.query(criteria=critere4HYP, properties=propsTableau)
 
 
 # test= elastic.ELATE_MaterialsProject("mp-2133")
@@ -110,9 +110,9 @@ def calculMaxG(elas):
 
 propsDisplay_old = ["minLC", "maxLC", "minNu", "maxNu", "K_Voigt_Reuss_Hill", "Emin", "Emax", "Gmin", "Gmax",
                     "elasticity.poisson_ratio"]
-propsDisplay = ["minLC", "maxLC", "minNu", "maxNu", "Emin", "Emax", "Gmin", "Gmax", 'elasticity.poisson_ratio',
+propsDisplay = ["minLC", "maxLC", "minNu", "maxNu", "Emin", "Emax", "Gmin", "Gmax",
                 'elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill',
-                'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
+                'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill', 'elasticity.poisson_ratio',]
 
 col = len(propsDisplay)
 lin = len(materials)
@@ -145,12 +145,12 @@ def recup(materials):
                 tableau[i, 6] = calculMaxYoung(elastElement)[1]
                 tableau[i, 7] = calculMinG(elastElement)[1]
                 tableau[i, 8] = calculMaxG(elastElement)[1]
-                tableau[i, 9] = material.get("elasticity.poisson_ratio")
-                tableau[i, 10] = material.get('elasticity.G_Reuss')
-                tableau[i, 11] = material.get('elasticity.G_Voigt')
-                tableau[i, 12] = material.get('elasticity.G_Voigt_Reuss_Hill')
-                tableau[i, 13] = material.get('elasticity.K_Reuss')
-                tableau[i, 14] = material.get('elasticity.K_Voigt')
+                tableau[i, 9] = material.get('elasticity.G_Reuss')
+                tableau[i, 10] = material.get('elasticity.G_Voigt')
+                tableau[i, 11] = material.get('elasticity.G_Voigt_Reuss_Hill')
+                tableau[i, 12] = material.get('elasticity.K_Reuss')
+                tableau[i, 13] = material.get('elasticity.K_Voigt')
+                tableau[i, 14] = material.get("elasticity.poisson_ratio")
                 i = i + 1
             else:
                 materialNonConformeEigenvalNegative.append(material.get('material_id'))
@@ -168,10 +168,29 @@ def export(donnees, ligne, nomColonnes, fichier):
     my_df.index = ligne
     my_df.to_csv(fichier, index=ligne, header=nomColonnes)
 
+def importer(fichier):
+    return pd.read_csv(fichier, index_col=0)
+
+def export_equal_0(file_name):
+    data = importer(file_name)
+    extract_data2 = data[(data['elasticity.G_Reuss'] != 0) & (data['elasticity.G_Voigt'] != 0) &
+                         (data['elasticity.G_Voigt_Reuss_Hill'] != 0) &
+                         (data['elasticity.K_Reuss'] != 0) &
+                         (data['elasticity.K_Voigt'] != 0) &
+                         (data['elasticity.K_Voigt_Reuss_Hill'] != 0)]
+    extract_data3 = data[(data['elasticity.G_Reuss'] == 0) | (data['elasticity.G_Voigt'] == 0) |
+                         (data['elasticity.G_Voigt_Reuss_Hill'] == 0) |
+                         (data['elasticity.K_Reuss'] == 0) |
+                         (data['elasticity.K_Voigt'] == 0) |
+                         (data['elasticity.K_Voigt_Reuss_Hill'] == 0)]
+    extract_data2.to_csv("elasticElate_ALL_revisionArt_without_Zero_HYP.csv")
+    extract_data3.to_csv("elasticElate_ALL_revisionArt_with_Zero_HYP.csv")
 
 resultat = recup(materials)
 
-export(resultat, materialIds, propsDisplay, "elasticRatioNegaEXP_revisionArt.csv")
+export(resultat, materialIds, propsDisplay, "elasticElate_ALL_revisionArt_HYP.csv")
+
+export_equal_0("elasticElate_ALL_revisionArt_HYP.csv")
 
 print("materials non conformes, eigenVal negative:\n" + str(materialNonConformeEigenvalNegative))
 print("materials non conformes, matrice singuliere:\n" + str(materialNonConformeMatSinguliere))
