@@ -1,0 +1,920 @@
+C:\Applications\Anaconda3\python.exe "C:\Applications\JetBrains\PyCharm 2018.2.4\helpers\pydev\pydevconsole.py" 63778 63779
+import sys; print('Python %s on %s' % (sys.version, sys.platform))
+sys.path.extend(['C:\\Users\\siwar\\Desktop\\PycharmProjects\\MaterialsProject', 'C:/Users/siwar/Desktop/PycharmProjects/MaterialsProject'])
+Python 3.6.5 |Anaconda, Inc.| (default, Mar 29 2018, 13:32:41) [MSC v.1900 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 6.4.0 -- An enhanced Interactive Python. Type '?' for help.
+PyDev console: using IPython 6.4.0
+Python 3.6.5 |Anaconda, Inc.| (default, Mar 29 2018, 13:32:41) [MSC v.1900 64 bit (AMD64)] on win32
+In[2]: runfile('C:/Users/siwar/Desktop/PycharmProjects/MaterialsProject/com/project/donnee/tracagePropFromCSV/tracageProprieteFromCSVwith2sur3G.py', wdir='C:/Users/siwar/Desktop/PycharmProjects/MaterialsProject/com/project/donnee/tracagePropFromCSV')
+Backend Qt5Agg is interactive backend. Turning interactive mode on.
+############# maxLC versus minLC ######################
+y =  1.47 * x + 4.16 
+Variance score: -0.25 
+Mean squared error:2036.73 
+Nombre de points: 11398
+############# minNu versus minLC ######################
+y =  -0.00 * x + 0.13 
+Variance score: -0.00 
+Mean squared error:0.01 
+Nombre de points: 8135
+############# maxNu versus minLC ######################
+y =  -0.00 * x + 0.59 
+Variance score: 0.01 
+Mean squared error:0.10 
+Nombre de points: 11366
+############# Emin versus minLC ######################
+y =  -1.73 * x + 103.95 
+Variance score: -0.39 
+Mean squared error:10412.14 
+Nombre de points: 11398
+############# Emax versus minLC ######################
+y =  -3.14 * x + 192.67 
+Variance score: -0.43 
+Mean squared error:23832.11 
+Nombre de points: 11398
+############# Gmin versus minLC ######################
+y =  -0.64 * x + 39.43 
+Variance score: -0.37 
+Mean squared error:1638.68 
+Nombre de points: 11398
+############# Gmax versus minLC ######################
+y =  -1.22 * x + 78.51 
+Variance score: -0.40 
+Mean squared error:4124.92 
+Nombre de points: 11398
+############# elasticity.G_Reuss versus minLC ######################
+y =  -0.83 * x + 51.27 
+Variance score: -0.41 
+Mean squared error:2306.90 
+Nombre de points: 11398
+############# elasticity.G_Voigt versus minLC ######################
+y =  -0.94 * x + 59.27 
+Variance score: -0.44 
+Mean squared error:2541.81 
+Nombre de points: 11398
+############# elasticity.G_Voigt_Reuss_Hill versus minLC ######################
+y =  -0.88 * x + 55.27 
+Variance score: -0.44 
+Mean squared error:2389.76 
+Nombre de points: 11398
+############# elasticity.K_Reuss versus minLC ######################
+y =  -1.95 * x + 114.79 
+Variance score: -0.41 
+Mean squared error:7194.83 
+Nombre de points: 11398
+############# elasticity.K_Voigt versus minLC ######################
+y =  -2.01 * x + 117.91 
+Variance score: -0.43 
+Mean squared error:7216.04 
+Nombre de points: 11398
+############# elasticity.K_Voigt_Reuss_Hill versus minLC ######################
+y =  -1.98 * x + 116.35 
+Variance score: -0.42 
+Mean squared error:7181.30 
+Nombre de points: 11398
+############# minLC versus maxLC ######################
+y =  0.12 * x + 3.71 
+Variance score: -0.25 
+Mean squared error:168.16 
+Nombre de points: 11398
+############# minNu versus maxLC ######################
+y =  -0.00 * x + 0.13 
+Variance score: -0.02 
+Mean squared error:0.01 
+Nombre de points: 8203
+############# maxNu versus maxLC ######################
+y =  0.00 * x + 0.58 
+Variance score: -0.12 
+Mean squared error:0.15 
+Nombre de points: 11732
+############# Emin versus maxLC ######################
+y =  -0.30 * x + 97.19 
+Variance score: -0.31 
+Mean squared error:9766.48 
+Nombre de points: 11764
+############# Emax versus maxLC ######################
+y =  -0.31 * x + 179.37 
+Variance score: -0.18 
+Mean squared error:19714.89 
+Nombre de points: 11764
+############# Gmin versus maxLC ######################
+y =  -0.11 * x + 36.96 
+Variance score: -0.30 
+Mean squared error:1543.88 
+Nombre de points: 11764
+############# Gmax versus maxLC ######################
+y =  -0.13 * x + 73.32 
+Variance score: -0.18 
+Mean squared error:3439.88 
+Nombre de points: 11764
+############# elasticity.G_Reuss versus maxLC ######################
+y =  -0.14 * x + 48.16 
+Variance score: -0.33 
+Mean squared error:2149.21 
+Nombre de points: 11764
+############# elasticity.G_Voigt versus maxLC ######################
+y =  -0.12 * x + 55.46 
+Variance score: -0.26 
+Mean squared error:2192.57 
+Nombre de points: 11764
+############# elasticity.G_Voigt_Reuss_Hill versus maxLC ######################
+y =  -0.13 * x + 51.81 
+Variance score: -0.30 
+Mean squared error:2135.71 
+Nombre de points: 11764
+############# elasticity.K_Reuss versus maxLC ######################
+y =  -0.33 * x + 107.57 
+Variance score: -0.30 
+Mean squared error:6718.06 
+Nombre de points: 11764
+############# elasticity.K_Voigt versus maxLC ######################
+y =  -0.28 * x + 110.25 
+Variance score: -0.24 
+Mean squared error:6336.59 
+Nombre de points: 11764
+############# elasticity.K_Voigt_Reuss_Hill versus maxLC ######################
+y =  -0.31 * x + 108.91 
+Variance score: -0.28 
+Mean squared error:6487.22 
+Nombre de points: 11764
+############# minLC versus minNu ######################
+y =  -5.84 * x + 5.17 
+Variance score: 0.05 
+Mean squared error:50.43 
+Nombre de points: 8135
+############# maxLC versus minNu ######################
+y =  -57.89 * x + 16.30 
+Variance score: 0.07 
+Mean squared error:672.25 
+Nombre de points: 8203
+############# maxNu versus minNu ######################
+y =  -0.82 * x + 0.59 
+Variance score: 0.21 
+Mean squared error:0.02 
+Nombre de points: 8203
+############# Emin versus minNu ######################
+y =  191.29 * x + 87.33 
+Variance score: 0.30 
+Mean squared error:5749.97 
+Nombre de points: 8203
+############# Emax versus minNu ######################
+y =  -170.77 * x + 206.56 
+Variance score: -0.19 
+Mean squared error:19974.80 
+Nombre de points: 8203
+############# Gmin versus minNu ######################
+y =  69.37 * x + 33.74 
+Variance score: 0.26 
+Mean squared error:973.90 
+Nombre de points: 8203
+############# Gmax versus minNu ######################
+y =  -93.45 * x + 86.11 
+Variance score: -0.27 
+Mean squared error:3589.60 
+Nombre de points: 8203
+############# elasticity.G_Reuss versus minNu ######################
+y =  32.23 * x + 48.76 
+Variance score: 0.12 
+Mean squared error:1547.12 
+Nombre de points: 8203
+############# elasticity.G_Voigt versus minNu ######################
+y =  -10.21 * x + 59.20 
+Variance score: -0.04 
+Mean squared error:1905.38 
+Nombre de points: 8203
+############# elasticity.G_Voigt_Reuss_Hill versus minNu ######################
+y =  10.98 * x + 53.99 
+Variance score: 0.04 
+Mean squared error:1707.52 
+Nombre de points: 8203
+############# elasticity.K_Reuss versus minNu ######################
+y =  181.93 * x + 89.98 
+Variance score: 0.30 
+Mean squared error:3748.52 
+Nombre de points: 8203
+############# elasticity.K_Voigt versus minNu ######################
+y =  162.72 * x + 94.87 
+Variance score: 0.27 
+Mean squared error:3865.37 
+Nombre de points: 8203
+############# elasticity.K_Voigt_Reuss_Hill versus minNu ######################
+y =  172.31 * x + 92.43 
+Variance score: 0.28 
+Mean squared error:3795.81 
+Nombre de points: 8203
+############# minLC versus maxNu ######################
+y =  -0.55 * x + 5.21 
+Variance score: 0.01 
+Mean squared error:76.14 
+Nombre de points: 11366
+############# maxLC versus maxNu ######################
+y =  35.69 * x + -7.23 
+Variance score: -0.14 
+Mean squared error:3528.85 
+Nombre de points: 11732
+############# minNu versus maxNu ######################
+y =  -0.23 * x + 0.24 
+Variance score: -0.27 
+Mean squared error:0.01 
+Nombre de points: 8203
+############# Emin versus maxNu ######################
+y =  -99.00 * x + 152.60 
+Variance score: -0.94 
+Mean squared error:14484.64 
+Nombre de points: 11732
+############# Emax versus maxNu ######################
+y =  -39.48 * x + 198.88 
+Variance score: -0.19 
+Mean squared error:19855.11 
+Nombre de points: 11732
+############# Gmin versus maxNu ######################
+y =  -39.87 * x + 59.37 
+Variance score: -0.96 
+Mean squared error:2331.12 
+Nombre de points: 11732
+############# Gmax versus maxNu ######################
+y =  -19.55 * x + 83.28 
+Variance score: -0.23 
+Mean squared error:3580.54 
+Nombre de points: 11732
+############# elasticity.G_Reuss versus maxNu ######################
+y =  -41.74 * x + 71.28 
+Variance score: -0.86 
+Mean squared error:3008.47 
+Nombre de points: 11732
+############# elasticity.G_Voigt versus maxNu ######################
+y =  -26.91 * x + 69.94 
+Variance score: -0.48 
+Mean squared error:2585.77 
+Nombre de points: 11732
+############# elasticity.G_Voigt_Reuss_Hill versus maxNu ######################
+y =  -34.33 * x + 70.61 
+Variance score: -0.67 
+Mean squared error:2755.20 
+Nombre de points: 11732
+############# elasticity.K_Reuss versus maxNu ######################
+y =  -28.56 * x + 120.17 
+Variance score: -0.23 
+Mean squared error:6326.36 
+Nombre de points: 11732
+############# elasticity.K_Voigt versus maxNu ######################
+y =  -21.87 * x + 119.63 
+Variance score: -0.17 
+Mean squared error:5954.10 
+Nombre de points: 11732
+############# elasticity.K_Voigt_Reuss_Hill versus maxNu ######################
+y =  -25.22 * x + 119.90 
+Variance score: -0.20 
+Mean squared error:6100.65 
+Nombre de points: 11732
+############# minLC versus Emin ######################
+y =  -0.03 * x + 8.12 
+Variance score: 0.05 
+Mean squared error:127.64 
+Nombre de points: 11398
+############# maxLC versus Emin ######################
+y =  -0.13 * x + 26.97 
+Variance score: 0.04 
+Mean squared error:3123.60 
+Nombre de points: 11764
+############# minNu versus Emin ######################
+y =  0.00 * x + 0.11 
+Variance score: -0.01 
+Mean squared error:0.01 
+Nombre de points: 8203
+############# maxNu versus Emin ######################
+y =  -0.00 * x + 0.76 
+Variance score: 0.14 
+Mean squared error:0.11 
+Nombre de points: 11732
+############# Emax versus Emin ######################
+y =  1.19 * x + 64.69 
+Variance score: 0.70 
+Mean squared error:4932.56 
+Nombre de points: 11764
+############# Gmin versus Emin ######################
+y =  0.40 * x + -1.46 
+Variance score: 0.96 
+Mean squared error:50.81 
+Nombre de points: 11764
+############# Gmax versus Emin ######################
+y =  0.50 * x + 25.27 
+Variance score: 0.73 
+Mean squared error:779.61 
+Nombre de points: 11764
+############# elasticity.G_Reuss versus Emin ######################
+y =  0.46 * x + 3.68 
+Variance score: 1.00 
+Mean squared error:2.83 
+Nombre de points: 11764
+############# elasticity.G_Voigt versus Emin ######################
+y =  0.44 * x + 12.47 
+Variance score: 0.92 
+Mean squared error:143.16 
+Nombre de points: 11764
+############# elasticity.G_Voigt_Reuss_Hill versus Emin ######################
+y =  0.45 * x + 8.07 
+Variance score: 0.98 
+Mean squared error:37.92 
+Nombre de points: 11764
+############# elasticity.K_Reuss versus Emin ######################
+y =  0.66 * x + 41.08 
+Variance score: 0.64 
+Mean squared error:1843.44 
+Nombre de points: 11764
+############# elasticity.K_Voigt versus Emin ######################
+y =  0.65 * x + 45.98 
+Variance score: 0.63 
+Mean squared error:1872.11 
+Nombre de points: 11764
+############# elasticity.K_Voigt_Reuss_Hill versus Emin ######################
+y =  0.66 * x + 43.53 
+Variance score: 0.64 
+Mean squared error:1820.34 
+Nombre de points: 11764
+############# minLC versus Emax ######################
+y =  -0.03 * x + 9.64 
+Variance score: 0.06 
+Mean squared error:126.95 
+Nombre de points: 11398
+############# maxLC versus Emax ######################
+y =  -0.06 * x + 25.34 
+Variance score: 0.04 
+Mean squared error:3115.52 
+Nombre de points: 11764
+############# minNu versus Emax ######################
+y =  -0.00 * x + 0.14 
+Variance score: -0.03 
+Mean squared error:0.01 
+Nombre de points: 8203
+############# maxNu versus Emax ######################
+y =  -0.00 * x + 0.66 
+Variance score: 0.07 
+Mean squared error:0.12 
+Nombre de points: 11732
+############# Emin versus Emax ######################
+y =  0.53 * x + 0.38 
+Variance score: 0.92 
+Mean squared error:605.09 
+Nombre de points: 11764
+############# Gmin versus Emax ######################
+y =  0.21 * x + -0.67 
+Variance score: 0.91 
+Mean squared error:110.45 
+Nombre de points: 11764
+############# Gmax versus Emax ######################
+y =  0.40 * x + 1.30 
+Variance score: 0.72 
+Mean squared error:816.98 
+Nombre de points: 11764
+############# elasticity.G_Reuss versus Emax ######################
+y =  0.26 * x + 0.37 
+Variance score: 0.97 
+Mean squared error:51.68 
+Nombre de points: 11764
+############# elasticity.G_Voigt versus Emax ######################
+y =  0.30 * x + 0.48 
+Variance score: 0.91 
+Mean squared error:153.95 
+Nombre de points: 11764
+############# elasticity.G_Voigt_Reuss_Hill versus Emax ######################
+y =  0.28 * x + 0.43 
+Variance score: 0.96 
+Mean squared error:59.71 
+Nombre de points: 11764
+############# elasticity.K_Reuss versus Emax ######################
+y =  0.44 * x + 25.70 
+Variance score: 0.64 
+Mean squared error:1837.40 
+Nombre de points: 11764
+############# elasticity.K_Voigt versus Emax ######################
+y =  0.46 * x + 25.22 
+Variance score: 0.63 
+Mean squared error:1883.11 
+Nombre de points: 11764
+############# elasticity.K_Voigt_Reuss_Hill versus Emax ######################
+y =  0.45 * x + 25.46 
+Variance score: 0.64 
+Mean squared error:1819.33 
+Nombre de points: 11764
+############# minLC versus Gmin ######################
+y =  -0.07 * x + 7.75 
+Variance score: 0.05 
+Mean squared error:128.13 
+Nombre de points: 11398
+############# maxLC versus Gmin ######################
+y =  -0.31 * x + 25.61 
+Variance score: 0.04 
+Mean squared error:3133.24 
+Nombre de points: 11764
+############# minNu versus Gmin ######################
+y =  0.00 * x + 0.11 
+Variance score: -0.01 
+Mean squared error:0.01 
+Nombre de points: 8203
+############# maxNu versus Gmin ######################
+y =  -0.00 * x + 0.76 
+Variance score: 0.13 
+Mean squared error:0.11 
+Nombre de points: 11732
+############# Emin versus Gmin ######################
+y =  2.48 * x + 5.07 
+Variance score: 0.96 
+Mean squared error:308.96 
+Nombre de points: 11764
+############# Emax versus Gmin ######################
+y =  2.90 * x + 72.53 
+Variance score: 0.70 
+Mean squared error:5023.47 
+Nombre de points: 11764
+############# Gmax versus Gmin ######################
+y =  1.23 * x + 28.17 
+Variance score: 0.73 
+Mean squared error:789.12 
+Nombre de points: 11764
+############# elasticity.G_Reuss versus Gmin ######################
+y =  1.14 * x + 5.72 
+Variance score: 1.00 
+Mean squared error:4.39 
+Nombre de points: 11764
+############# elasticity.G_Voigt versus Gmin ######################
+y =  1.11 * x + 14.63 
+Variance score: 0.92 
+Mean squared error:143.65 
+Nombre de points: 11764
+############# elasticity.G_Voigt_Reuss_Hill versus Gmin ######################
+y =  1.12 * x + 10.17 
+Variance score: 0.98 
+Mean squared error:38.85 
+Nombre de points: 11764
+############# elasticity.K_Reuss versus Gmin ######################
+y =  1.58 * x + 47.09 
+Variance score: 0.63 
+Mean squared error:1926.10 
+Nombre de points: 11764
+############# elasticity.K_Voigt versus Gmin ######################
+y =  1.54 * x + 51.67 
+Variance score: 0.62 
+Mean squared error:1951.54 
+Nombre de points: 11764
+############# elasticity.K_Voigt_Reuss_Hill versus Gmin ######################
+y =  1.56 * x + 49.37 
+Variance score: 0.63 
+Mean squared error:1901.41 
+Nombre de points: 11764
+############# minLC versus Gmax ######################
+y =  -0.06 * x + 9.19 
+Variance score: 0.06 
+Mean squared error:127.05 
+Nombre de points: 11398
+############# maxLC versus Gmax ######################
+y =  -0.14 * x + 25.01 
+Variance score: 0.04 
+Mean squared error:3118.33 
+Nombre de points: 11764
+############# minNu versus Gmax ######################
+y =  -0.00 * x + 0.15 
+Variance score: -0.04 
+Mean squared error:0.01 
+Nombre de points: 8203
+############# maxNu versus Gmax ######################
+y =  -0.00 * x + 0.67 
+Variance score: 0.08 
+Mean squared error:0.12 
+Nombre de points: 11732
+############# Emin versus Gmax ######################
+y =  1.27 * x + 1.72 
+Variance score: 0.92 
+Mean squared error:595.29 
+Nombre de points: 11764
+############# Emax versus Gmax ######################
+y =  2.31 * x + 9.94 
+Variance score: 0.69 
+Mean squared error:5193.19 
+Nombre de points: 11764
+############# Gmin versus Gmax ######################
+y =  0.50 * x + -0.47 
+Variance score: 0.91 
+Mean squared error:105.14 
+Nombre de points: 11764
+############# elasticity.G_Reuss versus Gmax ######################
+y =  0.64 * x + 0.35 
+Variance score: 0.97 
+Mean squared error:43.57 
+Nombre de points: 11764
+############# elasticity.G_Voigt versus Gmax ######################
+y =  0.74 * x + 0.68 
+Variance score: 0.91 
+Mean squared error:153.13 
+Nombre de points: 11764
+############# elasticity.G_Voigt_Reuss_Hill versus Gmax ######################
+y =  0.69 * x + 0.51 
+Variance score: 0.97 
+Mean squared error:55.42 
+Nombre de points: 11764
+############# elasticity.K_Reuss versus Gmax ######################
+y =  1.02 * x + 29.50 
+Variance score: 0.64 
+Mean squared error:1853.10 
+Nombre de points: 11764
+############# elasticity.K_Voigt versus Gmax ######################
+y =  1.06 * x + 30.27 
+Variance score: 0.63 
+Mean squared error:1883.39 
+Nombre de points: 11764
+############# elasticity.K_Voigt_Reuss_Hill versus Gmax ######################
+y =  1.04 * x + 29.88 
+Variance score: 0.64 
+Mean squared error:1828.81 
+Nombre de points: 11764
+############# minLC versus elasticity.G_Reuss ######################
+y =  -0.07 * x + 8.36 
+Variance score: 0.06 
+Mean squared error:127.42 
+Nombre de points: 11398
+############# maxLC versus elasticity.G_Reuss ######################
+y =  -0.29 * x + 27.91 
+Variance score: 0.04 
+Mean squared error:3115.56 
+Nombre de points: 11764
+############# minNu versus elasticity.G_Reuss ######################
+y =  0.00 * x + 0.12 
+Variance score: 0.00 
+Mean squared error:0.01 
+Nombre de points: 8203
+############# maxNu versus elasticity.G_Reuss ######################
+y =  -0.00 * x + 0.76 
+Variance score: 0.14 
+Mean squared error:0.11 
+Nombre de points: 11732
+############# Emin versus elasticity.G_Reuss ######################
+y =  2.10 * x + -4.02 
+Variance score: 0.96 
+Mean squared error:296.68 
+Nombre de points: 11764
+############# Emax versus elasticity.G_Reuss ######################
+y =  2.70 * x + 50.46 
+Variance score: 0.71 
+Mean squared error:4922.94 
+Nombre de points: 11764
+############# Gmin versus elasticity.G_Reuss ######################
+y =  0.84 * x + -3.32 
+Variance score: 0.96 
+Mean squared error:49.66 
+Nombre de points: 11764
+############# Gmax versus elasticity.G_Reuss ######################
+y =  1.15 * x + 18.52 
+Variance score: 0.74 
+Mean squared error:769.91 
+Nombre de points: 11764
+############# elasticity.G_Voigt versus elasticity.G_Reuss ######################
+y =  1.00 * x + 7.81 
+Variance score: 0.92 
+Mean squared error:139.89 
+Nombre de points: 11764
+############# elasticity.G_Voigt_Reuss_Hill versus elasticity.G_Reuss ######################
+y =  1.00 * x + 3.90 
+Variance score: 0.98 
+Mean squared error:35.10 
+Nombre de points: 11764
+############# elasticity.K_Reuss versus elasticity.G_Reuss ######################
+y =  1.43 * x + 37.01 
+Variance score: 0.64 
+Mean squared error:1861.58 
+Nombre de points: 11764
+############# elasticity.K_Voigt versus elasticity.G_Reuss ######################
+y =  1.41 * x + 41.45 
+Variance score: 0.63 
+Mean squared error:1892.18 
+Nombre de points: 11764
+############# elasticity.K_Voigt_Reuss_Hill versus elasticity.G_Reuss ######################
+y =  1.42 * x + 39.23 
+Variance score: 0.64 
+Mean squared error:1839.52 
+Nombre de points: 11764
+############# minLC versus elasticity.G_Voigt ######################
+y =  -0.07 * x + 9.06 
+Variance score: 0.06 
+Mean squared error:127.20 
+Nombre de points: 11398
+############# maxLC versus elasticity.G_Voigt ######################
+y =  -0.23 * x + 26.91 
+Variance score: 0.04 
+Mean squared error:3110.42 
+Nombre de points: 11764
+############# minNu versus elasticity.G_Voigt ######################
+y =  -0.00 * x + 0.13 
+Variance score: -0.00 
+Mean squared error:0.01 
+Nombre de points: 8203
+############# maxNu versus elasticity.G_Voigt ######################
+y =  -0.00 * x + 0.71 
+Variance score: 0.12 
+Mean squared error:0.11 
+Nombre de points: 11732
+############# Emin versus elasticity.G_Voigt ######################
+y =  1.89 * x + -8.96 
+Variance score: 0.96 
+Mean squared error:334.05 
+Nombre de points: 11764
+############# Emax versus elasticity.G_Voigt ######################
+y =  2.92 * x + 18.28 
+Variance score: 0.69 
+Mean squared error:5101.77 
+Nombre de points: 11764
+############# Gmin versus elasticity.G_Voigt ######################
+y =  0.75 * x + -5.11 
+Variance score: 0.95 
+Mean squared error:57.07 
+Nombre de points: 11764
+############# Gmax versus elasticity.G_Voigt ######################
+y =  1.24 * x + 5.10 
+Variance score: 0.72 
+Mean squared error:801.80 
+Nombre de points: 11764
+############# elasticity.G_Reuss versus elasticity.G_Voigt ######################
+y =  0.92 * x + -3.53 
+Variance score: 1.00 
+Mean squared error:4.23 
+Nombre de points: 11764
+############# elasticity.G_Voigt_Reuss_Hill versus elasticity.G_Voigt ######################
+y =  0.96 * x + -1.77 
+Variance score: 0.98 
+Mean squared error:37.06 
+Nombre de points: 11764
+############# elasticity.K_Reuss versus elasticity.G_Voigt ######################
+y =  1.40 * x + 27.69 
+Variance score: 0.64 
+Mean squared error:1852.34 
+Nombre de points: 11764
+############# elasticity.K_Voigt versus elasticity.G_Voigt ######################
+y =  1.42 * x + 29.81 
+Variance score: 0.63 
+Mean squared error:1893.81 
+Nombre de points: 11764
+############# elasticity.K_Voigt_Reuss_Hill versus elasticity.G_Voigt ######################
+y =  1.41 * x + 28.75 
+Variance score: 0.64 
+Mean squared error:1834.81 
+Nombre de points: 11764
+############# minLC versus elasticity.G_Voigt_Reuss_Hill ######################
+y =  -0.07 * x + 8.78 
+Variance score: 0.06 
+Mean squared error:127.37 
+Nombre de points: 11398
+############# maxLC versus elasticity.G_Voigt_Reuss_Hill ######################
+y =  -0.26 * x + 27.73 
+Variance score: 0.04 
+Mean squared error:3112.19 
+Nombre de points: 11764
+############# minNu versus elasticity.G_Voigt_Reuss_Hill ######################
+y =  0.00 * x + 0.13 
+Variance score: 0.00 
+Mean squared error:0.01 
+Nombre de points: 8203
+############# maxNu versus elasticity.G_Voigt_Reuss_Hill ######################
+y =  -0.00 * x + 0.74 
+Variance score: 0.14 
+Mean squared error:0.11 
+Nombre de points: 11732
+############# Emin versus elasticity.G_Voigt_Reuss_Hill ######################
+y =  2.04 * x + -8.79 
+Variance score: 0.96 
+Mean squared error:302.81 
+Nombre de points: 11764
+############# Emax versus elasticity.G_Voigt_Reuss_Hill ######################
+y =  2.87 * x + 31.62 
+Variance score: 0.70 
+Mean squared error:4985.83 
+Nombre de points: 11764
+############# Gmin versus elasticity.G_Voigt_Reuss_Hill ######################
+y =  0.81 * x + -5.13 
+Variance score: 0.96 
+Mean squared error:50.97 
+Nombre de points: 11764
+############# Gmax versus elasticity.G_Voigt_Reuss_Hill ######################
+y =  1.22 * x + 10.63 
+Variance score: 0.73 
+Mean squared error:780.68 
+Nombre de points: 11764
+############# elasticity.G_Reuss versus elasticity.G_Voigt_Reuss_Hill ######################
+y =  0.98 * x + -2.85 
+Variance score: 1.00 
+Mean squared error:0.60 
+Nombre de points: 11764
+############# elasticity.G_Voigt versus elasticity.G_Voigt_Reuss_Hill ######################
+y =  1.02 * x + 2.86 
+Variance score: 0.92 
+Mean squared error:141.86 
+Nombre de points: 11764
+############# elasticity.K_Reuss versus elasticity.G_Voigt_Reuss_Hill ######################
+y =  1.44 * x + 30.84 
+Variance score: 0.64 
+Mean squared error:1859.41 
+Nombre de points: 11764
+############# elasticity.K_Voigt versus elasticity.G_Voigt_Reuss_Hill ######################
+y =  1.44 * x + 34.16 
+Variance score: 0.63 
+Mean squared error:1894.61 
+Nombre de points: 11764
+############# elasticity.K_Voigt_Reuss_Hill versus elasticity.G_Voigt_Reuss_Hill ######################
+y =  1.44 * x + 32.50 
+Variance score: 0.64 
+Mean squared error:1839.41 
+Nombre de points: 11764
+############# minLC versus elasticity.K_Reuss ######################
+y =  -0.05 * x + 10.57 
+Variance score: 0.07 
+Mean squared error:125.06 
+Nombre de points: 11398
+############# maxLC versus elasticity.K_Reuss ######################
+y =  -0.21 * x + 36.23 
+Variance score: 0.06 
+Mean squared error:3056.63 
+Nombre de points: 11764
+############# minNu versus elasticity.K_Reuss ######################
+y =  0.00 * x + 0.10 
+Variance score: -0.00 
+Mean squared error:0.01 
+Nombre de points: 8203
+############# maxNu versus elasticity.K_Reuss ######################
+y =  -0.00 * x + 0.68 
+Variance score: 0.10 
+Mean squared error:0.12 
+Nombre de points: 11732
+############# Emin versus elasticity.K_Reuss ######################
+y =  0.96 * x + -5.77 
+Variance score: 0.89 
+Mean squared error:781.96 
+Nombre de points: 11764
+############# Emax versus elasticity.K_Reuss ######################
+y =  1.43 * x + 28.04 
+Variance score: 0.68 
+Mean squared error:5379.46 
+Nombre de points: 11764
+############# Gmin versus elasticity.K_Reuss ######################
+y =  0.36 * x + -1.98 
+Variance score: 0.86 
+Mean squared error:162.06 
+Nombre de points: 11764
+############# Gmax versus elasticity.K_Reuss ######################
+y =  0.58 * x + 12.08 
+Variance score: 0.70 
+Mean squared error:880.01 
+Nombre de points: 11764
+############# elasticity.G_Reuss versus elasticity.K_Reuss ######################
+y =  0.45 * x + 0.06 
+Variance score: 0.92 
+Mean squared error:125.37 
+Nombre de points: 11764
+############# elasticity.G_Voigt versus elasticity.K_Reuss ######################
+y =  0.47 * x + 5.09 
+Variance score: 0.86 
+Mean squared error:251.69 
+Nombre de points: 11764
+############# elasticity.G_Voigt_Reuss_Hill versus elasticity.K_Reuss ######################
+y =  0.46 * x + 2.57 
+Variance score: 0.91 
+Mean squared error:152.59 
+Nombre de points: 11764
+############# elasticity.K_Voigt versus elasticity.K_Reuss ######################
+y =  0.98 * x + 5.62 
+Variance score: 0.63 
+Mean squared error:1885.26 
+Nombre de points: 11764
+############# elasticity.K_Voigt_Reuss_Hill versus elasticity.K_Reuss ######################
+y =  0.99 * x + 2.81 
+Variance score: 0.64 
+Mean squared error:1827.77 
+Nombre de points: 11764
+############# minLC versus elasticity.K_Voigt ######################
+y =  -0.05 * x + 10.94 
+Variance score: 0.07 
+Mean squared error:125.22 
+Nombre de points: 11398
+############# maxLC versus elasticity.K_Voigt ######################
+y =  -0.18 * x + 33.48 
+Variance score: 0.06 
+Mean squared error:3057.31 
+Nombre de points: 11764
+############# minNu versus elasticity.K_Voigt ######################
+y =  0.00 * x + 0.11 
+Variance score: -0.00 
+Mean squared error:0.01 
+Nombre de points: 8203
+############# maxNu versus elasticity.K_Voigt ######################
+y =  -0.00 * x + 0.66 
+Variance score: 0.08 
+Mean squared error:0.12 
+Nombre de points: 11732
+############# Emin versus elasticity.K_Voigt ######################
+y =  0.95 * x + -8.04 
+Variance score: 0.89 
+Mean squared error:794.12 
+Nombre de points: 11764
+############# Emax versus elasticity.K_Voigt ######################
+y =  1.52 * x + 13.23 
+Variance score: 0.68 
+Mean squared error:5325.08 
+Nombre de points: 11764
+############# Gmin versus elasticity.K_Voigt ######################
+y =  0.36 * x + -2.97 
+Variance score: 0.86 
+Mean squared error:162.69 
+Nombre de points: 11764
+############# Gmax versus elasticity.K_Voigt ######################
+y =  0.61 * x + 6.98 
+Variance score: 0.70 
+Mean squared error:861.32 
+Nombre de points: 11764
+############# elasticity.G_Reuss versus elasticity.K_Voigt ######################
+y =  0.45 * x + -1.41 
+Variance score: 0.92 
+Mean squared error:123.79 
+Nombre de points: 11764
+############# elasticity.G_Voigt versus elasticity.K_Voigt ######################
+y =  0.49 * x + 1.88 
+Variance score: 0.86 
+Mean squared error:237.56 
+Nombre de points: 11764
+############# elasticity.G_Voigt_Reuss_Hill versus elasticity.K_Voigt ######################
+y =  0.47 * x + 0.23 
+Variance score: 0.91 
+Mean squared error:143.26 
+Nombre de points: 11764
+############# elasticity.K_Reuss versus elasticity.K_Voigt ######################
+y =  0.99 * x + -2.59 
+Variance score: 0.65 
+Mean squared error:1823.36 
+Nombre de points: 11764
+############# elasticity.K_Voigt_Reuss_Hill versus elasticity.K_Voigt ######################
+y =  1.00 * x + -1.30 
+Variance score: 0.64 
+Mean squared error:1831.44 
+Nombre de points: 11764
+############# minLC versus elasticity.K_Voigt_Reuss_Hill ######################
+y =  -0.05 * x + 10.78 
+Variance score: 0.07 
+Mean squared error:125.20 
+Nombre de points: 11398
+############# maxLC versus elasticity.K_Voigt_Reuss_Hill ######################
+y =  -0.20 * x + 35.04 
+Variance score: 0.06 
+Mean squared error:3057.38 
+Nombre de points: 11764
+############# minNu versus elasticity.K_Voigt_Reuss_Hill ######################
+y =  0.00 * x + 0.10 
+Variance score: -0.00 
+Mean squared error:0.01 
+Nombre de points: 8203
+############# maxNu versus elasticity.K_Voigt_Reuss_Hill ######################
+y =  -0.00 * x + 0.67 
+Variance score: 0.09 
+Mean squared error:0.12 
+Nombre de points: 11732
+############# Emin versus elasticity.K_Voigt_Reuss_Hill ######################
+y =  0.96 * x + -7.65 
+Variance score: 0.90 
+Mean squared error:781.05 
+Nombre de points: 11764
+############# Emax versus elasticity.K_Voigt_Reuss_Hill ######################
+y =  1.49 * x + 19.61 
+Variance score: 0.68 
+Mean squared error:5338.31 
+Nombre de points: 11764
+############# Gmin versus elasticity.K_Voigt_Reuss_Hill ######################
+y =  0.36 * x + -2.76 
+Variance score: 0.86 
+Mean squared error:161.30 
+Nombre de points: 11764
+############# Gmax versus elasticity.K_Voigt_Reuss_Hill ######################
+y =  0.60 * x + 9.11 
+Variance score: 0.70 
+Mean squared error:868.89 
+Nombre de points: 11764
+############# elasticity.G_Reuss versus elasticity.K_Voigt_Reuss_Hill ######################
+y =  0.45 * x + -1.02 
+Variance score: 0.92 
+Mean squared error:123.26 
+Nombre de points: 11764
+############# elasticity.G_Voigt versus elasticity.K_Voigt_Reuss_Hill ######################
+y =  0.48 * x + 3.13 
+Variance score: 0.86 
+Mean squared error:243.44 
+Nombre de points: 11764
+############# elasticity.G_Voigt_Reuss_Hill versus elasticity.K_Voigt_Reuss_Hill ######################
+y =  0.47 * x + 1.06 
+Variance score: 0.91 
+Mean squared error:146.74 
+Nombre de points: 11764
+############# elasticity.K_Reuss versus elasticity.K_Voigt_Reuss_Hill ######################
+y =  1.00 * x + -2.07 
+Variance score: 0.64 
+Mean squared error:1839.76 
+Nombre de points: 11764
+############# elasticity.K_Voigt versus elasticity.K_Voigt_Reuss_Hill ######################
+y =  1.00 * x + 2.08 
+Variance score: 0.63 
+Mean squared error:1904.99 
+Nombre de points: 11764

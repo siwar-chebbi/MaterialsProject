@@ -18,13 +18,14 @@ def importer(fichier):
 
 # correspond a elate_properties_all_materials_filtered.py
 
+
 propsDisplay = ["minLC", "maxLC", "minNu", "maxNu", "Emin", "Emax", "Gmin", "Gmax",
                 'elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill',
-                'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
+               'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill']
 
 propsPlotLabel = [u'$LC_{min} (GPa)$', u'$LC_{max}(GPa)$', u'$\mu_{min}(GPa)$', u'$\mu_{max}(GPa)$', u'$E_{min}(GPa)$', '$E_{max}(GPa)$', u'$G_{min}(GPa)$', '$G_{max}(GPa)$',
                   u'$G_{Reuss} (GPa)$', u'$G_{Voigt}(GPa)$', u'$G_{Voigt\u2000Reuss\u2000Hill}(GPa)$',
-                  u'$K_{Reuss}(GPa)$', '$K_{Voigt}(GPa)$', u'$K_{Voigt\u2000Reuss\u2000Hill}(GPa)$']
+                 u'$K_{Reuss}(GPa)$', '$K_{Voigt}(GPa)$', u'$K_{Voigt\u2000Reuss\u2000Hill}(GPa)$']
 
 
 propsPlotLabelSansGPA = [u'$G_{Reuss} $', u'$G_{Voigt}$', u'$G_{Voigt\u2000Reuss\u2000Hill}$',
@@ -32,9 +33,9 @@ propsPlotLabelSansGPA = [u'$G_{Reuss} $', u'$G_{Voigt}$', u'$G_{Voigt\u2000Reuss
 
 
 # fichiers input (csv) et output (pdf)
-data = importer("elasticElate_ALL_revisionArt_without_Zero.csv")
+data = importer("elasticElate_ALL_revisionArt_without_Zero_HYP.csv")
 data.head()
-pdf = matplotlib.backends.backend_pdf.PdfPages("elasticElate_ALL_revisionArt_without_ZeroAND1sur3G_14JUIN3000*3000.pdf")
+pdf = matplotlib.backends.backend_pdf.PdfPages("elasticElate_ALL_revisionArt_without_Zero3000X3000_HYP.pdf")
 
 # valeurs poisson
 poisson = data['elasticity.poisson_ratio'].get_values()
@@ -86,6 +87,10 @@ for prop1 in propsDisplay:
                 # + '\n Mean squared error: ' + "{:.2f}".format( mean_squared_error(data_y_pred, data_Y_log))
 
             area = 0.1
+            max_x_log = 3000
+            max_y_log = 3000
+            min_x_log = 1
+            min_y_log = 1
             # 2 subplots superposees
             fig = plt.figure()
             ax1 = fig.add_subplot(111, label="log10")
@@ -105,13 +110,13 @@ for prop1 in propsDisplay:
             #                 norm=normalize, alpha=3)
             ax1.set_xscale('log')
             ax1.set_yscale('log')
-            ax1.set_xlim(1, 3000)
-            ax1.set_ylim(1, 3000)
+            ax1.set_xlim(min_x_log, max_x_log)
+            ax1.set_ylim(min_y_log, max_y_log)
 
             # subplot regression lineaire (droite)
             ax2.plot(sorted(data_X_log), data_y_pred, color='black', linewidth=1)
-            ax2.set_xlim(0, 4)
-            ax2.set_ylim(0, 4)
+            ax2.set_xlim(math.log10(min_x_log), math.log10(max_x_log))
+            ax2.set_ylim(math.log10(min_y_log), math.log10(max_y_log))
             ax2.set_yticklabels([])
             ax2.set_xticklabels([])
 

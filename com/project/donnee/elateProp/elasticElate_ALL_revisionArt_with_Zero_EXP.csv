@@ -1,4 +1,4 @@
-,minLC,maxLC,minNu,maxNu,Emin,Emax,Gmin,Gmax,elasticity.G_Reuss,elasticity.G_Voigt,elasticity.G_Voigt_Reuss_Hill,elasticity.K_Reuss,elasticity.K_Voigt,elasticity.K_Voigt_Reuss_Hill,elasticity.poisson_ratio
+,minLC,maxLC,minNu,maxNu,elasticity.K_Voigt_Reuss_Hill,Emin,Emax,Gmin,Gmax,elasticity.G_Reuss,elasticity.G_Voigt,elasticity.G_Voigt_Reuss_Hill,elasticity.K_Reuss,elasticity.K_Voigt,elasticity.poisson_ratio
 mp-7615,1999.9999999999989,3249.9999999999986,-1.5000000000000004,-0.5853659915749893,0.0,0.7804878048780491,2.000000000000001,3.555555902981377,14.999999983640494,7.0,10.0,9.0,0.0,0.0,-0.85
 mp-23158,1000.0,1000.0,-0.3333332349409845,0.0,1.0,1.0,1.499999999490442,0.5000000848952316,1.0000000000000002,0.0,0.0,0.0,1.0,1.0,0.21
 mp-610917,83.33333333333337,166.66666666666669,0.1408775039077185,0.5727485603340924,2.0,1.5,2.666666666666667,0.5000000004330549,1.0000000000000002,0.0,1.0,1.0,2.0,2.0,0.38

@@ -1,5 +1,5 @@
 from pymatgen import MPRester
-from MaterialsProject.com.project.elate import elastic
+from com.project.elate import elastic
 import numpy as np
 import pandas as pd
 
@@ -112,7 +112,7 @@ propsDisplay_old = ["minLC", "maxLC", "minNu", "maxNu", "K_Voigt_Reuss_Hill", "E
                     "elasticity.poisson_ratio"]
 propsDisplay = ["minLC", "maxLC", "minNu", "maxNu", "Emin", "Emax", "Gmin", "Gmax",
                 'elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill',
-                'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill', 'elasticity.poisson_ratio',]
+                'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill', 'elasticity.poisson_ratio']
 
 col = len(propsDisplay)
 lin = len(materials)
@@ -140,16 +140,16 @@ def recup(materials):
                 tableau[i, 1] = calculMaxLC(elastElement)[1]
                 tableau[i, 2] = calculMinNu(elastElement)[1]
                 tableau[i, 3] = calculMaxNu(elastElement)[1]
-                tableau[i, 4] = material.get("elasticity.K_Voigt_Reuss_Hill")
-                tableau[i, 5] = calculMinYoung(elastElement)[1]
-                tableau[i, 6] = calculMaxYoung(elastElement)[1]
-                tableau[i, 7] = calculMinG(elastElement)[1]
-                tableau[i, 8] = calculMaxG(elastElement)[1]
-                tableau[i, 9] = material.get('elasticity.G_Reuss')
-                tableau[i, 10] = material.get('elasticity.G_Voigt')
-                tableau[i, 11] = material.get('elasticity.G_Voigt_Reuss_Hill')
-                tableau[i, 12] = material.get('elasticity.K_Reuss')
-                tableau[i, 13] = material.get('elasticity.K_Voigt')
+                tableau[i, 4] = calculMinYoung(elastElement)[1]
+                tableau[i, 5] = calculMaxYoung(elastElement)[1]
+                tableau[i, 6] = calculMinG(elastElement)[1]
+                tableau[i, 7] = calculMaxG(elastElement)[1]
+                tableau[i, 8] = material.get('elasticity.G_Reuss')
+                tableau[i, 9] = material.get('elasticity.G_Voigt')
+                tableau[i, 10] = material.get('elasticity.G_Voigt_Reuss_Hill')
+                tableau[i, 11] = material.get('elasticity.K_Reuss')
+                tableau[i, 12] = material.get('elasticity.K_Voigt')
+                tableau[i, 13] = material.get("elasticity.K_Voigt_Reuss_Hill")
                 tableau[i, 14] = material.get("elasticity.poisson_ratio")
                 i = i + 1
             else:

@@ -8,13 +8,20 @@ import matplotlib.cm as cm
 import matplotlib.colors as color
 import math
 
+propsTableau = ["minLC", "maxLC", "minNu", "maxNu", "Emin", "Emax", "Gmin", "Gmax",
+                'elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill',
+                'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.K_Voigt_Reuss_Hill', 'elasticity.poisson_ratio']
+
+propsPlotLabel = [u'$LC_{min} (GPa)$', u'$LC_{max}(GPa)$', u'$\mu_{min}(GPa)$', u'$\mu_{max}(GPa)$', u'$E_{min}(GPa)$',
+                  '$E_{max}(GPa)$', u'$G_{min}(GPa)$', '$G_{max}(GPa)$',
+                  u'$G_{Reuss} (GPa)$', u'$G_{Voigt}(GPa)$', u'$G_{Voigt\u2000Reuss\u2000Hill}(GPa)$',
+                  u'$K_{Reuss}(GPa)$', '$K_{Voigt}(GPa)$', u'$K_{Voigt\u2000Reuss\u2000Hill}(GPa)$', u'$Poisson\u2000ratio$']
 
 
-propsTableau = ["minLC", "maxLC", "minNu", "maxNu", "K_Voigt_Reuss_Hill", "Emin", "Emax", "Gmin", "Gmax"]
 
-propsPlotLabel = [u'$LC_{min} (GPa)$', u'$LC_{max}(GPa)$', u'$\mu_{min}(GPa)$', u'$\mu_{max}(GPa)$',
-                  u'$K_{Voigt\u2000Reuss\u2000Hill}(GPa)$', u'$E_{min}(GPa)$', '$E_{max}(GPa)$', u'$G_{min}(GPa)$',
-                  '$G_{max}(GPa)$']
+#propsTableau = ["minLC", "maxLC", "minNu", "maxNu", "K_Voigt_Reuss_Hill", "Emin", "Emax", "Gmin", "Gmax"]
+
+#propsPlotLabel = [u'$LC_{min} (GPa)$', u'$LC_{max}(GPa)$', u'$\mu_{min}(GPa)$', u'$\mu_{max}(GPa)$', u'$K_{Voigt\u2000Reuss\u2000Hill}(GPa)$', u'$E_{min}(GPa)$', '$E_{max}(GPa)$', u'$G_{min}(GPa)$', '$G_{max}(GPa)$']
 
 
 def importer(fichier):
@@ -57,7 +64,7 @@ def drawTable(propsTableauToPlot, pdffile):
     maxY= 100
     minY= 1
 
-    nbIntervalle = 500
+    nbIntervalle = 50
     pas = (maxY - minY) / nbIntervalle
     bins = []
     for i in range(0, nbIntervalle):
@@ -70,7 +77,7 @@ def drawTable(propsTableauToPlot, pdffile):
              histtype='bar')  # bar est le defaut
 
     # plt.ylim(minY, maxY)
-    plt.ylabel('Nombre of structures')
+    plt.ylabel('Number of structures')
     plt.gca().set_xscale("log")
     # plt.xlabel('propriete')
     # plt.title('Histogramme')
