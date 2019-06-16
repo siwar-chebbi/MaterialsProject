@@ -25,11 +25,7 @@ print("\nNombre de tous les éléments dans le fichier csv = {}\n".format(data.s
 #print("Nombre d'éléments extraits avec minNu < 0 = {}\n".format(extract_data1.shape[0]))
 
 extract_data2 = data[(data['minLC'] < 0)]
-extract_data2.to_csv("Extract_nagative_minLCEXP"
-                     ""
-                     ""
-                     ""
-                     ".csv")
+extract_data2.to_csv("Extract_nagative_minLCEXP.csv")
 print("Nombre d'éléments extraits avec  minLC < 0 = {}\n".format(extract_data2.shape[0]))
 
 #extract_data3 = data[(data['elasticity.poisson_ratio'] < 0)]
