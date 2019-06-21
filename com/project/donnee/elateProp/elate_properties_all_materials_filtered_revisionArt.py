@@ -1,5 +1,5 @@
 from pymatgen import MPRester
-from com.project.elate import elastic
+from MaterialsProject.com.project.elate import elastic
 import numpy as np
 import pandas as pd
 
@@ -16,12 +16,20 @@ critere1 = {"nelements": {'$lte': 6}, 'elements': {'$all': composes}, "elasticit
             "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0}, "elasticity.K_Reuss": {'$gte': 0},
             "elasticity.K_Voigt": {'$gte': 0}, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
 
-# critere2: tous les elements elastiques ratio de poisson positif
-critere2 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$gt': 0},
+# critere2: tous les elements elastiques ratio de poisson negatif
+critere2 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$lt': 0},
             "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
             "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
             "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
             "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
+
+critere2EXP = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, 'icsd_ids.0': {'$exists': True}, "elasticity.poisson_ratio": {'$lt': 0},
+            "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
+            "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
+            "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
+            "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
+
+
 # critere3: tous les elements elastiques
 critere3 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None},
             "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
@@ -57,7 +65,7 @@ critere4HYP = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, 'icsd_ids.
                "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
                "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
 
-materials = api.query(criteria=critere4HYP, properties=propsTableau)
+materials = api.query(criteria=critere2EXP, properties=propsTableau)
 
 
 # test= elastic.ELATE_MaterialsProject("mp-2133")
@@ -183,14 +191,14 @@ def export_equal_0(file_name):
                          (data['elasticity.K_Reuss'] == 0) |
                          (data['elasticity.K_Voigt'] == 0) |
                          (data['elasticity.K_Voigt_Reuss_Hill'] == 0)]
-    extract_data2.to_csv("elasticElate_ALL_revisionArt_without_Zero_HYP.csv")
-    extract_data3.to_csv("elasticElate_ALL_revisionArt_with_Zero_HYP.csv")
+    extract_data2.to_csv("elasticElate_ALL_revisionArt_without_Zero_PoissonNega_EXP.csv")
+    extract_data3.to_csv("elasticElate_ALL_revisionArt_with_Zero_PoissonNega_EXP.csv")
 
 resultat = recup(materials)
 
-export(resultat, materialIds, propsDisplay, "elasticElate_ALL_revisionArt_HYP.csv")
+export(resultat, materialIds, propsDisplay, "elasticElate_ALL_revisionArt_PoissonNega_EXP.csv")
 
-export_equal_0("elasticElate_ALL_revisionArt_HYP.csv")
+export_equal_0("elasticElate_ALL_revisionArt_PoissonNega_EXP.csv")
 
 print("materials non conformes, eigenVal negative:\n" + str(materialNonConformeEigenvalNegative))
 print("materials non conformes, matrice singuliere:\n" + str(materialNonConformeMatSinguliere))

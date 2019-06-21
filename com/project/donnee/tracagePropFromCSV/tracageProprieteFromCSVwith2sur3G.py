@@ -58,7 +58,7 @@ def generation_pdf(csv_source, pdf_file):
 
                 data_X2 = np.vstack(cleaned_x)
                 data_Y2 = cleaned_y
-                cleaned_x2sur3 = [i * 1 / 3 for i in data_X2]
+                cleaned_x2sur3 = [i * 2.2 for i in data_X2]
                 # cleaned_x8sur3 = [i * 8 / 3 for i in data_X_log]
 
                 # regession lineaire de log10(y) =f(log10(x))
@@ -89,7 +89,7 @@ def generation_pdf(csv_source, pdf_file):
                 ax1 = fig.add_subplot(111, label="log10")
                 ax2 = fig.add_subplot(111, label="regression", frame_on=False)
                 # rajouter 2sur3 de G
-                ax3 = fig.add_subplot(111, label="1sur3", frame_on=False)
+                #ax3 = fig.add_subplot(111, label="1sur3", frame_on=False)
                 # ax4 = fig.add_subplot(111, label="8sur3", frame_on=False)
 
                 # subplot de tous les points
@@ -114,12 +114,12 @@ def generation_pdf(csv_source, pdf_file):
                 ax2.set_xticklabels([])
 
                 # subplot 1/3  (droite)
-                ax3.plot(sorted(data_X2), sorted(cleaned_x2sur3), color='green', linewidth=1)
-                ax3.text(1.9, 0.7, '1/3G', fontsize=6, color='green', rotation=19)
-                ax3.set_xlim(0, 1e3)
-                ax3.set_ylim(0, 1e3)
-                ax3.set_yticklabels([])
-                ax3.set_xticklabels([])
+                #ax3.plot(sorted(data_X2), sorted(cleaned_x2sur3), color='green', linewidth=1)
+                #ax3.text(0.75, 1.9, '2.2G', fontsize=6, color='green', rotation=55)
+                #ax3.set_xlim(0, 1e3)
+                #ax3.set_ylim(0, 1e3)
+                #ax3.set_yticklabels([])
+                #ax3.set_xticklabels([])
 
                 # subplot 8/3  (droite)
                 # ax4.plot(sorted(data_X_log), sorted(cleaned_x8sur3), "--", color='orange', linewidth=2)
@@ -145,7 +145,9 @@ def generation_pdf(csv_source, pdf_file):
 
 
 #generation_pdf("elasticElate_ALL_revisionArt_without_Zero.csv", "elasticElate_ALL_revisionArt_without_LOG_AND_Zero.pdf")
-print("#################################################################################################\n""#################################################################################################\n")
+#print("#################################################################################################\n""#################################################################################################\n")
 generation_pdf("elasticElate_ALL_revisionArt_without_Zero_EXP.csv", "elasticElate_ALL_revisionArt_without_LOG_AND_Zero_EXP.pdf")
-print("#################################################################################################\n""#################################################################################################\n")
-generation_pdf("elasticElate_ALL_revisionArt_without_Zero_HYP.csv", "elasticElate_ALL_revisionArt_without_LOG_AND_Zero_HYP.pdf")
+#print("#################################################################################################\n""#################################################################################################\n")
+#generation_pdf("elasticElate_ALL_revisionArt_without_Zero_HYP.csv", "elasticElate_ALL_revisionArt_without_LOG_AND_Zero_HYP.pdf")
+#print("#################################################################################################\n""#################################################################################################\n")
+#generation_pdf("elasticElate_ALL_revisionArt_without_Zero.csv", "elasticElate_ALL_revisionArt_without_LOG_AND_Zero.pdf")

@@ -30,7 +30,7 @@ def importer(fichier):
     return pd.read_csv(fichier)
 
 
-data = importer("elasticElate_ALL_revisionArt_without_Zero.csv")
+data = importer("elasticElate_ALL_revisionArt_without_Zero_HYP.csv")
 data.head()
 
 
@@ -49,7 +49,7 @@ def drawTable(propsTableauToPlot, pdffile, prop_graph, prop_scale):
         tableauLabel = propsPlotLabel[propsTableau.index(prop)]
         # couleur = cm((1 + propsTableauToPlot.index(prop)) / (len(propsTableauToPlot) + 1))
     # http://www.python-simple.com/python-matplotlib/histogram.php
-    nbIntervalle = 50  # 45 avec ratio poisson ; 50 pour K et G
+    nbIntervalle = 45  # 45 avec ratio poisson ; 50 pour K et G
     pas = (maxY - minY) / nbIntervalle
     bins = []
     for i in range(0, nbIntervalle):
@@ -102,22 +102,22 @@ def drawTable(propsTableauToPlot, pdffile, prop_graph, prop_scale):
 
 cm = cm.get_cmap('gist_rainbow')
 propsToPlot = ['elasticity.G_Voigt_Reuss_Hill']
-drawTable(propsToPlot, "histogrammeGVRH_LOG_ALL.pdf", "G", "log")
-drawTable(propsToPlot, "histogrammeGVRH_ALL.pdf", "G", "")
+drawTable(propsToPlot, "histogrammeGVRH_LOG_ALL_HYP.pdf", "G", "log")
+drawTable(propsToPlot, "histogrammeGVRH_ALL_HYP.pdf", "G", "")
 propsToPlot3 = ['elasticity.G_Reuss']
-drawTable(propsToPlot3, "histogrammeGReuss_LOG_ALL.pdf", "G", "log")
-drawTable(propsToPlot3, "histogrammeGReuss_ALL.pdf", "G", "")
+drawTable(propsToPlot3, "histogrammeGReuss_LOG_ALL_HYP.pdf", "G", "log")
+drawTable(propsToPlot3, "histogrammeGReuss_ALL_HYP.pdf", "G", "")
 propsToPlot4 = ['elasticity.G_Voigt']
-drawTable(propsToPlot4, "histogrammeGVoigt_LOG_ALL.pdf", "G", "log")
-drawTable(propsToPlot4, "histogrammeGVoigt_ALL.pdf", "G", "")
+drawTable(propsToPlot4, "histogrammeGVoigt_LOG_ALL_HYP.pdf", "G", "log")
+drawTable(propsToPlot4, "histogrammeGVoigt_ALL_HYP.pdf", "G", "")
 propsToPlot5 = ['elasticity.K_Reuss']
-drawTable(propsToPlot5, "histogrammeKReuss_LOG_ALL.pdf", "K", "log")
-drawTable(propsToPlot5, "histogrammeKReuss_ALL.pdf", "K", "")
+drawTable(propsToPlot5, "histogrammeKReuss_LOG_ALL_HYP.pdf", "K", "log")
+drawTable(propsToPlot5, "histogrammeKReuss_ALL_HYP.pdf", "K", "")
 propsToPlot6 = ['elasticity.K_Voigt']
-drawTable(propsToPlot6, "histogrammeKVoigt_LOG_ALL.pdf", "K", "log")
-drawTable(propsToPlot6, "histogrammeKVoigt_ALL.pdf", "K", "")
+drawTable(propsToPlot6, "histogrammeKVoigt_LOG_ALL_HYP.pdf", "K", "log")
+drawTable(propsToPlot6, "histogrammeKVoigt_ALL_HYP.pdf", "K", "")
 propsToPlot7 = ['elasticity.K_Voigt_Reuss_Hill']
-drawTable(propsToPlot7, "histogrammeKVRH_LOG_ALL.pdf", "K", "log")
-drawTable(propsToPlot7, "histogrammeKVRH_ALL.pdf", "K", "")
-# propsToPlot2 = ['elasticity.poisson_ratio']
-# drawTable(propsToPlot2, "histogrammeRatio_ALL.pdf", "P", "")
+drawTable(propsToPlot7, "histogrammeKVRH_LOG_ALL_HYP.pdf", "K", "log")
+drawTable(propsToPlot7, "histogrammeKVRH_ALL_HYP.pdf", "K", "")
+#propsToPlot2 = ['elasticity.poisson_ratio']
+#drawTable(propsToPlot2, "histogrammeRatio_ALL_HYP.pdf", "P","")

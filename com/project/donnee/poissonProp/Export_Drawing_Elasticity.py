@@ -47,6 +47,14 @@ critere3 = {"nelements": {'$lte': 6}, 'elements': {'$in': ionique}, "elasticity"
             "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0}, "elasticity.K_Reuss": {'$gte': 0},
             "elasticity.K_Voigt": {'$gte': 0}, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
 
+
+
+critere3PoissonNega = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.poisson_ratio": {'$lt': 0},
+            "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
+            "elasticity.K_Reuss": {'$gte': 0, '$lte': 1000}, "elasticity.K_Voigt": {'$gte': 0, '$lte': 1000},
+            "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000}}
+
+
 # Less than 1000###############################################################################
 critere4 = {"nelements": {'$lte': 6}, "elasticity": {'$ne': None}, "elasticity.G_Reuss": {'$gte': 0, '$lte': 1000},
             "elasticity.G_Voigt": {'$gte': 0, '$lte': 1000}, "elasticity.G_Voigt_Reuss_Hill": {'$gte': 0, '$lte': 1000},
@@ -126,7 +134,7 @@ critere9 = {"nelements": {'$lte': 6}, 'elements': {'$all': compos}, "elasticity"
             "elasticity.K_Voigt": {'$gte': 0}, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
 
 # requete
-materials = api.query(criteria=critere4HYP, properties=propsTableauCritere)
+materials = api.query(criteria=critere3PoissonNega, properties=propsTableauCritere)
 
 # dimensions du tableau
 lin = len(propsTableau)
@@ -173,7 +181,7 @@ def export_gte_1000(file_name):
 
 
 resultat = recup(materials)
-export(resultat.transpose(), materialIds, propsTableau, "elastic_property_from_MP_DB_HYP_3961__RevisionArtic.csv")
+export(resultat.transpose(), materialIds, propsTableau, "elastic_property_from_MP_DB_RevisionArti_PoissonNega.csv")
 #export_gte_1000("recupAll.csv")
 
 ##################################Filtration des données > 1000############################

@@ -20,6 +20,7 @@ def importer(fichier):
 norm_csv = "elasticElate_ALL_revisionArt_without_Zero.csv"
 exp_csv = "elasticElate_ALL_revisionArt_without_Zero_EXP.csv"
 hyp_csv = "elasticElate_ALL_revisionArt_without_Zero_HYP.csv"
+LC_nega="Extract_nagative_minAndmaxLC.csv"
 
 propsDisplay = ["minLC", "maxLC", "minNu", "maxNu", "Emin", "Emax", "Gmin", "Gmax",
                 'elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill',
@@ -34,9 +35,9 @@ propsPlotLabelSansGPA = [u'$G_{Reuss} $', u'$G_{Voigt}$', u'$G_{Voigt\u2000Reuss
                          u'$K_{Reuss}$', '$K_{Voigt}$', u'$K_{Voigt\u2000Reuss\u2000Hill}$']
 
 # fichiers input (csv) et output (pdf)
-data = importer(hyp_csv)
+data = importer(LC_nega)
 data.head()
-pdf = matplotlib.backends.backend_pdf.PdfPages("elasticElate_ALL_revisionArt_without_Zero_with1sur3G_HYP.pdf")
+pdf = matplotlib.backends.backend_pdf.PdfPages("Extract_nagative_minAndmaxLC.pdf")
 
 # valeurs poisson
 poisson = data['elasticity.poisson_ratio'].get_values()
@@ -62,7 +63,9 @@ for prop1 in propsDisplay:
             # log10 de X et Y
             data_X_log = np.vstack(np.log10(cleaned_x))
             data_Y_log = np.log10(cleaned_y)
-            cleaned_x2sur3 = [i * 1 / 3 for i in data_X_log]
+            y22 = [ i * 2.2 for i in cleaned_x]
+            y22_log = np.log10(y22)
+            # cleaned_x2sur3 = [i * 2.2 for i in data_X_log]
             # cleaned_x8sur3 = [i * 8 / 3 for i in data_X_log]
 
             # regession lineaire de log10(y) =f(log10(x))
@@ -118,8 +121,8 @@ for prop1 in propsDisplay:
             ax2.set_xticklabels([])
 
             # subplot 1/3  (droite)
-            ax3.plot(sorted(data_X_log), sorted(cleaned_x2sur3), color='green', linewidth=1)
-            ax3.text(1.9, 0.7, '1/3G', fontsize=6, color='green', rotation=19)
+            ax3.plot(sorted(data_X_log), sorted(y22_log), color='green', linewidth=1)
+            ax3.text(0.2, 0.7, '2.2G', fontsize=6, color='green', rotation=47)
             ax3.set_xlim(0, 3)
             ax3.set_ylim(0, 3)
             ax3.set_yticklabels([])

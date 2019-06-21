@@ -19,7 +19,7 @@ def importer(fichier):
     return pd.read_csv(fichier)
 
 
-data = importer("elasticElateALL.csv")
+data = importer("elasticElate_ALL_revisionArt_without_Zero.csv")
 data.head()
 
 Emax_list = data['Emax'].get_values()
@@ -48,7 +48,7 @@ ax1 = fig.add_subplot(111, label="log10")
 ax1.set_xlim(0.80, 300)
 ax1.set_ylim(data_Y.min(), data_Y.max())
 ax1.set_xlabel("Elastic anisotropy")
-ax1.set_ylabel(u'$\mu (GPa)$')
+ax1.set_ylabel(u'$\mu$')
 ax1.set_xscale("log")
 ax1.scatter(data_X, data_Y, s=area, alpha=1, color="green")
 

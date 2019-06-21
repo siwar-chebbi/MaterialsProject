@@ -28,7 +28,7 @@ def importer(fichier):
     return pd.read_csv(fichier)
 
 
-data = importer("elasticElateALL.csv")
+data = importer("elasticElate_ALL_revisionArt_without_Zero.csv")
 data.head()
 
 Emax_list = data['Emax'].get_values()
