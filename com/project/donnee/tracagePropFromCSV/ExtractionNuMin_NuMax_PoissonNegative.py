@@ -24,9 +24,9 @@ data = importer("elasticElate_ALL_revisionArt_without_Zero.csv")
 data.head()
 print("\nNombre de tous les éléments dans le fichier csv = {}\n".format(data.shape[0]))
 
-##extract_data1 = data[(data['minNu'] < 0)]
-##extract_data1.to_csv("Extract_nagative_minNu_poisson.csv")
-##print("Nombre d'éléments extraits avec minNu < 0 = {}\n".format(extract_data1.shape[0]))
+#extract_data1 = data[(data['minNu'] < 0)]
+#extract_data1.to_csv("Extract_nagative_minNu_poisson.csv")
+#print("Nombre d'éléments extraits avec minNu < 0 = {}\n".format(extract_data1.shape[0]))
 
 #extract_data2 = data[(data['minLC'] < 0)]
 #extract_data2.to_csv("Extract_nagative_minLCEXP.csv")
@@ -49,5 +49,5 @@ print("\nNombre de tous les éléments dans le fichier csv = {}\n".format(data.s
 #print("Nombre d'éléments extraits avec minAndmaxNu < 0 = {}\n".format(extract_data6.shape[0]))
 
 extract_data7 = data[(data['minLC'] < 0)]
-extract_data7.to_csv("Extract_nagative_minAndmaxLC.csv")
+#extract_data7.to_csv("Extract_nagative_minAndmaxLC.csv")
 print("Nombre d'éléments extraits avec minAndmaxLC < 0 = {}\n".format(extract_data7.shape[0]))

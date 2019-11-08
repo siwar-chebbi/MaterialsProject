@@ -134,7 +134,7 @@ critere9 = {"nelements": {'$lte': 6}, 'elements': {'$all': compos}, "elasticity"
             "elasticity.K_Voigt": {'$gte': 0}, "elasticity.K_Voigt_Reuss_Hill": {'$gte': 0}}
 
 # requete
-materials = api.query(criteria=critere3PoissonNega, properties=propsTableauCritere)
+materials = api.query(criteria=critere4_gte_1000, properties=propsTableauCritere)
 
 # dimensions du tableau
 lin = len(propsTableau)
