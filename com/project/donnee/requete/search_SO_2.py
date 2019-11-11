@@ -2,7 +2,7 @@
 
 from pymatgen import MPRester
 
-api = MPRester("fB610TDF3LSwxiN9")
+api = MPRester("eDCEK5m9WVjmajp7e8af")
 
 compteur = 0
 
