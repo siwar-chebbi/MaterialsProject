@@ -28,7 +28,7 @@ def get_all_elements():
                 api._make_request("/element/%s/tasks/isolated_atom" % element.value, mp_decode=False)[0]
         except:
             pass
-            print("Problème de recuperation de l'élément atomique  : " + str(element))
+            print("\nProblème de recuperation de l'élément atomique  : " + str(element))
 
 
 # Import du fichier csv initlial
@@ -95,7 +95,7 @@ def get_calculated_properties(entries_var):
         try:
             average_electroneg = entry.composition.average_electroneg
         except:
-            print("Erreur calcul average_electroneg de  : " + str(entry.data['material_id']))
+            print("\nErreur calcul average_electroneg de  : " + str(entry.data['material_id']))
 
         try:
             cohesive_energy = get_cohesive_energy(entry, True)

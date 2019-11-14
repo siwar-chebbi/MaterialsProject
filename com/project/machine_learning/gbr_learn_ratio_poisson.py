@@ -19,13 +19,13 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import mean_squared_error
 import matplotlib as mpl
 
-data = pd.read_pickle('FX_dft_hero.pkl')
+data = pd.read_csv('test.csv', index_col=0)
 
 print(str(data.columns))
 
-y = data['g_vrh']
+y = data['elasticity.poisson_ratio']
 
-X = data.drop(['k_vrh', 'g_vrh', 'uni_anis', 'energy'], axis=1)
+X = data.drop(['elasticity.poisson_ratio', 'cepa'], axis=1)
 
 print(str(np.shape(X)))
 
@@ -61,7 +61,7 @@ for i in range(0, iterations):
     score = (score * -1) ** 0.5
     scores.append(score)
     if i == (iterations - 1):
-        plt.plot([0, 60], [0, 60], '--', color='black')
+        plt.plot([0, 1], [0, 1], '--', color='black')
         plt.plot(y, predict, 'o', color=b, markersize=10)
 
 scores = np.array(scores)
@@ -69,7 +69,7 @@ scores = np.array(scores)
 print(str(np.mean(scores.flatten())))
 print(str(np.std(scores.flatten())))
 
-plt.ylabel('G$\mathregular{_{GBR}}$ / GPa')
-plt.xlabel('G$\mathregular{_{DFT}}$ / GPa')
+plt.ylabel('Ratio_Poisson$\mathregular{_{GBR}}$ / GPa')
+plt.xlabel('Ratio_Poisson$\mathregular{_{DFT}}$ / GPa')
 
-plt.savefig("crossval_G_nolog.pdf", format='pdf', bbox_inches="tight", dpi=600)
+plt.savefig("Ratio_poisson_100_iterationS.pdf", format='pdf', bbox_inches="tight", dpi=600)
