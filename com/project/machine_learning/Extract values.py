@@ -15,7 +15,7 @@ DATAFILE_AIAB = 'data/element_aiab_energy.json'
 VERY_SMALL = 1E-12
 
 propsTableauCritere = ['material_id', 'pretty_formula', 'energy', 'energy_per_atom', 'density',
-                       'formation_energy_per_atom', 'volume', 'is_hubbard', 'nsites']
+                       'formation_energy_per_atom', 'volume', 'is_hubbard', 'nsites', 'spacegroup', 'band_gap', 'e_above_hull']
 
 all_elements = dict()
 
@@ -43,6 +43,9 @@ tableau_material_ids = []
 def get_calculated_properties(entries_var):
     lvpa_list = []
     cepa_list = []
+    group1_list = []
+    atomicmass1_list = []
+    atomicradius1_list = []
     rowH1A_list = []
     rowHn3A_list = []
     xH4A_list = []
@@ -53,6 +56,11 @@ def get_calculated_properties(entries_var):
     cohesive_energy_list = []
     cohesive_energy_problem_list = []
     average_electroneg_list = []
+    bandgap_list = []
+    density_list = []
+    formation_energie_peratom_list = []
+    energie_above_hull_list = []
+
 
     for entry in entries_var:
         caveats_str = ''
@@ -61,6 +69,9 @@ def get_calculated_properties(entries_var):
         weight_list = []
         energy_list = []
         row_list = []
+        group_list = []
+        atomicmass_list = []
+        atomicradius_list = []
         x_list = []
         average_electroneg = None
         cohesive_energy = None
@@ -77,6 +88,10 @@ def get_calculated_properties(entries_var):
             if element.block == 'f':
                 f_block_flag = True
             row_list.append(element.row)
+            group_list.append(element.group)
+            atomicmass_list.append(element.atomic_mass)
+            atomicradius_list.append(element.atomic_radius)
+            atomicnumber_list.append(composition.(element))
             x_list.append(element.X)
 
         # On error, add material to aiab_problem_list and continue with next material
@@ -107,6 +122,9 @@ def get_calculated_properties(entries_var):
         # Append descriptors for this material to descriptor lists
         lvpa_list.append(math.log10(float(entry.data["volume"]) / float(entry.data["nsites"])))
         cepa_list.append(float(entry.energy_per_atom) - ewa)
+        group1_list.append(holder_mean(group_list, 1.0, weights=weight_list))
+        atomicmass1_list.append(holder_mean(atomicmass_list, 1.0, weights=weight_list))
+        atomicradius1_list.append(holder_mean(atomicradius_list, 1.0, weights=weight_list))
         rowH1A_list.append(holder_mean(row_list, 1.0, weights=weight_list))
         rowHn3A_list.append(holder_mean(row_list, -3.0, weights=weight_list))
         xH4A_list.append(holder_mean(x_list, 4.0, weights=weight_list))
@@ -114,7 +132,11 @@ def get_calculated_properties(entries_var):
         caveats_list.append(caveats_str)
         cohesive_energy_list.append(cohesive_energy)
         average_electroneg_list.append(average_electroneg)
+        bandgap_list.append(entry.data["band_gap"])
+        density_list.append(entry.data["density"])
         matid_list.append(str(entry.data["material_id"]))
+        formation_energie_peratom_list.append(entry.data["formation_energy_per_atom"])
+        energie_above_hull_list.append(entry.data["e_above_hull"])
 
     # Check that at least one valid material was provided
     num_predictions = len(matid_list)
@@ -126,16 +148,16 @@ def get_calculated_properties(entries_var):
                 len(cohesive_energy_list) != num_predictions or len(average_electroneg_list) != num_predictions):
             return (None, None, None, None, None, None)
         descriptors = np.ascontiguousarray(
-            [lvpa_list, cepa_list, rowH1A_list, rowHn3A_list, xH4A_list, xHn4A_list, cohesive_energy_list,
-             average_electroneg_list],
+            [lvpa_list, cepa_list, group1_list, atomicmass1_list, atomicradius1_list, rowH1A_list, rowHn3A_list, xH4A_list, xHn4A_list, cohesive_energy_list,
+             average_electroneg_list, bandgap_list, density_list, formation_energie_peratom_list, energie_above_hull_list] ,
             dtype=float)
 
     print("\nErreur calcul get_cohesive_energy de  : " + str(cohesive_energy_problem_list))
     print("\nErreur calcul aiab de  : " + str(cohesive_energy_problem_list))
 
     return pd.DataFrame(descriptors.transpose(), index=matid_list,
-                        columns=['lvpa', 'cepa', 'rowH1A', 'rowHn3A', 'xH4A', 'xHn4A', 'cohesive_energy',
-                                 'average_electroneg'])
+                        columns=['lvpa', 'cepa', 'group1', 'atomic_mass1', 'atomicRadius1', 'rowH1A', 'rowHn3A', 'xH4A', 'xHn4A', 'cohesive_energy',
+                                 'average_electroneg', 'bandgap', 'density', 'formation_energy-peratom', 'e_above_hull'])
 
 
 def export_additional_properties(data1, data2, fichier):
@@ -247,7 +269,7 @@ def get_element_aiab_energy(element):
 
 
 # 1- On recupere toutes les lignes du fichiers csv
-data_from_cv = importer("elasticElate_ALL_revisionArt_without_Zero.csv")
+data_from_cv = importer("Extract_nagative_minNu_maxNu_poisson.csv")
 
 print("\nNombre de tous les éléments dans le fichier csv = {}\n".format(data_from_cv.shape[0]))
 
@@ -265,4 +287,4 @@ get_all_elements()
 data_additional_prop = get_calculated_properties(entries)
 
 # 6- Generation du nouveau fichier csv contenant toutes les proprietes
-export_additional_properties(data_from_cv, data_additional_prop, 'test.csv')
+export_additional_properties(data_from_cv, data_additional_prop, 'Extract_nagative_minNu_maxNu_poisson_descriptors.csv')
