@@ -19,21 +19,34 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import mean_squared_error
 import matplotlib as mpl
 from sklearn.metrics import mean_absolute_error
+from sklearn.model_selection import cross_val_predict, cross_val_score
+from sklearn import linear_model
 
-data = pd.read_csv('Extract_nagative_minNu_maxNu_poisson_descriptors.csv', index_col=0)
+data = pd.read_csv('Extract_Allvalues_descriptors.csv', index_col=0)
 
 print(str(data.columns))
 
-y = data['elasticity.poisson_ratio']
+#y = data['elasticity.poisson_ratio']
+#y = data['minNu']
+y = data['maxNu']
+# without elastic properties
+#X = data.drop(['elasticity.poisson_ratio', 'cepa', 'minLC',	'maxLC', 'minNu','maxNu','elasticity.K_Voigt_Reuss_Hill',	'Emin',	'Emax',	'Gmin',	'Gmax',	'elasticity.G_Reuss',	'elasticity.G_Voigt',	'elasticity.G_Voigt_Reuss_Hill',	'elasticity.K_Reuss',	'elasticity.K_Voigt'], axis=1)
 
-X = data.drop(['elasticity.poisson_ratio', 'cepa', 'minNu', 'maxNu'], axis=1)
+#without Numax and Numin
+#X = data.drop(['elasticity.poisson_ratio', 'cepa', 'minLC',	'maxLC','elasticity.K_Voigt_Reuss_Hill',	'Emin',	'Emax',	'Gmin',	'Gmax',	'elasticity.G_Reuss',	'elasticity.G_Voigt',	'elasticity.G_Voigt_Reuss_Hill',	'elasticity.K_Reuss',	'elasticity.K_Voigt'], axis=1)
+
+
+# only we kept KVRH and GVRH
+#X = data.drop(['elasticity.poisson_ratio', 'cepa', 'minLC',	'maxLC', 'minNu','maxNu',	'Emin',	'Emax',	'Gmin',	'Gmax',	'elasticity.G_Reuss',	'elasticity.G_Voigt',	'elasticity.K_Reuss',	'elasticity.K_Voigt'], axis=1)
+
+#With all elastic properties
+X = data.drop(['maxNu', 'cepa'], axis=1)
 
 print(str(np.shape(X)))
 
 # y = np.log10(y)
 
-from sklearn.model_selection import cross_val_predict, cross_val_score
-from sklearn import linear_model
+
 
 lr = linear_model.LinearRegression()
 import seaborn as sns
@@ -46,15 +59,11 @@ gbr = GradientBoostingRegressor(n_estimators=1000, learning_rate=0.01, min_sampl
 # gbr = AdaBoostRegressor(DecisionTreeRegressor(max_depth=4),
 #                         n_estimators=300, random_state=0)
 
-mpl.rcParams['pdf.fonttype'] = 42
-sns.set(style="white", palette="muted")
-sns.set_style("ticks")
-sns.set_context("notebook", font_scale=1.8, rc={"figure.figsize": (8, 6)})
-sns.set_palette("muted")
-b, gr, r, p, v = sns.color_palette("muted", 5)
 
 scores = []
 iterations = 100
+plt.figure(figsize=(12, 6))
+predict_result = []
 for i in range(0, iterations):
     cv = KFold(n_splits=3, random_state=i)
     predict = cross_val_predict(gbr, X, y, cv=cv, n_jobs=-1)
@@ -62,40 +71,56 @@ for i in range(0, iterations):
     score = (score * -1) ** 0.5
     scores.append(score)
     if i == (iterations - 1):
-        plt.plot([-1, 1], [-1, 1], '--', color='black')
-        plt.plot(y, predict, 'o', color=b, markersize=5)
+        predict_result = predict
 
 scores = np.array(scores)
-# print(str(scores
+print("Le resultat de prédiction de ration de poisson est :" + str(predict_result))
 print(str(np.mean(scores.flatten())))
 print(str(np.std(scores.flatten())))
 print(str(mean_absolute_error(y, predict)))
 
 
-plt.ylabel('Ratio_Poisson$\mathregular{_{GBR}}$ ')
-plt.xlabel('Ratio_Poisson$\mathregular{_{DFT}}$ ')
+# plot ratio de poisson
 
-plt.savefig("Ratio_poisson_100_iterationSGBRwhioutNumaxandmin.pdf", format='pdf', bbox_inches="tight", dpi=600)
+def tracage_ratio_poisson():
+    plt.subplot(1, 2, 1)
+    plt.plot([-1, 1], [-1, 1], '--', color='black')
+    plt.plot(y, predict, 'o', color='b', markersize=1)
+    plt.ylabel('maxNu$\mathregular{_{GBR}}$ ')
+    plt.xlabel('maxNu$\mathregular{_{DFT}}$ ')
+    plt.title('minNu')
+
+
+def tracage_relative_importance():
+    plt.subplot(1, 2, 2)
+    plt.barh(pos, feature_importance[sorted_idx], align='center')
+    feature_names = np.array(['elasticity.poisson_ratio', 'cepa', 'minLC',	'maxLC', 'minNu',
+                              'elasticity.K_Voigt_Reuss_Hill',	'Emin',	'Emax',	'Gmin',	'Gmax',	'elasticity.G_Reuss',
+                              'elasticity.G_Voigt',	'elasticity.G_Voigt_Reuss_Hill',	'elasticity.K_Reuss',	'elasticity.K_Voigt'
+                              'lvpa', 'group1', 'atomic_mass1', 'atomicRadius1', 'rowH1A',
+                              'rowHn3A', 'xH4A', 'xHn4A', 'cohesive_energy', 'average_electroneg',
+                              'bandgap', 'density', 'formation_energy-peratom', 'e_above_hull'])
+    print(len(feature_names))
+    plt.yticks(pos, feature_names[sorted_idx], fontsize=8)
+    plt.xlabel('Relative Importance')
+    plt.title('Variable Importance')
+    plt.savefig("Class_GBR_importance_withElasticPropertiesFormaxNu.pdf", format='pdf', bbox_inches="tight", dpi=600)
+
 
 # Plot feature importance
-# gbr.fit(X,y)
-# # make importances relative to max importance
-# feature_importance=gbr.feature_importances_
-# feature_importance = 100.0 * (feature_importance / feature_importance.max())
-# sorted_idx = np.argsort(feature_importance)
-# print (sorted_idx)
-# pos = np.arange(sorted_idx.shape[0]) + .5
-# plt.barh(pos, feature_importance[sorted_idx], align='center')
-# feature_names=np.array(['minLC', 'maxLC', 'minNu', 'maxNu', 'elasticity.K_Voigt_Reuss_Hill',
-#        'Emin', 'Emax', 'Gmin', 'Gmax', 'elasticity.G_Reuss',
-#        'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill',
-#        'elasticity.K_Reuss', 'elasticity.K_Voigt',
-#        'lvpa', 'group1', 'atomic_mass1', 'atomicRadius1', 'rowH1A',
-#        'rowHn3A', 'xH4A', 'xHn4A', 'cohesive_energy', 'average_electroneg',
-#        'bandgap', 'density', 'formation_energy-peratom', 'e_above_hull'])
-# print (len(feature_names))
-# print (len(X))
-# plt.yticks(pos, feature_names[sorted_idx],fontsize=8)
-# plt.xlabel('Relative Importance')
-# #plt.title('Variable Importance')
-# plt.savefig("Class_RFR_importanceGBR.pdf",format='pdf', bbox_inches="tight", dpi=600)
+
+gbr.fit(X, y)
+# make importances relative to max importance
+feature_importance = gbr.feature_importances_
+feature_importance = 100.0 * (feature_importance / feature_importance.max())
+sorted_idx = np.argsort(feature_importance)
+print(sorted_idx)
+pos = np.arange(sorted_idx.shape[0]) + .5
+
+print(len(X))
+
+# =====tracage ratio de poisson
+tracage_ratio_poisson()
+# =====tracage relative importance
+tracage_relative_importance()
+

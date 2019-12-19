@@ -91,7 +91,7 @@ def get_calculated_properties(entries_var):
             group_list.append(element.group)
             atomicmass_list.append(element.atomic_mass)
             atomicradius_list.append(element.atomic_radius)
-            atomicnumber_list.append(composition.(element))
+            #atomicnumber_list.append(composition.(element))
             x_list.append(element.X)
 
         # On error, add material to aiab_problem_list and continue with next material
@@ -269,7 +269,7 @@ def get_element_aiab_energy(element):
 
 
 # 1- On recupere toutes les lignes du fichiers csv
-data_from_cv = importer("Extract_nagative_minNu_maxNu_poisson.csv")
+data_from_cv = importer("elasticElate_ALL_revisionArt_without_Zero.csv")
 
 print("\nNombre de tous les éléments dans le fichier csv = {}\n".format(data_from_cv.shape[0]))
 
@@ -287,4 +287,4 @@ get_all_elements()
 data_additional_prop = get_calculated_properties(entries)
 
 # 6- Generation du nouveau fichier csv contenant toutes les proprietes
-export_additional_properties(data_from_cv, data_additional_prop, 'Extract_nagative_minNu_maxNu_poisson_descriptors.csv')
+export_additional_properties(data_from_cv, data_additional_prop, 'Extract_Allvalues_descriptors.csv')
