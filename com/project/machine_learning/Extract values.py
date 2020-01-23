@@ -6,6 +6,7 @@ import json
 import math
 import os
 import sys
+from pymatgen.analysis.elasticity import ElasticTensor
 
 api = MPRester("eDCEK5m9WVjmajp7e8af")
 CAVEAT_AIAB = 'Unable to estimate cohesive energy for material.'
@@ -44,12 +45,50 @@ def get_calculated_properties(entries_var):
     lvpa_list = []
     cepa_list = []
     group1_list = []
+    group2_list = []
+    group3_list = []
+    group4_list = []
+    group0_list = []
+    groupNEG1_list = []
+    groupNEG2_list = []
+    groupNEG3_list = []
+    groupNEG4_list = []
     atomicmass1_list = []
+    atomicmass2_list = []
+    atomicmass3_list = []
+    atomicmass4_list = []
+    atomicmass0_list = []
+    atomicmassNEG1_list = []
+    atomicmassNEG2_list = []
+    atomicmassNEG3_list = []
+    atomicmassNEG4_list = []
     atomicradius1_list = []
+    atomicradius2_list = []
+    atomicradius3_list = []
+    atomicradius4_list = []
+    atomicradius0_list = []
+    atomicradiusNEG1_list = []
+    atomicradiusNEG2_list = []
+    atomicradiusNEG3_list = []
+    atomicradiusNEG4_list = []
     rowH1A_list = []
+    rowH2A_list = []
+    rowH3A_list = []
+    rowH4A_list = []
+    rowH0A_list = []
+    rowHn1A_list = []
+    rowHn2A_list = []
     rowHn3A_list = []
+    rowHn4A_list = []
     xH4A_list = []
+    xH3A_list = []
+    xH2A_list = []
+    xH1A_list = []
+    xH0A_list = []
     xHn4A_list = []
+    xHn3A_list = []
+    xHn2A_list = []
+    xHn1A_list = []
     matid_list = []
     caveats_list = []
     aiab_problem_list = []
@@ -60,12 +99,16 @@ def get_calculated_properties(entries_var):
     density_list = []
     formation_energie_peratom_list = []
     energie_above_hull_list = []
+    melting1_temperature_list = []
 
 
     for entry in entries_var:
         caveats_str = ''
         aiab_flag = False
         f_block_flag = False
+        eElms = []
+        eBlPt = []
+        eMlPt = []
         weight_list = []
         energy_list = []
         row_list = []
@@ -73,25 +116,42 @@ def get_calculated_properties(entries_var):
         atomicmass_list = []
         atomicradius_list = []
         x_list = []
+        melting_temperature_list = []
+        boiling_temperature_list = []
         average_electroneg = None
         cohesive_energy = None
         # Construct per-element lists for this material
         composition = entry.composition
-        for element_key, amount in composition.get_el_amt_dict().items():
+
+        for element_key, amount in composition.get_el_amt_dict().iteritems():
             element = Element(element_key)
+            eElms.append(element)
             weight_list.append(composition.get_atomic_fraction(element))
             aiab_energy = get_element_aiab_energy(element_key)  # aiab = atom-in-a-box
+            boiling = composition.__getattribute__(element_key)
             if aiab_energy is None:
                 aiab_flag = True
                 break
             energy_list.append(aiab_energy)
             if element.block == 'f':
                 f_block_flag = True
+            iElms__eBlPt = float(string.replace( string.replace( checkData(), ' K', ''), '(white P) ', ''))
+            if iElms__eBlPt == 0:
+                if element_key == 'Pa':
+                    iElms__eBlPt = 4273
+                else:
+                    sys.stderr.write('  Warning: In {} element {} has boiling point of None\n'.format(mpID, element_key))
+            eBlPt.append(float(iElms__eBlPt))
+
+            iElms__eMlPt = float(string.replace(string.replace(checkData(element.b), ' K', ''), '(white P) ', ''))
+            if iElms__eMlPt == 0:
+                sys.stderr.write('  Warning: In {} element {} has melting point of None\n'.format(mpID, iElmKey))
+            eMlPt.append(float(iElms__eMlPt))
+
             row_list.append(element.row)
             group_list.append(element.group)
             atomicmass_list.append(element.atomic_mass)
             atomicradius_list.append(element.atomic_radius)
-            #atomicnumber_list.append(composition.(element))
             x_list.append(element.X)
 
         # On error, add material to aiab_problem_list and continue with next material
@@ -123,12 +183,50 @@ def get_calculated_properties(entries_var):
         lvpa_list.append(math.log10(float(entry.data["volume"]) / float(entry.data["nsites"])))
         cepa_list.append(float(entry.energy_per_atom) - ewa)
         group1_list.append(holder_mean(group_list, 1.0, weights=weight_list))
+        group2_list.append(holder_mean(group_list, 2.0, weights=weight_list))
+        group3_list.append(holder_mean(group_list, 3.0, weights=weight_list))
+        group4_list.append(holder_mean(group_list, 4.0, weights=weight_list))
+        group0_list.append(holder_mean(group_list, 0.0, weights=weight_list))
+        groupNEG1_list.append(holder_mean(group_list, -1.0, weights=weight_list))
+        groupNEG2_list.append(holder_mean(group_list, -2.0, weights=weight_list))
+        groupNEG3_list.append(holder_mean(group_list, -3.0, weights=weight_list))
+        groupNEG4_list.append(holder_mean(group_list, -4.0, weights=weight_list))
         atomicmass1_list.append(holder_mean(atomicmass_list, 1.0, weights=weight_list))
+        atomicmass2_list.append(holder_mean(atomicmass_list, 2.0, weights=weight_list))
+        atomicmass3_list.append(holder_mean(atomicmass_list, 3.0, weights=weight_list))
+        atomicmass4_list.append(holder_mean(atomicmass_list, 4.0, weights=weight_list))
+        atomicmass0_list.append(holder_mean(atomicmass_list, 0.0, weights=weight_list))
+        atomicmassNEG1_list.append(holder_mean(atomicmass_list, -1.0, weights=weight_list))
+        atomicmassNEG2_list.append(holder_mean(atomicmass_list, -2.0, weights=weight_list))
+        atomicmassNEG3_list.append(holder_mean(atomicmass_list, -3.0, weights=weight_list))
+        atomicmassNEG4_list.append(holder_mean(atomicmass_list, -4.0, weights=weight_list))
         atomicradius1_list.append(holder_mean(atomicradius_list, 1.0, weights=weight_list))
+        atomicradius2_list.append(holder_mean(atomicradius_list, 2.0, weights=weight_list))
+        atomicradius3_list.append(holder_mean(atomicradius_list, 3.0, weights=weight_list))
+        atomicradius4_list.append(holder_mean(atomicradius_list, 4.0, weights=weight_list))
+        atomicradius0_list.append(holder_mean(atomicradius_list, 0.0, weights=weight_list))
+        atomicradiusNEG1_list.append(holder_mean(atomicradius_list, -1.0, weights=weight_list))
+        atomicradiusNEG2_list.append(holder_mean(atomicradius_list, -2.0, weights=weight_list))
+        atomicradiusNEG3_list.append(holder_mean(atomicradius_list, -3.0, weights=weight_list))
+        atomicradiusNEG4_list.append(holder_mean(atomicradius_list, -4.0, weights=weight_list))
         rowH1A_list.append(holder_mean(row_list, 1.0, weights=weight_list))
+        rowH2A_list.append(holder_mean(row_list, 2.0, weights=weight_list))
+        rowH3A_list.append(holder_mean(row_list, 3.0, weights=weight_list))
+        rowH4A_list.append(holder_mean(row_list, 4.0, weights=weight_list))
+        rowH0A_list.append(holder_mean(row_list, 0.0, weights=weight_list))
+        rowHn1A_list.append(holder_mean(row_list, -1.0, weights=weight_list))
+        rowHn2A_list.append(holder_mean(row_list, -2.0, weights=weight_list))
         rowHn3A_list.append(holder_mean(row_list, -3.0, weights=weight_list))
+        rowHn4A_list.append(holder_mean(row_list, -4.0, weights=weight_list))
         xH4A_list.append(holder_mean(x_list, 4.0, weights=weight_list))
+        xH3A_list.append(holder_mean(x_list, 3.0, weights=weight_list))
+        xH2A_list.append(holder_mean(x_list, 2.0, weights=weight_list))
+        xH1A_list.append(holder_mean(x_list, 1.0, weights=weight_list))
+        xH0A_list.append(holder_mean(x_list, 0.0, weights=weight_list))
         xHn4A_list.append(holder_mean(x_list, -4.0, weights=weight_list))
+        xHn3A_list.append(holder_mean(x_list, -3.0, weights=weight_list))
+        xHn2A_list.append(holder_mean(x_list, -2.0, weights=weight_list))
+        xHn1A_list.append(holder_mean(x_list, -1.0, weights=weight_list))
         caveats_list.append(caveats_str)
         cohesive_energy_list.append(cohesive_energy)
         average_electroneg_list.append(average_electroneg)
@@ -148,17 +246,26 @@ def get_calculated_properties(entries_var):
                 len(cohesive_energy_list) != num_predictions or len(average_electroneg_list) != num_predictions):
             return (None, None, None, None, None, None)
         descriptors = np.ascontiguousarray(
-            [lvpa_list, cepa_list, group1_list, atomicmass1_list, atomicradius1_list, rowH1A_list, rowHn3A_list, xH4A_list, xHn4A_list, cohesive_energy_list,
-             average_electroneg_list, bandgap_list, density_list, formation_energie_peratom_list, energie_above_hull_list] ,
+            [lvpa_list, cepa_list, group1_list, group2_list, group3_list, group4_list, group0_list, groupNEG1_list, groupNEG2_list,
+             groupNEG3_list, groupNEG4_list, atomicmass1_list, atomicmass2_list, atomicmass3_list, atomicmass4_list, atomicmass0_list,
+             atomicmassNEG1_list, atomicmassNEG2_list, atomicmassNEG3_list, atomicmassNEG4_list, atomicradius1_list, atomicradius2_list, atomicradius3_list,
+             atomicradius4_list, atomicradius0_list, atomicradiusNEG1_list, atomicradiusNEG2_list, atomicradiusNEG3_list, atomicradiusNEG4_list,
+             rowH1A_list, rowH2A_list, rowH3A_list, rowH4A_list, rowH0A_list, rowHn1A_list, rowHn2A_list, rowHn3A_list,
+             rowHn4A_list, xH4A_list, xH3A_list, xH2A_list, xH1A_list, xH0A_list, xHn4A_list, xH3A_list, xH2A_list, xH1A_list,
+             cohesive_energy_list, average_electroneg_list, bandgap_list, density_list, formation_energie_peratom_list, energie_above_hull_list] ,
             dtype=float)
 
     print("\nErreur calcul get_cohesive_energy de  : " + str(cohesive_energy_problem_list))
     print("\nErreur calcul aiab de  : " + str(cohesive_energy_problem_list))
 
     return pd.DataFrame(descriptors.transpose(), index=matid_list,
-                        columns=['lvpa', 'cepa', 'group1', 'atomic_mass1', 'atomicRadius1', 'rowH1A', 'rowHn3A', 'xH4A', 'xHn4A', 'cohesive_energy',
+                        columns=['lvpa', 'cepa', 'group1','group2', 'group3', 'group4', 'group0', 'group-1', 'group-2', 'group-3', 'group-4',
+                                 'atomic_mass1', 'atomic_mass2', 'atomic_mass3', 'atomic_mass4', 'atomic_mass0', 'atomic_mass-1', 'atomic_mass-2',
+                                 'atomic_mass-3', 'atomic_mass-4', 'atomicRadius1', 'atomicRadius2', 'atomicRadius3', 'atomicRadius4', 'atomicRadius0', 'atomicRadius-1',
+                                 'atomicRadius-2', 'atomicRadius-3', 'atomicRadius-4','rowH1A', 'rowH2A', 'rowH3A', 'rowH4A', 'rowH0A',
+                                 'rowHn1A', 'rowHn2A', 'rowHn3A', 'rowHn4A', 'xH4A', 'xH3A', 'xH2A', 'xH1A', 'xH0A','xHn4A',
+                                 'xHn3A', 'xHn2A', 'xHn1A','cohesive_energy',
                                  'average_electroneg', 'bandgap', 'density', 'formation_energy-peratom', 'e_above_hull'])
-
 
 def export_additional_properties(data1, data2, fichier):
     mergedDf = data1.merge(data2, left_index=True, right_index=True)
@@ -285,6 +392,6 @@ get_all_elements()
 
 # 5-Calcul des propriétés à completer au fichier csv
 data_additional_prop = get_calculated_properties(entries)
-
+#
 # 6- Generation du nouveau fichier csv contenant toutes les proprietes
 export_additional_properties(data_from_cv, data_additional_prop, 'Extract_Allvalues_descriptors.csv')

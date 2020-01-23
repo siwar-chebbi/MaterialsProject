@@ -26,11 +26,11 @@ data = pd.read_csv('Extract_Allvalues_descriptors.csv', index_col=0)
 
 print(str(data.columns))
 
-#y = data['elasticity.poisson_ratio']
+y = data['elasticity.poisson_ratio']
 #y = data['minNu']
-y = data['maxNu']
+#y = data['maxNu']
 # without elastic properties
-#X = data.drop(['elasticity.poisson_ratio', 'cepa', 'minLC',	'maxLC', 'minNu','maxNu','elasticity.K_Voigt_Reuss_Hill',	'Emin',	'Emax',	'Gmin',	'Gmax',	'elasticity.G_Reuss',	'elasticity.G_Voigt',	'elasticity.G_Voigt_Reuss_Hill',	'elasticity.K_Reuss',	'elasticity.K_Voigt'], axis=1)
+X = data.drop(['elasticity.poisson_ratio', 'cepa', 'minLC',	'maxLC', 'minNu','maxNu','elasticity.K_Voigt_Reuss_Hill',	'Emin',	'Emax',	'Gmin',	'Gmax',	'elasticity.G_Reuss',	'elasticity.G_Voigt',	'elasticity.G_Voigt_Reuss_Hill',	'elasticity.K_Reuss',	'elasticity.K_Voigt'], axis=1)
 
 #without Numax and Numin
 #X = data.drop(['elasticity.poisson_ratio', 'cepa', 'minLC',	'maxLC','elasticity.K_Voigt_Reuss_Hill',	'Emin',	'Emax',	'Gmin',	'Gmax',	'elasticity.G_Reuss',	'elasticity.G_Voigt',	'elasticity.G_Voigt_Reuss_Hill',	'elasticity.K_Reuss',	'elasticity.K_Voigt'], axis=1)
@@ -40,7 +40,7 @@ y = data['maxNu']
 #X = data.drop(['elasticity.poisson_ratio', 'cepa', 'minLC',	'maxLC', 'minNu','maxNu',	'Emin',	'Emax',	'Gmin',	'Gmax',	'elasticity.G_Reuss',	'elasticity.G_Voigt',	'elasticity.K_Reuss',	'elasticity.K_Voigt'], axis=1)
 
 #With all elastic properties
-X = data.drop(['maxNu', 'cepa'], axis=1)
+#X = data.drop(['maxNu', 'cepa'], axis=1)
 
 print(str(np.shape(X)))
 
@@ -86,25 +86,25 @@ def tracage_ratio_poisson():
     plt.subplot(1, 2, 1)
     plt.plot([-1, 1], [-1, 1], '--', color='black')
     plt.plot(y, predict, 'o', color='b', markersize=1)
-    plt.ylabel('maxNu$\mathregular{_{GBR}}$ ')
-    plt.xlabel('maxNu$\mathregular{_{DFT}}$ ')
-    plt.title('minNu')
+    plt.ylabel('Nu$\mathregular{_{GBR}}$ ')
+    plt.xlabel('Nu$\mathregular{_{DFT}}$ ')
+    plt.title('Nu')
 
 
 def tracage_relative_importance():
     plt.subplot(1, 2, 2)
     plt.barh(pos, feature_importance[sorted_idx], align='center')
-    feature_names = np.array(['elasticity.poisson_ratio', 'cepa', 'minLC',	'maxLC', 'minNu',
-                              'elasticity.K_Voigt_Reuss_Hill',	'Emin',	'Emax',	'Gmin',	'Gmax',	'elasticity.G_Reuss',
-                              'elasticity.G_Voigt',	'elasticity.G_Voigt_Reuss_Hill',	'elasticity.K_Reuss',	'elasticity.K_Voigt'
-                              'lvpa', 'group1', 'atomic_mass1', 'atomicRadius1', 'rowH1A',
-                              'rowHn3A', 'xH4A', 'xHn4A', 'cohesive_energy', 'average_electroneg',
+    feature_names = np.array(['lvpa', 'group1', 'group2','group3','group4','group0','group-1','group-2','group-3','group-4',
+                              'atomic_mass1', 'atomic_mass2','atomic_mass3','atomic_mass4','atomic_mass0','atomic_mass-1','atomic_mass-2','atomic_mass-3',
+                              'atomic_mass-4','atomicRadius1','atomicRadius2','atomicRadius3','atomicRadius4','atomicRadius0','atomicRadius-1',
+                              'atomicRadius-2','atomicRadius-3','atomicRadius-4', 'rowH1A', 'rowH2A','rowH3A', 'rowH4A', 'rowH0A', 'rowHn1A', 'rowHn2A',
+                              'rowHn3A', 'rowHn4A', 'xH4A','xH3A','xH2A','xH1A','xH0A','xHn4A','xHn3A','xHn2A','xHn1A', 'cohesive_energy', 'average_electroneg',
                               'bandgap', 'density', 'formation_energy-peratom', 'e_above_hull'])
     print(len(feature_names))
     plt.yticks(pos, feature_names[sorted_idx], fontsize=8)
     plt.xlabel('Relative Importance')
     plt.title('Variable Importance')
-    plt.savefig("Class_GBR_importance_withElasticPropertiesFormaxNu.pdf", format='pdf', bbox_inches="tight", dpi=600)
+    plt.savefig("Class_GBR_importance_withElasticProperties.pdf", format='pdf', bbox_inches="tight", dpi=600)
 
 
 # Plot feature importance
