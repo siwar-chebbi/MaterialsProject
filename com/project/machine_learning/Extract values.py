@@ -6,6 +6,7 @@ import json
 import math
 import os
 import sys
+import string
 from pymatgen.analysis.elasticity import ElasticTensor
 
 api = MPRester("eDCEK5m9WVjmajp7e8af")
@@ -36,6 +37,18 @@ def get_all_elements():
 def importer(fichier):
     return pd.read_csv(fichier, index_col=0)
 
+
+
+# Function to handle 'no data' strings
+def checkData( field ):
+  if field is None:
+    sys.stderr.write('  Warning: A None field was set to zero in checkData.\n')
+    return '0'
+  if isinstance(field, str) and field[:7] == 'no data':
+    sys.stderr.write('  Warning: A \'no data\' field was set to zero in checkData.\n')
+    return '0'
+  else:
+    return field
 
 # material Ids du tableau a remlir dans get_calculated_properties
 tableau_material_ids = []
@@ -123,30 +136,30 @@ def get_calculated_properties(entries_var):
         # Construct per-element lists for this material
         composition = entry.composition
 
-        for element_key, amount in composition.get_el_amt_dict().iteritems():
+        for element_key, amount in composition.get_el_amt_dict().items():
             element = Element(element_key)
             eElms.append(element)
             weight_list.append(composition.get_atomic_fraction(element))
             aiab_energy = get_element_aiab_energy(element_key)  # aiab = atom-in-a-box
-            boiling = composition.__getattribute__(element_key)
             if aiab_energy is None:
                 aiab_flag = True
                 break
             energy_list.append(aiab_energy)
             if element.block == 'f':
                 f_block_flag = True
-            iElms__eBlPt = float(string.replace( string.replace( checkData(), ' K', ''), '(white P) ', ''))
-            if iElms__eBlPt == 0:
-                if element_key == 'Pa':
-                    iElms__eBlPt = 4273
-                else:
-                    sys.stderr.write('  Warning: In {} element {} has boiling point of None\n'.format(mpID, element_key))
-            eBlPt.append(float(iElms__eBlPt))
 
-            iElms__eMlPt = float(string.replace(string.replace(checkData(element.b), ' K', ''), '(white P) ', ''))
-            if iElms__eMlPt == 0:
-                sys.stderr.write('  Warning: In {} element {} has melting point of None\n'.format(mpID, iElmKey))
-            eMlPt.append(float(iElms__eMlPt))
+            iElms__eBlPt = float(((checkData(element.data['Melting point'])).replace(' K', '')).replace('(white P) ', ''))
+            # if iElms__eBlPt == 0:
+            #     if element_key == 'Pa':
+            #         iElms__eBlPt = 4273
+            #     else:
+            #         sys.stderr.write('  Warning: In {} element {} has boiling point of None\n'.format(mpID, element_key))
+            # eBlPt.append(float(iElms__eBlPt))
+            #
+            # iElms__eMlPt = float(string.replace(string.replace(checkData(element.b), ' K', ''), '(white P) ', ''))
+            # if iElms__eMlPt == 0:
+            #     sys.stderr.write('  Warning: In {} element {} has melting point of None\n'.format(mpID, iElmKey))
+            # eMlPt.append(float(iElms__eMlPt))
 
             row_list.append(element.row)
             group_list.append(element.group)
