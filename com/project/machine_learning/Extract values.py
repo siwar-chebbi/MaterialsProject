@@ -6,21 +6,60 @@ import json
 import math
 import os
 import sys
+from com.project.machine_learning.pymatgen_utils import holder, voronoi_tools
+from com.project.examples.gbml import elasticity
 import string
 from pymatgen.analysis.elasticity import ElasticTensor
 
 from numpy import array
 
-COLONNE = ['group-4', 'group-3', 'group-2', 'group-1', 'group-0', 'group1', 'group2', 'group3', 'group4',
-           'atomic_mass-4', 'atomic_mass-3', 'atomic_mass-2', 'atomic_mass-1', 'atomic_mass-0', 'atomic_mass1',
-           'atomic_mass2', 'atomic_mass3', 'atomic_mass4', 'atomic_number-4', 'atomic_number-3', 'atomic_number-2',
-           'atomic_number-1', 'atomic_number-0', 'atomic_number1', 'atomic_number2', 'atomic_number3', 'atomic_number4',
-           'atomic_radius-4', 'atomic_radius-3', 'atomic_radius-2', 'atomic_radius-1', 'atomic_radius-0',
-           'atomic_radius1', 'atomic_radius2', 'atomic_radius3', 'atomic_radius4', 'row-4', 'row-3', 'row-2', 'row-1',
-           'row-0', 'row1', 'row2', 'row3', 'row4', 'x-4', 'x-3', 'x-2', 'x-1', 'x-0', 'x1', 'x2', 'x3', 'x4',
-           'eBlPt-4', 'eBlPt-3', 'eBlPt-2', 'eBlPt-1', 'eBlPt-0', 'eBlPt1', 'eBlPt2', 'eBlPt3', 'eBlPt4', 'eMlPt-4',
-           'eMlPt-3', 'eMlPt-2', 'eMlPt-1', 'eMlPt-0', 'eMlPt1', 'eMlPt2', 'eMlPt3', 'eMlPt4', 'lvpa', 'cepa',
-           'cohesive_energy', 'average_electroneg', 'bandgap', 'density', 'formation_energy-peratom', 'e_above_hull']
+# file to import
+IMPORTED_FILE = "elasticElate_ALL_revisionArt_without_Zero_test.csv"
+# file to export
+FILTE_TO_EXPORT = 'Extract_Allvalues_descriptors_test.csv'
+# Colonne qui contient la liste des descriptors : IL FAUT RESPECTER L'ORDRE
+COLONNE = [
+    # mean with power [-4..4] with stdev [0,1] : eGrp, eAtmM, eZ, eRad, eRow, eX, eBlPt, eMlPt :88
+    'eGrpHn4A', 'eGrpHn3A', 'eGrpHn2A', 'eGrpHn1A', 'eGrpH0A', 'eGrpH1A', 'eGrpH2A', 'eGrpH3A', 'eGrpH4A', 'eGrpH0S',
+    'eGrpH1S',
+    'eAtMHn4A', 'eAtMHn3A', 'eAtMHn2A', 'eAtMHn1A', 'eAtMH0A', 'eAtMH1A', 'eAtMH2A', 'eAtMH3A', 'eAtMH4A', 'eAtMH0S',
+    'eAtMH1S',
+    'eZHn4A', 'eZHn3A', 'eZHn2A', 'eZHn1A', 'eZH0A', 'eZH1A', 'eZH2A', 'eZH3A', 'eZH4A', 'eZH0S',
+    'eZH1S',
+    'eRadHn4A', 'eRadHn3A', 'eRadHn2A', 'eRadHn1A', 'eRadH0A', 'eRadH1A', 'eRadH2A', 'eRadH3A', 'eRadH4A', 'eRadH0S',
+    'eRadH1S',
+    'eRowHn4A', 'eRowHn3A', 'eRowHn2A', 'eRowHn1A', 'eRowH0A', 'eRowH1A', 'eRowH2A', 'eRowH3A', 'eRowH4A', 'eRowH0S',
+    'eRowH1S',
+    'eXHn4A', 'eXHn3A', 'eXHn2A', 'eXHn1A', 'eXH0A', 'eXH1A', 'eXH2A', 'eXH3A', 'eXH4A', 'eXH0S', 'eXH1S',
+    'eBlPtHn4A', 'eBlPtHn3A', 'eBlPtHn2A', 'eBlPtHn1A', 'eBlPtH0A', 'eBlPtH1A', 'eBlPtH2A', 'eBlPtH3A', 'eBlPtH4A',
+    'eBlPtH0S', 'eBlPtH1S',
+    'eMlPtHn4A', 'eMlPtHn3A', 'eMlPtHn2A', 'eMlPtHn1A', 'eMlPtH0A', 'eMlPtH1A', 'eMlPtH2A', 'eMlPtH3A', 'eMlPtH4A',
+    'eMlPtH0S', 'eMlPtH1S',
+
+    # autres proprietes:8
+    'lvpa', 'cepa', 'cohesive_energy', 'average_electroneg', 'bandGap', 'rho', 'fepa',
+    'eah',
+    # coordination,bond length,bond angle:33
+    'sCoorHn4A', 'sCoorHn3A', 'sCoorHn2A', 'sCoorHn1A', 'sCoorH0A', 'sCoorH1A', 'sCoorH2A', 'sCoorH3A', 'sCoorH4A',
+    'sCoorH0S', 'sCoorH1S',
+    'sBnLnHn4AH1A', 'sBnLnHn3AH1A', 'sBnLnHn2AH1A', 'sBnLnHn1AH1A', 'sBnLnH0AH1A', 'sBnLnH1AH1A', 'sBnLnH2AH1A',
+    'sBnLnH3AH1A', 'sBnLnH4AH1A', 'sBnLnH0SH1A', 'sBnLnH1SH1A',
+    'sBnAnHn4AH1A', 'sBnAnHn3AH1A', 'sBnAnHn2AH1A', 'sBnAnHn1AH1A', 'sBnAnH0AH1A', 'sBnAnH1AH1A', 'sBnAnH2AH1A',
+    'sBnAnH3AH1A', 'sBnAnH4AH1A', 'sBnAnH0SH1A', 'sBnAnH1SH1A',
+
+    # descriptors of neighbor differences :60
+    'sRowADH0AH1A', 'sRowADH1AH1A', 'sRowADH2AH1A', 'sRowADH3AH1A', 'sRowADH4AH1A', 'sRowADH1SH1A', 'sRowSDH1AH1A',
+    'sRowSDH2AH1A', 'sRowSDH4AH1A', 'sRowSDH1SH1A', 'sGrpADH0AH1A', 'sGrpADH1AH1A', 'sGrpADH2AH1A', 'sGrpADH3AH1A',
+    'sGrpADH4AH1A', 'sGrpADH1SH1A', 'sGrpSDH1AH1A', 'sGrpSDH2AH1A', 'sGrpSDH4AH1A', 'sGrpSDH1SH1A',
+    'sAtMADH0AH1A', 'sAtMADH1AH1A', 'sAtMADH2AH1A', 'sAtMADH3AH1A', 'sAtMADH4AH1A', 'sAtMADH1SH1A', 'sAtMSDH1AH1A',
+    'sAtMSDH2AH1A', 'sAtMSDH4AH1A', 'sAtMSDH1SH1A',
+    'sRadADH0AH1A', 'sRadADH1AH1A', 'sRadADH2AH1A', 'sRadADH3AH1A', 'sRadADH4AH1A', 'sRadADH1SH1A', 'sRadSDH1AH1A',
+    'sRadSDH2AH1A', 'sRadSDH4AH1A', 'sRadSDH1SH1A',
+    'sXADH0AH1A', 'sXADH1AH1A', 'sXADH2AH1A', 'sXADH3AH1A', 'sXADH4AH1A', 'sXADH1SH1A',
+    'sXSDH1AH1A', 'sXSDH2AH1A', 'sXSDH4AH1A', 'sXSDH1SH1A',
+    'sZADH0AH1A', 'sZADH1AH1A', 'sZADH2AH1A', 'sZADH3AH1A', 'sZADH4AH1A', 'sZADH1SH1A', 'sZSDH1AH1A',
+    'sZSDH2AH1A', 'sZSDH4AH1A', 'sZSDH1SH1A'
+]
 
 api = MPRester("eDCEK5m9WVjmajp7e8af")
 CAVEAT_AIAB = 'Unable to estimate cohesive energy for material.'
@@ -31,9 +70,12 @@ VERY_SMALL = 1E-12
 
 propsTableauCritere = ['material_id', 'pretty_formula', 'energy', 'energy_per_atom', 'density',
                        'formation_energy_per_atom', 'volume', 'is_hubbard', 'nsites', 'spacegroup', 'band_gap',
-                       'e_above_hull']
-
+                       'e_above_hull', 'structure']
+# dictionnaire contenant tous les éléments chimiques du tableau périodique
 all_elements = dict()
+
+# material Ids du tableau a remplir dans get_calculated_properties
+tableau_material_ids = []
 
 
 # Recuperer tous les elements du tableau périodique
@@ -47,8 +89,8 @@ def get_all_elements():
             print("\nProblème de recuperation de l'élément atomique  : " + str(element))
 
 
-# Import du fichier csv initlial
-def importer(fichier):
+# Import du fichier csv initial
+def import_file(fichier):
     return pd.read_csv(fichier, index_col=0)
 
 
@@ -64,16 +106,18 @@ def checkData(field):
         return field
 
 
-# material Ids du tableau a remplir dans get_calculated_properties
-tableau_material_ids = []
-
-
-def holder_mean_all_powers(values, powers, weights, weights_norm=None):
-    result_array = []
+def holder_mean_all_powers(values, powers, weights=None, weights_norm=None):
+    holder_mean_arrays = []
     for power in powers:
-        result_array.append(holder_mean(values, power, weights, weights_norm))
+        holder_mean_arrays.append(holder.mean(values, power, weights, weights_norm))
+    return holder_mean_arrays
 
-    return result_array
+
+def stdevs_all_powers(values, powers, weights=None, weights_norm=None):
+    stdevs_arrays = []
+    for power in powers:
+        stdevs_arrays.append(holder.stdev(values, power, weights, weights_norm))
+    return stdevs_arrays
 
 
 def build_ascontiguousarray(properties_table):
@@ -103,14 +147,14 @@ def get_calculated_properties(entries_var):
         aiab_flag = False
         f_block_flag = False
         eElms = []
-        weight_list = []
-        energy_list = []
-        row_list = []
-        group_list = []
-        atomic_mass_list = []
-        atomic_number_list = []
-        atomic_radius_list = []
-        x_list = []
+        eWts = []
+        eAIAB = []
+        eRow = []
+        eGrp = []
+        eAtmM = []
+        eZ = []
+        eRad = []
+        eX = []
         eBlPt = []
         eMlPt = []
         average_electroneg = None
@@ -122,12 +166,12 @@ def get_calculated_properties(entries_var):
         for element_key, amount in composition.get_el_amt_dict().items():
             element = Element(element_key)
             eElms.append(element)
-            weight_list.append(composition.get_atomic_fraction(element))
-            aiab_energy = get_element_aiab_energy(element_key)  # aiab = atom-in-a-box
+            eWts.append(composition.get_atomic_fraction(element))
+            aiab_energy = elasticity.get_element_aiab_energy(element_key)  # aiab = atom-in-a-box
             if aiab_energy is None:
                 aiab_flag = True
                 break
-            energy_list.append(aiab_energy)
+            eAIAB.append(aiab_energy)
             if element.block == 'f':
                 f_block_flag = True
 
@@ -149,12 +193,12 @@ def get_calculated_properties(entries_var):
                     '  Warning: In {} element {} has melting point of None\n'.format(str(entry.data["material_id"]),
                                                                                      element_key))
             eMlPt.append(float(iElms__eMlPt))
-            group_list.append(element.group)
-            atomic_mass_list.append(element.atomic_mass)
-            atomic_number_list.append(element.number)
-            atomic_radius_list.append(element.atomic_radius)
-            row_list.append(element.row)
-            x_list.append(element.X)
+            eGrp.append(element.group)
+            eAtmM.append(element.atomic_mass)
+            eZ.append(element.number)
+            eRad.append(element.atomic_radius)
+            eRow.append(element.row)
+            eX.append(element.X)
 
         # On error, add material to aiab_problem_list and continue with next material
         if aiab_flag:
@@ -170,7 +214,7 @@ def get_calculated_properties(entries_var):
                 caveats_str += " "
             caveats_str += CAVEAT_F_BLOCK
         # Calculate intermediate weighted averages (WA) for this material
-        ewa = np.average(energy_list, weights=weight_list)  # atom-in-a-box energy WA
+        ewa = np.average(eAIAB, weights=eWts)  # atom-in-a-box energy WA
         try:
             average_electroneg = entry.composition.average_electroneg
         except:
@@ -181,15 +225,27 @@ def get_calculated_properties(entries_var):
         except:
             cohesive_energy_problem_list.append(str(entry.data["material_id"]))
 
-        # print(str(entry.data["material_id"]))
+        # Construct Voronoi neighbor dictionaries
+        structure = entry.data['structure']
+        try:
+            # TODO change get_voronoi_dicts_3 to get_voronoi_dicts_2 to calculte bond_angles
+            # (voronoi_neighbor_sites, voronoi_neighbor_pairs) = voronoi_tools.get_voronoi_dicts(structure)
+            (voronoi_neighbor_sites, voronoi_neighbor_pairs) = voronoi_tools.get_voronoi_dicts_2(structure)
+            # (voronoi_neighbor_sites, voronoi_neighbor_pairs) = voronoi_tools.get_voronoi_dicts_3(structure)
+        except RuntimeError:
+            sys.stderr.write('  Error: Voronoi failed for {}\n'.format(str(entry.data["material_id"])))
+            continue
 
-        # Append descriptors for this material to descriptor lists
-        for property in [group_list, atomic_mass_list, atomic_number_list, atomic_radius_list, row_list, x_list, eBlPt,
-                         eMlPt]:
-            result_with_powers = []
-            result_with_powers = holder_mean_all_powers(property, [-4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0],
-                                                        weight_list)
-            properties_table_entry.extend(result_with_powers)
+        print(str(entry.data["material_id"]))
+
+        # Append properties with powers for each material
+        # see COLONNE
+        for property in [eGrp, eAtmM, eZ, eRad, eRow, eX, eBlPt, eMlPt]:
+            properties_table_entry.extend(
+                holder_mean_all_powers(property, [-4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0],
+                                       eWts))
+            # Append stdevs with powers for each material
+            properties_table_entry.extend(stdevs_all_powers(property, [0.0, 1.0], eWts))
 
         # lvpa
         properties_table_entry.append(math.log10(float(entry.data["volume"]) / float(entry.data["nsites"])))
@@ -205,6 +261,55 @@ def get_calculated_properties(entries_var):
         properties_table_entry.append(entry.data["formation_energy_per_atom"])
         properties_table_entry.append(entry.data["e_above_hull"])
 
+        # Calc and print Voronoi based coordination descriptors:
+        #   sCoorHn4A,sCoorHn3A,sCoorHn2A,sCoorHn1A,sCoorH0A,sCoorH1A,sCoorH2A,sCoorH3A,sCoorH4A,sCoorH0S,sCoorH1S
+        site_means = voronoi_tools.get_coordinations(voronoi_neighbor_sites)
+        properties_table_entry.extend(holder_mean_all_powers(site_means,
+                                                             [-4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0]))
+        properties_table_entry.extend(stdevs_all_powers(site_means, [0.0, 1.0]))
+
+        # Calc and print Voronoi based bond length descriptors:,
+        # sBnLnHn4AH1A, sBnLnHn3AH1A, sBnLnHn2AH1A, sBnLnHn1AH1A, sBnLnH0AH1A, sBnLnH1AH1A, sBnLnH2AH1A, sBnLnH3AH1A, sBnLnH4AH1A, sBnLnH0SH1A, sBnLnH1SH1A
+        (site_means, site_stdevs) = voronoi_tools.get_bond_lengths(voronoi_neighbor_sites)
+        properties_table_entry.extend(
+            holder_mean_all_powers(site_means, [-4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0]))
+        properties_table_entry.extend(
+            stdevs_all_powers(site_means, [0.0, 1.0]))  # No negative Holder means due to zero valued centered means
+
+        # Calc and print Voronoi based bond angle descriptors:
+        #   sBnAnHn4AH1A, sBnAnHn3AH1A, sBnAnHn2AH1A, sBnAnHn1AH1A, sBnAnH0AH1A, sBnAnH1AH1A, sBnAnH2AH1A, sBnAnH3AH1A, sBnAnH4AH1A, sBnAnH0SH1A, sBnAnH1SH1A
+        # TODO remove condition to calculte bond_angles
+        if len(voronoi_neighbor_pairs) > 0:
+            (site_means, site_stdevs) = voronoi_tools.get_bond_angles(voronoi_neighbor_pairs)
+            #
+            properties_table_entry.extend(
+                holder_mean_all_powers(site_means, [-4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0]))
+            properties_table_entry.extend(
+                stdevs_all_powers(site_means, [0.0, 1.0]))  # No negative Holder means due to zero valued centered means
+        else:
+            properties_table_entry.extend([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+        # Calculate and print Voronoi based Holder descriptors of neighbor differences:
+        # *** With vetting/coding, could add: eBlPt, eMlPt, AIAB ***
+        # see COLONNE
+        for property in ['row', 'group', 'atomic_mass', 'atomic_radius', 'X', 'Z']:
+            (site_means, site_stdevs) = voronoi_tools.get_property_diffs(voronoi_neighbor_sites, property,
+                                                                         abs_flag=True)
+            properties_table_entry.extend(holder_mean_all_powers(site_means,
+                                                                 [0.0, 1.0, 2.0, 3.0,
+                                                                  4.0]))  # No negative Holder means due to zero valued diffs
+            properties_table_entry.extend(stdevs_all_powers(site_means,
+                                                            [
+                                                                1.0]))  # No non-positive Holder stdevs due to zero valued diffs
+
+            (site_means, site_stdevs) = voronoi_tools.get_property_diffs(voronoi_neighbor_sites, property,
+                                                                         abs_flag=False)
+            properties_table_entry.extend(holder_mean_all_powers(site_means,
+                                                                 [1.0, 2.0,
+                                                                  4.0]))  # No non-positive or cubic Holder means due to negative values
+            properties_table_entry.extend(stdevs_all_powers(site_means,
+                                                            [
+                                                                1.0]))  # No non-positive or cubic Holder means due to negative values
+
         properties_table_entries.append(properties_table_entry)
         matid_list.append(str(entry.data["material_id"]))
 
@@ -216,8 +321,10 @@ def get_calculated_properties(entries_var):
         build_check_list(inverted_properties_table_entries, num_predictions, len(COLONNE))
         descriptors = np.ascontiguousarray(build_ascontiguousarray(inverted_properties_table_entries), dtype=float)
 
-    print("\nErreur calcul get_cohesive_energy, nombre d'éléments "+str(len(cohesive_energy_problem_list))+"  de  : " + str(cohesive_energy_problem_list))
-    print("\nErreur calcul aiab, nombre d'éléments "+str(len(cohesive_energy_problem_list))+" de  : " + str(cohesive_energy_problem_list))
+    print("\nErreur calcul get_cohesive_energy, nombre d'éléments " + str(
+        len(cohesive_energy_problem_list)) + "  de  : " + str(cohesive_energy_problem_list))
+    print("\nErreur calcul aiab, nombre d'éléments " + str(len(cohesive_energy_problem_list)) + " de  : " + str(
+        cohesive_energy_problem_list))
 
     return pd.DataFrame(descriptors.transpose(), index=matid_list,
                         columns=COLONNE)
@@ -254,187 +361,8 @@ def get_cohesive_energy(entry, per_atom):
     return ecoh_per_formula / n if per_atom else ecoh_per_formula
 
 
-def holder_mean(values, power, weights=None, weights_norm=None):
-    """
-    Calculate (possibly weighted) Holder (or power) mean
-    :param: values: list or array of (typically elemental property) values
-    :param: power: the power to which the Holder mean is to be calculated
-    :param: weights: option list or array of weights
-    :param: weights_norm: optional normalization method to be applied to weights
-    :return: holder_mean
-    """
-
-    values = np.array(values, dtype=float)
-    power = float(power)
-
-    # Make sure weights match length and are normalized
-    if weights is None:
-        alpha = 1 / len(values)
-    else:
-        weights = np.array(weights, dtype=float)
-        if len(values) != len(weights):
-            # warn('Holder.mean returned zero when passed length mis-matched values and weights', UserWarning)
-            sys.stderr.write('  Warning: Holder.mean returned zero when passed length mis-matched values and weights\n')
-            return 0.0
-        if weights_norm is not None:
-            if weights_norm == "max" and max(weights) != 1.0:
-                weights = weights / max(weights)
-            elif weights_norm == "sum" and sum(weights) != 1.0:
-                weights = weights / sum(weights)
-            else:
-                # warn('Holder.mean returned zero when passed unknown weights_norm method', UserWarning)
-                sys.stderr.write('  Warning: Holder.mean returned zero when passed unknown weights_norm method\n')
-                return 0.0
-        alpha = 1 / sum(weights)
-
-    if power == 0.0:  # geometric mean
-        if any(abs(value) < VERY_SMALL for value in values):
-            return 0.0
-        elif any(value < 0 for value in values):
-            # warn('Holder.mean returned zero when passed negative value with zero power', UserWarning)
-            sys.stderr.write('  Warning: Holder.mean returned zero when passed negative value with zero power\n')
-            sys.stderr.write('    values = {:s}  weights = {:s}  power = {:f}\n'.format(values, weights, power))
-            return 0.0
-
-        if weights is None:
-            return math.exp(alpha * sum(np.log(values)))
-        else:
-            return math.exp(alpha * sum(weights * np.log(values)))
-
-    elif power == 1.0:  # arithmetic mean
-        return np.average(values, weights=weights)
-
-    if any(value < 0 for value in values):
-        if power % 2 != 0.0:
-            # warn('Holder.mean returned zero when passed negative value with non-even power', UserWarning)
-            sys.stderr.write('  Warning: Holder.mean returned zero when passed negative value with non-even power\n')
-            sys.stderr.write('    values = {:s}  weights = {:s}  power = {:f}\n'.format(values, weights, power))
-            return 0.0
-
-    if weights is None:
-        return pow(alpha * sum(np.power(values, power)), 1 / power)
-    else:
-        return pow(alpha * sum(weights * np.power(values, power)), 1 / power)
-
-
-def stdev(values, power, weights=None, weights_norm=None):
-    values = array(values, dtype=float)
-    power = float(power)
-
-    # Check for single value in values
-    if len(values) is 1:
-        return 0.0
-
-    # Make sure weights match length and are normalized
-    if weights is None:
-        beta = 1 / (len(values) - 1)
-    else:
-        weights = array(weights, dtype=float)
-        if len(values) != len(weights):
-            # warn('Holder.stdev returned zero when passed length mis-matched values and weights', UserWarning)
-            sys.stderr.write(
-                '  Warning: Holder.stdev returned zero when passed length mis-matched values and weights\n')
-            return 0.0
-        if weights_norm is not None:
-            if weights_norm == "max" and max(weights) != 1.0:
-                weights = weights / max(weights)
-            elif weights_norm == "sum" and sum(weights) != 1.0:
-                weights = weights / sum(weights)
-            else:
-                # warn('Holder.stdev returned zero when passed unknown weights_norm method', UserWarning)
-                sys.stderr.write('  Warning: Holder.stdev returned zero when passed unknown weights_norm method\n')
-                return 0.0
-        alpha = sum(weights)  # Note: Alpha is defined differently here than in mean function!
-        beta = alpha / (alpha ** 2 - sum(np.power(weights, 2)))
-    # TODO
-    # holder_mean = mean(values, power, weights=weights)
-
-    if power == 0.0:  # geometric stdev (unbiased estimate)
-        if any(value <= 0 for value in values):
-            # warn('Holder.stdev returned zero when passed non-positive value with zero power', UserWarning)
-            sys.stderr.write('  Warning: Holder.stdev returned zero when passed non-positive value with zero power\n')
-            sys.stderr.write('    values = {:s}  weights = {:s}  power = {:f}\n'.format(values, weights, power))
-            return 0.0
-        if abs(holder_mean) < VERY_SMALL:
-            # warn('Holder.stdev returned zero when passed values with near-zero mean with zero power', UserWarning)
-            sys.stderr.write(
-                '  Warning: Holder.stdev returned zero when passed values with near-zero mean with zero power\n')
-            sys.stderr.write('    values = {:s}  weights = {:s}  power = {:f}\n'.format(values, weights, power))
-            return 0.0
-        if weights is None:
-            return math.exp(math.sqrt(beta * sum(np.power(np.log(values / holder_mean), 2))))
-        else:
-            return math.exp(math.sqrt(beta * sum(weights * np.power(np.log(values / holder_mean), 2))))
-
-    holder_mean_centered_values = values - holder_mean
-
-    if power == 1.0:  # arithmetic stdev (unbiased estimate)
-        if weights is None:
-            return math.sqrt(beta * sum(np.power(holder_mean_centered_values, 2)))
-        else:
-            return math.sqrt(beta * sum(weights * np.power(holder_mean_centered_values, 2)))
-
-    # else:
-    #   #warn('Holder.stdev returned zero when passed power other than 0 or 1', UserWarning)
-    #   sys.stderr.write('  Warning: Holder.stdev returned zero when passed power other than 0 or 1\n')
-    #   sys.stderr.write('    values = {:s}  weights = {:s}  power = {:f}\n'.format(values, weights, power))
-    #   return 0.0
-
-    # if sum(np.abs(holder_mean_centered_values)) < VERY_SMALL:
-    #   return 0.0
-
-    if power < 0.0:
-        if any(abs(centered_value) < VERY_SMALL for centered_value in holder_mean_centered_values):
-            # warn('Holder.stdev returned zero when passed near-zero value with negative power', UserWarning)
-            sys.stderr.write('  Warning: Holder.stdev returned zero when passed near-zero value with negative power\n')
-            sys.stderr.write('    values = {:s}  power = {:f}\n'.format(holder_mean_centered_values, power))
-            return 0.0
-
-    if any(centered_value < 0 for centered_value in holder_mean_centered_values):
-        if power % 1 != 0.0:
-            # warn('Holder.stdev returned zero when passed non-positive value with non-integer power', UserWarning)
-            sys.stderr.write(
-                '  Warning: Holder.stdev returned zero when passed negative value with non-integer power\n')
-            sys.stderr.write('    values = {:s}  power = {:f}\n'.format(holder_mean_centered_values, power))
-            return 0.0
-
-    if weights is None:
-        # sys.stderr.write('    values = {:s}  power = {:f}\n'.format(holder_mean_centered_values, power))
-        return pow(beta * sum(np.power(holder_mean_centered_values, 2 * power)), 1 / 2 / power)
-    else:
-        # sys.stderr.write('    values = {:s}  weights = {:s}  power = {:f}\n'.format(holder_mean_centered_values, weights, power))
-        return pow(beta * sum(weights * np.power(holder_mean_centered_values, 2 * power)), 1 / 2 / power)
-
-
-def get_element_aiab_energy(element):
-    """
-    Lookup atom-in-a-box (aiab) energy for specified element.
-    Used to estimate cohesive energy of a compound from the compound's VASP energy.
-    The elemental atom-in-a-box energies were provided by Wei Chen and Maarten de Jong.
-    Returns atom-in-a-box energy for specified element.
-    :param element:
-    :return: aiab_energy
-    """
-
-    element_aiab_energy_dict = None
-
-    try:
-        with open(os.path.join(os.path.dirname(__file__), DATAFILE_AIAB), 'r') as json_file:
-            element_aiab_energy_dict = json.load(json_file)
-
-    finally:
-        if element_aiab_energy_dict is None:
-            return None
-
-        object = element_aiab_energy_dict.get(element)
-        if object is not None:
-            return object[0]
-
-        return None
-
-
 # 1- On recupere toutes les lignes du fichiers csv
-data_from_cv = importer("elasticElate_ALL_revisionArt_without_Zero.csv")
+data_from_cv = import_file(IMPORTED_FILE)
 
 print("\nNombre de tous les éléments dans le fichier csv = {}\n".format(data_from_cv.shape[0]))
 
@@ -452,4 +380,4 @@ get_all_elements()
 data_additional_prop = get_calculated_properties(entries)
 #
 # 6- Generation du nouveau fichier csv contenant toutes les proprietes
-export_additional_properties(data_from_cv, data_additional_prop, 'Extract_Allvalues_descriptors_test.csv')
+export_additional_properties(data_from_cv, data_additional_prop, FILTE_TO_EXPORT)
