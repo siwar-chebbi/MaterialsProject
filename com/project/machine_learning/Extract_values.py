@@ -14,9 +14,9 @@ from pymatgen.analysis.elasticity import ElasticTensor
 from numpy import array
 
 # file to import
-IMPORTED_FILE = "elasticElate_ALL_revisionArt_without_Zero_test2.csv"
+IMPORTED_FILE = "elasticElate_ALL_revisionArt_without_Zero.csv"
 # file to export
-FILTE_TO_EXPORT = 'Extract_Allvalues_descriptors_test2.csv'
+FILTE_TO_EXPORT = 'Extract_Allvalues_descriptors.csv'
 # Colonne qui contient la liste des descriptors : IL FAUT RESPECTER L'ORDRE
 COLONNE = [
     # mean with power [-4..4] with stdev [0,1] : eGrp, eAtmM, eZ, eRad, eRow, eX, eBlPt, eMlPt :88
