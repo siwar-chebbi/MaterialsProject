@@ -1,0 +1,160 @@
+C:\Applications\Anaconda3\python.exe "C:\Applications\JetBrains\PyCharm 2018.2.4\helpers\pydev\pydevconsole.py" 57558 57559
+import sys; print('Python %s on %s' % (sys.version, sys.platform))
+sys.path.extend(['C:\\Users\\siwar\\Desktop\\PycharmProjects\\MaterialsProject', 'C:/Users/siwar/Desktop/PycharmProjects/MaterialsProject'])
+Python 3.6.5 |Anaconda, Inc.| (default, Mar 29 2018, 13:32:41) [MSC v.1900 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 6.4.0 -- An enhanced Interactive Python. Type '?' for help.
+PyDev console: using IPython 6.4.0
+Python 3.6.5 |Anaconda, Inc.| (default, Mar 29 2018, 13:32:41) [MSC v.1900 64 bit (AMD64)] on win32
+runfile('C:/Users/siwar/Desktop/PycharmProjects/MaterialsProject/com/project/machine_learning/Extract_values_sans_voronoi.py', wdir='C:/Users/siwar/Desktop/PycharmProjects/MaterialsProject/com/project/machine_learning')
+Nombre de tous les éléments dans le fichier csv = 11764
+  0%|          | 0/11300 [00:00<?, ?it/s]
+  4%|▍         | 500/11300 [00:01<00:22, 469.70it/s]
+  9%|▉         | 1000/11300 [00:01<00:19, 523.13it/s]
+ 13%|█▎        | 1500/11300 [00:02<00:17, 549.59it/s]
+ 18%|█▊        | 2000/11300 [00:03<00:17, 544.34it/s]
+ 22%|██▏       | 2500/11300 [00:04<00:17, 494.03it/s]
+ 27%|██▋       | 3000/11300 [00:06<00:18, 441.10it/s]
+ 31%|███       | 3500/11300 [00:07<00:17, 457.07it/s]
+ 35%|███▌      | 4000/11300 [00:08<00:15, 463.95it/s]
+ 40%|███▉      | 4500/11300 [00:09<00:14, 467.72it/s]
+ 44%|████▍     | 5000/11300 [00:10<00:12, 507.95it/s]
+ 49%|████▊     | 5500/11300 [00:10<00:10, 528.71it/s]
+ 53%|█████▎    | 6000/11300 [00:11<00:09, 576.23it/s]
+ 58%|█████▊    | 6500/11300 [00:12<00:08, 591.04it/s]
+ 62%|██████▏   | 7000/11300 [00:13<00:07, 541.68it/s]
+ 66%|██████▋   | 7500/11300 [00:14<00:06, 545.60it/s]
+ 71%|███████   | 8000/11300 [00:15<00:05, 593.55it/s]
+ 75%|███████▌  | 8500/11300 [00:15<00:04, 587.69it/s]
+ 80%|███████▉  | 9000/11300 [00:16<00:04, 563.78it/s]
+ 84%|████████▍ | 9500/11300 [00:17<00:03, 567.93it/s]
+ 88%|████████▊ | 10000/11300 [00:18<00:02, 576.05it/s]
+ 93%|█████████▎| 10500/11300 [00:19<00:01, 586.42it/s]
+ 97%|█████████▋| 11000/11300 [00:20<00:00, 593.90it/s]
+100%|██████████| 11300/11300 [00:20<00:00, 556.82it/s]
+100%|██████████| 11300/11300 [00:40<00:00, 556.82it/s]
+Problème de recuperation de l'élément atomique  : Po
+Problème de recuperation de l'élément atomique  : At
+Problème de recuperation de l'élément atomique  : Rn
+Problème de recuperation de l'élément atomique  : Fr
+Problème de recuperation de l'élément atomique  : Ra
+Problème de recuperation de l'élément atomique  : Pa
+Problème de recuperation de l'élément atomique  : Am
+Problème de recuperation de l'élément atomique  : Cm
+Problème de recuperation de l'élément atomique  : Bk
+Problème de recuperation de l'élément atomique  : Cf
+Problème de recuperation de l'élément atomique  : Es
+Problème de recuperation de l'élément atomique  : Fm
+Problème de recuperation de l'élément atomique  : Md
+Problème de recuperation de l'élément atomique  : No
+Problème de recuperation de l'élément atomique  : Lr
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+  Warning: A 'no data' field was set to zero in checkData.
+Erreur calcul get_cohesive_energy, nombre d'éléments 50  de  : ['mp-1009545', 'mp-10740', 'mp-15694', 'mp-2364', 'mp-27478', 'mp-30741', 'mp-30825', 'mp-567580', 'mp-8557', 'mp-861975', 'mp-861991', 'mp-861992', 'mp-861995', 'mp-862813', 'mp-862814', 'mp-862820', 'mp-862821', 'mp-862830', 'mp-862831', 'mp-862832', 'mp-862843', 'mp-862844', 'mp-862847', 'mp-862854', 'mp-862855', 'mp-862861', 'mp-862862', 'mp-862863', 'mp-862864', 'mp-864655', 'mp-864780', 'mp-864791', 'mp-864926', 'mp-865120', 'mp-865148', 'mp-865149', 'mp-865516', 'mp-865608', 'mp-865788', 'mp-865801', 'mp-865841', 'mp-865856', 'mp-865858', 'mp-867278', 'mp-867918', 'mp-973865', 'mp-973910', 'mp-977455', 'mp-978291', 'mp-983497']
+Erreur calcul aiab, nombre d'éléments 50 de  : ['mp-1009545', 'mp-10740', 'mp-15694', 'mp-2364', 'mp-27478', 'mp-30741', 'mp-30825', 'mp-567580', 'mp-8557', 'mp-861975', 'mp-861991', 'mp-861992', 'mp-861995', 'mp-862813', 'mp-862814', 'mp-862820', 'mp-862821', 'mp-862830', 'mp-862831', 'mp-862832', 'mp-862843', 'mp-862844', 'mp-862847', 'mp-862854', 'mp-862855', 'mp-862861', 'mp-862862', 'mp-862863', 'mp-862864', 'mp-864655', 'mp-864780', 'mp-864791', 'mp-864926', 'mp-865120', 'mp-865148', 'mp-865149', 'mp-865516', 'mp-865608', 'mp-865788', 'mp-865801', 'mp-865841', 'mp-865856', 'mp-865858', 'mp-867278', 'mp-867918', 'mp-973865', 'mp-973910', 'mp-977455', 'mp-978291', 'mp-983497']
+Nombre de propriétés  : 95
+ liste des propriétés : 
+['minLC', 'maxLC', 'minNu', 'maxNu', 'elasticity.K_Voigt_Reuss_Hill', 'Emin', 'Emax', 'Gmin', 'Gmax', 'elasticity.G_Reuss', 'elasticity.G_Voigt', 'elasticity.G_Voigt_Reuss_Hill', 'elasticity.K_Reuss', 'elasticity.K_Voigt', 'elasticity.poisson_ratio', 'group-4', 'group-3', 'group-2', 'group-1', 'group-0', 'group1', 'group2', 'group3', 'group4', 'atomic_mass-4', 'atomic_mass-3', 'atomic_mass-2', 'atomic_mass-1', 'atomic_mass-0', 'atomic_mass1', 'atomic_mass2', 'atomic_mass3', 'atomic_mass4', 'atomic_number-4', 'atomic_number-3', 'atomic_number-2', 'atomic_number-1', 'atomic_number-0', 'atomic_number1', 'atomic_number2', 'atomic_number3', 'atomic_number4', 'atomic_radius-4', 'atomic_radius-3', 'atomic_radius-2', 'atomic_radius-1', 'atomic_radius-0', 'atomic_radius1', 'atomic_radius2', 'atomic_radius3', 'atomic_radius4', 'row-4', 'row-3', 'row-2', 'row-1', 'row-0', 'row1', 'row2', 'row3', 'row4', 'x-4', 'x-3', 'x-2', 'x-1', 'x-0', 'x1', 'x2', 'x3', 'x4', 'eBlPt-4', 'eBlPt-3', 'eBlPt-2', 'eBlPt-1', 'eBlPt-0', 'eBlPt1', 'eBlPt2', 'eBlPt3', 'eBlPt4', 'eMlPt-4', 'eMlPt-3', 'eMlPt-2', 'eMlPt-1', 'eMlPt-0', 'eMlPt1', 'eMlPt2', 'eMlPt3', 'eMlPt4', 'lvpa', 'cepa', 'cohesive_energy', 'average_electroneg', 'bandgap', 'density', 'formation_energy-peratom', 'e_above_hull']
+Nombre d'élément avant suppression des lignes contenant null  : 11300
+Nombre d'élément après suppression des lignes contenant null  : 11250
+Nombre de lignes contenants des null  : 50
+               minLC     maxLC  ...  formation_energy-peratom  e_above_hull
+mp-862821   3.144654  3.144654  ...                 -0.405316      0.000000
+mp-862813   6.896552  6.896552  ...                 -0.269375      0.000000
+mp-983497   3.636364  3.636364  ...                  0.066435      0.081108
+mp-865858   2.638522  2.638522  ...                 -0.387092      0.000000
+mp-27478    7.370710  8.941518  ...                 -3.670295      0.000000
+mp-867918   2.202643  2.202643  ...                 -0.437097      0.000000
+mp-864791   4.524887  4.524887  ...                 -0.376388      0.000000
+mp-864780   2.680965  2.680965  ...                 -0.423291      0.000000
+mp-865856   3.996955  7.042254  ...                 -0.114150      0.000000
+mp-862830   3.039514  3.039514  ...                 -0.261345      0.000000
+mp-862861   3.012048  3.012048  ...                 -0.289275      0.000000
+mp-978291   9.345794  9.345794  ...                  0.350002      0.350002
+mp-861992   2.304147  2.304147  ...                 -0.420716      0.008627
+mp-865841   2.816901  2.816901  ...                 -0.947253      0.000000
+mp-973910   3.144654  3.144654  ...                 -0.145996      0.015309
+mp-865149   1.926782  1.926782  ...                 -0.568851      0.000000
+mp-10740    3.484321  3.484321  ...                  0.000000      0.000000
+mp-865608   2.057613  2.057613  ...                 -0.298976      0.000000
+mp-862843   1.945525  1.945525  ...                 -0.390355      0.000000
+mp-865148   1.811594  1.811594  ...                 -0.359350      0.000000
+mp-862862   3.125000  3.125000  ...                 -0.335915      0.000000
+mp-862855   0.219912  3.478609  ...                 -3.858066      0.184619
+mp-8557     3.448276  3.448276  ...                 -3.579058      0.000000
+mp-862864   3.105590  3.105590  ...                 -0.284596      0.000000
+mp-865801   2.873563  2.873563  ...                 -0.249361      0.000000
+mp-865788   2.652520  2.652520  ...                 -0.215614      0.000000
+mp-15694    3.086420  3.086420  ...                 -1.046669      0.000000
+mp-862814   1.615509  1.615509  ...                 -0.321270      0.000000
+mp-861995   2.364066  2.364066  ...                 -0.403570      0.000000
+mp-977455   2.352941  2.352941  ...                 -2.847581      0.000000
+mp-864926   1.984127  1.984127  ...                 -0.363922      0.000000
+mp-867278   2.739726  2.739726  ...                 -0.143210      0.000000
+mp-865516   2.544529  2.544529  ...                 -0.379535      0.000000
+mp-862831   2.070393  2.070393  ...                 -0.343333      0.000000
+mp-862844   2.834103  3.593759  ...                 -0.264985      0.000000
+mp-862854   1.921524  2.841918  ...                 -0.776021      0.000000
+mp-865120   2.506266  2.506266  ...                 -3.461695      0.000000
+mp-862832   2.531646  2.531646  ...                 -3.184348      0.000000
+mp-973865   3.636364  3.636364  ...                 -0.250247      0.014738
+mp-861975   1.242350  1.372720  ...                 -3.099901      0.000000
+mp-861991   2.298851  2.298851  ...                 -0.134090      0.002130
+mp-862863   3.067485  3.067485  ...                 -0.352809      0.000000
+mp-862820   2.688172  2.688172  ...                 -0.412541      0.000000
+mp-864655   1.926782  1.926782  ...                 -0.325343      0.000000
+mp-567580   1.941748  1.941748  ...                 -0.442843      0.000000
+mp-30825    1.577287  1.577287  ...                 -0.902783      0.000000
+mp-1009545  1.468429  1.468429  ...                 -1.820733      0.000000
+mp-2364     1.639344  1.639344  ...                 -4.042685      0.000000
+mp-30741    1.329787  1.329787  ...                 -0.865059      0.000000
+mp-862847   1.021166  3.300739  ...                 -0.200692      0.000000
+[50 rows x 95 columns]
