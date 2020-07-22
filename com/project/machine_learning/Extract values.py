@@ -6,8 +6,10 @@ import json
 import math
 import os
 import sys
+from numpy import array
 import string
 from pymatgen.analysis.elasticity import ElasticTensor
+
 
 api = MPRester("eDCEK5m9WVjmajp7e8af")
 CAVEAT_AIAB = 'Unable to estimate cohesive energy for material.'
@@ -75,6 +77,15 @@ def get_calculated_properties(entries_var):
     atomicmassNEG2_list = []
     atomicmassNEG3_list = []
     atomicmassNEG4_list = []
+    atomicnumber1_list = []
+    atomicnumber2_list = []
+    atomicnumber3_list = []
+    atomicnumber4_list = []
+    atomicnumber0_list = []
+    atomicnumberNEG1_list = []
+    atomicnumberNEG2_list = []
+    atomicnumberNEG3_list = []
+    atomicnumberNEG4_list = []
     atomicradius1_list = []
     atomicradius2_list = []
     atomicradius3_list = []
@@ -84,6 +95,24 @@ def get_calculated_properties(entries_var):
     atomicradiusNEG2_list = []
     atomicradiusNEG3_list = []
     atomicradiusNEG4_list = []
+    eBlPt1_list = []
+    eBlPt2_list = []
+    eBlPt3_list = []
+    eBlPt4_list = []
+    eBlPt0_list = []
+    eBlPtNEG1_list = []
+    eBlPtNEG2_list = []
+    eBlPtNEG3_list = []
+    eBlPtNEG4_list = []
+    eMlPt1_list = []
+    eMlPt2_list = []
+    eMlPt3_list = []
+    eMlPt4_list = []
+    eMlPt0_list = []
+    eMlPtNEG1_list = []
+    eMlPtNEG2_list = []
+    eMlPtNEG3_list = []
+    eMlPtNEG4_list = []
     rowH1A_list = []
     rowH2A_list = []
     rowH3A_list = []
@@ -112,9 +141,22 @@ def get_calculated_properties(entries_var):
     density_list = []
     formation_energie_peratom_list = []
     energie_above_hull_list = []
-    melting1_temperature_list = []
-
-
+    Atomicmass_0D = []
+    Atomicmass_1D = []
+    Atomicnumber_0D = []
+    Atomicnumber_1D = []
+    Atomicradius_0D = []
+    Atomicradius_1D = []
+    BoilingTem_0D = []
+    BoilingTem_1D = []
+    Electro_0D =[]
+    Electro_1D =[]
+    Groupnumber_0D =[]
+    Groupnumber_1D = []
+    MelingTem_0D = []
+    MelingTem_1D = []
+    rownumber_0D = []
+    rownumber_1D = []
     for entry in entries_var:
         caveats_str = ''
         aiab_flag = False
@@ -127,10 +169,9 @@ def get_calculated_properties(entries_var):
         row_list = []
         group_list = []
         atomicmass_list = []
+        atomicnumber_list = []
         atomicradius_list = []
         x_list = []
-        melting_temperature_list = []
-        boiling_temperature_list = []
         average_electroneg = None
         cohesive_energy = None
         # Construct per-element lists for this material
@@ -145,25 +186,24 @@ def get_calculated_properties(entries_var):
                 aiab_flag = True
                 break
             energy_list.append(aiab_energy)
-            if element.block == 'f':
-                f_block_flag = True
 
-            iElms__eBlPt = float(((checkData(element.data['Melting point'])).replace(' K', '')).replace('(white P) ', ''))
-            # if iElms__eBlPt == 0:
-            #     if element_key == 'Pa':
-            #         iElms__eBlPt = 4273
-            #     else:
-            #         sys.stderr.write('  Warning: In {} element {} has boiling point of None\n'.format(mpID, element_key))
-            # eBlPt.append(float(iElms__eBlPt))
-            #
-            # iElms__eMlPt = float(string.replace(string.replace(checkData(element.b), ' K', ''), '(white P) ', ''))
-            # if iElms__eMlPt == 0:
-            #     sys.stderr.write('  Warning: In {} element {} has melting point of None\n'.format(mpID, iElmKey))
-            # eMlPt.append(float(iElms__eMlPt))
+            iElms__eBlPt = float(((checkData(element.data['Boiling point'])).replace(' K', '')).replace('(white P) ', ''))
+            if iElms__eBlPt == 0:
+                if element_key == 'Pa':
+                    iElms__eBlPt = 4273
+                else:
+                    sys.stderr.write('  Warning: In {} element has boiling point of None\n'.format(element))
+            eBlPt.append(float(iElms__eBlPt))
+
+            iElms__eMlPt = float(((checkData(element.data['Melting point'])).replace(' K', '')).replace('(white P) ', ''))
+            if iElms__eMlPt == 0:
+                sys.stderr.write('  Warning: In {} element has melting point of None\n'.format(element))
+            eMlPt.append(float(iElms__eMlPt))
 
             row_list.append(element.row)
             group_list.append(element.group)
             atomicmass_list.append(element.atomic_mass)
+            atomicnumber_list.append(element.number)
             atomicradius_list.append(element.atomic_radius)
             x_list.append(element.X)
 
@@ -213,6 +253,15 @@ def get_calculated_properties(entries_var):
         atomicmassNEG2_list.append(holder_mean(atomicmass_list, -2.0, weights=weight_list))
         atomicmassNEG3_list.append(holder_mean(atomicmass_list, -3.0, weights=weight_list))
         atomicmassNEG4_list.append(holder_mean(atomicmass_list, -4.0, weights=weight_list))
+        atomicnumber1_list.append(holder_mean(atomicnumber_list, 1.0, weights=weight_list))
+        atomicnumber2_list.append(holder_mean(atomicnumber_list, 2.0, weights=weight_list))
+        atomicnumber3_list.append(holder_mean(atomicnumber_list, 3.0, weights=weight_list))
+        atomicnumber4_list.append(holder_mean(atomicnumber_list, 4.0, weights=weight_list))
+        atomicnumber0_list.append(holder_mean(atomicnumber_list, 0.0, weights=weight_list))
+        atomicnumberNEG1_list.append(holder_mean(atomicnumber_list, -1.0, weights=weight_list))
+        atomicnumberNEG2_list.append(holder_mean(atomicnumber_list, -2.0, weights=weight_list))
+        atomicnumberNEG3_list.append(holder_mean(atomicnumber_list, -3.0, weights=weight_list))
+        atomicnumberNEG4_list.append(holder_mean(atomicnumber_list, -4.0, weights=weight_list))
         atomicradius1_list.append(holder_mean(atomicradius_list, 1.0, weights=weight_list))
         atomicradius2_list.append(holder_mean(atomicradius_list, 2.0, weights=weight_list))
         atomicradius3_list.append(holder_mean(atomicradius_list, 3.0, weights=weight_list))
@@ -222,6 +271,24 @@ def get_calculated_properties(entries_var):
         atomicradiusNEG2_list.append(holder_mean(atomicradius_list, -2.0, weights=weight_list))
         atomicradiusNEG3_list.append(holder_mean(atomicradius_list, -3.0, weights=weight_list))
         atomicradiusNEG4_list.append(holder_mean(atomicradius_list, -4.0, weights=weight_list))
+        eBlPt1_list.append(holder_mean(eBlPt, 1.0, weights=weight_list))
+        eBlPt2_list.append(holder_mean(eBlPt, 2.0, weights=weight_list))
+        eBlPt3_list.append(holder_mean(eBlPt, 3.0, weights=weight_list))
+        eBlPt4_list.append(holder_mean(eBlPt, 4.0, weights=weight_list))
+        eBlPt0_list.append(holder_mean(eBlPt, 0.0, weights=weight_list))
+        eBlPtNEG1_list.append(holder_mean(eBlPt, -1.0, weights=weight_list))
+        eBlPtNEG2_list.append(holder_mean(eBlPt, -2.0, weights=weight_list))
+        eBlPtNEG3_list.append(holder_mean(eBlPt, -3.0, weights=weight_list))
+        eBlPtNEG4_list.append(holder_mean(eBlPt, -4.0, weights=weight_list))
+        eMlPt1_list.append(holder_mean(eMlPt, 1.0, weights=weight_list))
+        eMlPt2_list.append(holder_mean(eMlPt, 2.0, weights=weight_list))
+        eMlPt3_list.append(holder_mean(eMlPt, 3.0, weights=weight_list))
+        eMlPt4_list.append(holder_mean(eMlPt, 4.0, weights=weight_list))
+        eMlPt0_list.append(holder_mean(eMlPt, 0.0, weights=weight_list))
+        eMlPtNEG1_list.append(holder_mean(eMlPt, -1.0, weights=weight_list))
+        eMlPtNEG2_list.append(holder_mean(eMlPt, -2.0, weights=weight_list))
+        eMlPtNEG3_list.append(holder_mean(eMlPt, -3.0, weights=weight_list))
+        eMlPtNEG4_list.append(holder_mean(eMlPt, -4.0, weights=weight_list))
         rowH1A_list.append(holder_mean(row_list, 1.0, weights=weight_list))
         rowH2A_list.append(holder_mean(row_list, 2.0, weights=weight_list))
         rowH3A_list.append(holder_mean(row_list, 3.0, weights=weight_list))
@@ -240,6 +307,22 @@ def get_calculated_properties(entries_var):
         xHn3A_list.append(holder_mean(x_list, -3.0, weights=weight_list))
         xHn2A_list.append(holder_mean(x_list, -2.0, weights=weight_list))
         xHn1A_list.append(holder_mean(x_list, -1.0, weights=weight_list))
+        Atomicmass_0D.append(stdev(atomicmass_list, 0.0, weights=weight_list))
+        Atomicmass_1D.append(stdev(atomicmass_list, 1.0, weights=weight_list))
+        Atomicnumber_0D.append(stdev(atomicnumber_list, 0.0, weights=weight_list))
+        Atomicnumber_1D.append(stdev(atomicnumber_list, 1.0, weights=weight_list))
+        Atomicradius_0D.append(stdev(atomicradius_list, 0.0, weights=weight_list))
+        Atomicradius_1D.append(stdev(atomicradius_list, 1.0, weights=weight_list))
+        BoilingTem_0D.append(stdev(eBlPt, 0.0, weights=weight_list))
+        BoilingTem_1D.append(stdev(eBlPt, 1.0, weights=weight_list))
+        Electro_0D.append(stdev(x_list, 0.0, weights=weight_list))
+        Electro_1D.append(stdev(x_list, 1.0, weights=weight_list))
+        Groupnumber_0D.append(stdev(group_list, 0.0, weights=weight_list))
+        Groupnumber_1D.append(stdev(group_list, 1.0, weights=weight_list))
+        MelingTem_0D.append(stdev(eMlPt, 0.0, weights=weight_list))
+        MelingTem_1D.append(stdev(eMlPt, 1.0, weights=weight_list))
+        rownumber_0D.append(stdev(row_list, 0.0, weights=weight_list))
+        rownumber_1D.append(stdev(row_list, 1.0, weights=weight_list))
         caveats_list.append(caveats_str)
         cohesive_energy_list.append(cohesive_energy)
         average_electroneg_list.append(average_electroneg)
@@ -261,10 +344,15 @@ def get_calculated_properties(entries_var):
         descriptors = np.ascontiguousarray(
             [lvpa_list, cepa_list, group1_list, group2_list, group3_list, group4_list, group0_list, groupNEG1_list, groupNEG2_list,
              groupNEG3_list, groupNEG4_list, atomicmass1_list, atomicmass2_list, atomicmass3_list, atomicmass4_list, atomicmass0_list,
-             atomicmassNEG1_list, atomicmassNEG2_list, atomicmassNEG3_list, atomicmassNEG4_list, atomicradius1_list, atomicradius2_list, atomicradius3_list,
-             atomicradius4_list, atomicradius0_list, atomicradiusNEG1_list, atomicradiusNEG2_list, atomicradiusNEG3_list, atomicradiusNEG4_list,
+             atomicmassNEG1_list, atomicmassNEG2_list, atomicmassNEG3_list, atomicmassNEG4_list, atomicnumber1_list, atomicnumber2_list, atomicnumber3_list, atomicnumber4_list, atomicnumber0_list,
+             atomicnumberNEG1_list, atomicnumberNEG2_list, atomicnumberNEG3_list, atomicnumberNEG4_list, atomicradius1_list, atomicradius2_list, atomicradius3_list,
+             atomicradius4_list, atomicradius0_list, atomicradiusNEG1_list, atomicradiusNEG2_list, atomicradiusNEG3_list, atomicradiusNEG4_list, eBlPt1_list, eBlPt2_list,
+             eBlPt3_list, eBlPt4_list, eBlPt0_list, eBlPtNEG1_list, eBlPtNEG2_list, eBlPtNEG3_list, eBlPtNEG4_list, eMlPt1_list, eMlPt2_list, eMlPt3_list, eMlPt4_list,
+             eMlPt0_list, eMlPtNEG1_list, eMlPtNEG2_list, eMlPtNEG3_list, eMlPtNEG4_list,
              rowH1A_list, rowH2A_list, rowH3A_list, rowH4A_list, rowH0A_list, rowHn1A_list, rowHn2A_list, rowHn3A_list,
-             rowHn4A_list, xH4A_list, xH3A_list, xH2A_list, xH1A_list, xH0A_list, xHn4A_list, xH3A_list, xH2A_list, xH1A_list,
+             rowHn4A_list, xH4A_list, xH3A_list, xH2A_list, xH1A_list, xH0A_list, xHn4A_list, xH3A_list, xH2A_list, xH1A_list, Atomicmass_0D, Atomicmass_1D,
+             Atomicnumber_0D, Atomicnumber_1D, Atomicradius_0D, Atomicradius_1D, BoilingTem_0D, BoilingTem_1D, Electro_0D, Electro_1D, Groupnumber_0D, Groupnumber_1D,
+             rownumber_0D, rownumber_1D, MelingTem_0D, MelingTem_1D,
              cohesive_energy_list, average_electroneg_list, bandgap_list, density_list, formation_energie_peratom_list, energie_above_hull_list] ,
             dtype=float)
 
@@ -274,10 +362,15 @@ def get_calculated_properties(entries_var):
     return pd.DataFrame(descriptors.transpose(), index=matid_list,
                         columns=['lvpa', 'cepa', 'group1','group2', 'group3', 'group4', 'group0', 'group-1', 'group-2', 'group-3', 'group-4',
                                  'atomic_mass1', 'atomic_mass2', 'atomic_mass3', 'atomic_mass4', 'atomic_mass0', 'atomic_mass-1', 'atomic_mass-2',
-                                 'atomic_mass-3', 'atomic_mass-4', 'atomicRadius1', 'atomicRadius2', 'atomicRadius3', 'atomicRadius4', 'atomicRadius0', 'atomicRadius-1',
-                                 'atomicRadius-2', 'atomicRadius-3', 'atomicRadius-4','rowH1A', 'rowH2A', 'rowH3A', 'rowH4A', 'rowH0A',
+                                 'atomic_mass-3', 'atomic_mass-4',  'atomic_number1', 'atomic_number2', 'atomic_number3', 'atomic_number4', 'atomic_number0', 'atomic_number-1',
+                                 'atomic_number-2','atomic_number-3', 'atomic_number-4','atomicRadius1', 'atomicRadius2', 'atomicRadius3', 'atomicRadius4', 'atomicRadius0', 'atomicRadius-1',
+                                 'atomicRadius-2', 'atomicRadius-3', 'atomicRadius-4', 'eBlPt1', 'eBlPt2', 'eBlPt3', 'eBlPt4', 'eBlPt0', 'eBlPt-1', 'eBlPt-2',
+                                 'eBlPt-3', 'eBlPt-4', 'eMlPt1', 'eMlPt2', 'eMlPt3', 'eMlPt4', 'eMlPt0', 'eMlPt-1', 'eMlPt-2',
+                                 'eMlPt-3', 'eMlPt-4', 'rowH1A', 'rowH2A', 'rowH3A', 'rowH4A', 'rowH0A',
                                  'rowHn1A', 'rowHn2A', 'rowHn3A', 'rowHn4A', 'xH4A', 'xH3A', 'xH2A', 'xH1A', 'xH0A','xHn4A',
-                                 'xHn3A', 'xHn2A', 'xHn1A','cohesive_energy',
+                                 'xHn3A', 'xHn2A', 'xHn1A', 'Atomicmass_0D', 'Atomicmass_1D', 'Atomicnumber_0D', 'Atomicnumber_1D', 'Atomicradius_0D',
+                                 'Atomicradius_1D','BoilingTem_0D', 'BoilingTem_1D', 'Electro_0D', 'Electro_1D', 'Groupnumber_0D', 'Groupnumber_1D',
+                                 'rownumber_0D', 'rownumber_1D', 'MelingTem_0D', 'MelingTem_1D', 'cohesive_energy',
                                  'average_electroneg', 'bandgap', 'density', 'formation_energy-peratom', 'e_above_hull'])
 
 def export_additional_properties(data1, data2, fichier):
@@ -359,6 +452,92 @@ def holder_mean(values, power, weights=None, weights_norm=None):
         return pow(alpha * sum(np.power(values, power)), 1 / power)
     else:
         return pow(alpha * sum(weights * np.power(values, power)), 1 / power)
+
+
+def stdev(values, power, weights=None, weights_norm=None):
+    values = array(values, dtype=float)
+    power = float(power)
+
+    # Check for single value in values
+    if len(values) is 1:
+        return 0.0
+
+    # Make sure weights match length and are normalized
+    if weights is None:
+        beta = 1 / (len(values) - 1)
+    else:
+        weights = array(weights, dtype=float)
+        if len(values) != len(weights):
+            # warn('Holder.stdev returned zero when passed length mis-matched values and weights', UserWarning)
+            sys.stderr.write('  Warning: Holder.stdev returned zero when passed length mis-matched values and weights\n')
+            return 0.0
+        if weights_norm is not None:
+            if weights_norm == "max" and max(weights) != 1.0:
+                weights = weights / max(weights)
+            elif weights_norm == "sum" and sum(weights) != 1.0:
+                weights = weights / sum(weights)
+            else:
+                # warn('Holder.stdev returned zero when passed unknown weights_norm method', UserWarning)
+                sys.stderr.write('  Warning: Holder.stdev returned zero when passed unknown weights_norm method\n')
+                return 0.0
+        alpha = sum(weights)  # Note: Alpha is defined differently here than in mean function!
+        beta = alpha / (alpha ** 2 - sum(np.power(weights, 2)))
+
+    holdermean = holder_mean(values, power, weights=weights)
+
+    if power == 0.0:  # geometric stdev (unbiased estimate)
+        if any(value <= 0 for value in values):
+            # warn('Holder.stdev returned zero when passed non-positive value with zero power', UserWarning)
+            sys.stderr.write('  Warning: Holder.stdev returned zero when passed non-positive value with zero power\n')
+            sys.stderr.write('    values = {:s}  weights = {:s}  power = {:f}\n'.format(values, weights, power))
+            return 0.0
+        if abs(holdermean) < VERY_SMALL:
+            # warn('Holder.stdev returned zero when passed values with near-zero mean with zero power', UserWarning)
+            sys.stderr.write('  Warning: Holder.stdev returned zero when passed values with near-zero mean with zero power\n')
+            sys.stderr.write('    values = {:s}  weights = {:s}  power = {:f}\n'.format(values, weights, power))
+            return 0.0
+        if weights is None:
+            return math.exp(math.sqrt(beta * sum(np.power(np.log(values / holdermean), 2))))
+        else:
+            return math.exp(math.sqrt(beta * sum(weights * np.power(np.log(values / holdermean), 2))))
+
+    holder_mean_centered_values = values - holdermean
+
+    if power == 1.0:  # arithmetic stdev (unbiased estimate)
+        if weights is None:
+            return math.sqrt(beta * sum(np.power(holder_mean_centered_values, 2)))
+        else:
+            return math.sqrt(beta * sum(weights * np.power(holder_mean_centered_values, 2)))
+
+    else:
+      #warn('Holder.stdev returned zero when passed power other than 0 or 1', UserWarning)
+      sys.stderr.write('  Warning: Holder.stdev returned zero when passed power other than 0 or 1\n')
+      sys.stderr.write('    values = {:s}  weights = {:s}  power = {:f}\n'.format(values, weights, power))
+      return 0.0
+
+    # if sum(np.abs(holder_mean_centered_values)) < VERY_SMALL:
+    #   return 0.0
+
+    if power < 0.0:
+        if any(abs(centered_value) < VERY_SMALL for centered_value in holder_mean_centered_values):
+            # warn('Holder.stdev returned zero when passed near-zero value with negative power', UserWarning)
+            sys.stderr.write('  Warning: Holder.stdev returned zero when passed near-zero value with negative power\n')
+            sys.stderr.write('    values = {:s}  power = {:f}\n'.format(holder_mean_centered_values, power))
+            return 0.0
+
+    if any(centered_value < 0 for centered_value in holder_mean_centered_values):
+        if power % 1 != 0.0:
+            # warn('Holder.stdev returned zero when passed non-positive value with non-integer power', UserWarning)
+            sys.stderr.write('  Warning: Holder.stdev returned zero when passed negative value with non-integer power\n')
+            sys.stderr.write('    values = {:s}  power = {:f}\n'.format(holder_mean_centered_values, power))
+            return 0.0
+
+    if weights is None:
+        # sys.stderr.write('    values = {:s}  power = {:f}\n'.format(holder_mean_centered_values, power))
+        return pow(beta * sum(np.power(holder_mean_centered_values, 2 * power)), 1 / 2 / power)
+    else:
+        # sys.stderr.write('    values = {:s}  weights = {:s}  power = {:f}\n'.format(holder_mean_centered_values, weights, power))
+        return pow(beta * sum(weights * np.power(holder_mean_centered_values, 2 * power)), 1 / 2 / power)
 
 
 def get_element_aiab_energy(element):

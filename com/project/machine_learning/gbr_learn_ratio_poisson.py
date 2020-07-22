@@ -74,7 +74,7 @@ for i in range(0, iterations):
         predict_result = predict
 
 scores = np.array(scores)
-print("Le resultat de prédiction de ration de poisson est :" + str(predict_result))
+print("Le resultat de prédiction du ratio de poisson est :" + str(predict_result))
 print(str(np.mean(scores.flatten())))
 print(str(np.std(scores.flatten())))
 print(str(mean_absolute_error(y, predict)))
@@ -94,12 +94,19 @@ def tracage_ratio_poisson():
 def tracage_relative_importance():
     plt.subplot(1, 2, 2)
     plt.barh(pos, feature_importance[sorted_idx], align='center')
-    feature_names = np.array(['lvpa', 'group1', 'group2','group3','group4','group0','group-1','group-2','group-3','group-4',
-                              'atomic_mass1', 'atomic_mass2','atomic_mass3','atomic_mass4','atomic_mass0','atomic_mass-1','atomic_mass-2','atomic_mass-3',
-                              'atomic_mass-4','atomicRadius1','atomicRadius2','atomicRadius3','atomicRadius4','atomicRadius0','atomicRadius-1',
-                              'atomicRadius-2','atomicRadius-3','atomicRadius-4', 'rowH1A', 'rowH2A','rowH3A', 'rowH4A', 'rowH0A', 'rowHn1A', 'rowHn2A',
-                              'rowHn3A', 'rowHn4A', 'xH4A','xH3A','xH2A','xH1A','xH0A','xHn4A','xHn3A','xHn2A','xHn1A', 'cohesive_energy', 'average_electroneg',
-                              'bandgap', 'density', 'formation_energy-peratom', 'e_above_hull'])
+    feature_names = np.array(['lvpa', 'group1', 'group2', 'group3', 'group4', 'group0', 'group-1', 'group-2', 'group-3', 'group-4',
+    'atomic_mass1', 'atomic_mass2', 'atomic_mass3', 'atomic_mass4', 'atomic_mass0', 'atomic_mass-1', 'atomic_mass-2',
+    'atomic_mass-3', 'atomic_mass-4', 'atomic_number1', 'atomic_number2', 'atomic_number3', 'atomic_number4', 'atomic_number0', 'atomic_number-1',
+    'atomic_number-2', 'atomic_number-3', 'atomic_number-4', 'atomicRadius1', 'atomicRadius2', 'atomicRadius3', 'atomicRadius4', 'atomicRadius0', 'atomicRadius-1',
+    'atomicRadius-2', 'atomicRadius-3', 'atomicRadius-4', 'eBlPt1', 'eBlPt2', 'eBlPt3', 'eBlPt4', 'eBlPt0', 'eBlPt-1', 'eBlPt-2',
+    'eBlPt-3', 'eBlPt-4', 'eMlPt1', 'eMlPt2', 'eMlPt3', 'eMlPt4', 'eMlPt0', 'eMlPt-1', 'eMlPt-2',
+    'eMlPt-3', 'eMlPt-4', 'rowH1A', 'rowH2A', 'rowH3A', 'rowH4A', 'rowH0A',
+    'rowHn1A', 'rowHn2A', 'rowHn3A', 'rowHn4A', 'xH4A', 'xH3A', 'xH2A', 'xH1A', 'xH0A', 'xHn4A',
+    'xHn3A', 'xHn2A', 'xHn1A', 'Atomicmass_0D', 'Atomicmass_1D', 'Atomicnumber_0D', 'Atomicnumber_1D', 'Atomicradius_0D',
+    'Atomicradius_1D', 'BoilingTem_0D', 'BoilingTem_1D', 'Electro_0D', 'Electro_1D', 'Groupnumber_0D', 'Groupnumber_1D',
+    'rownumber_0D', 'rownumber_1D', 'MelingTem_0D', 'MelingTem_1D', 'cohesive_energy',
+    'average_electroneg', 'bandgap', 'density', 'formation_energy-peratom', 'e_above_hull'])
+
     print(len(feature_names))
     plt.yticks(pos, feature_names[sorted_idx], fontsize=8)
     plt.xlabel('Relative Importance')
