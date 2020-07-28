@@ -5,7 +5,6 @@ from pymatgen import MPRester
 api = MPRester("eDCEK5m9WVjmajp7e8af")
 
 compteur = 0
-compteuri = 0
 texte = ""
 
 for i in range(1, 6):
